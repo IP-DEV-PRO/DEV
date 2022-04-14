@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DEVPRO</string>
+    <string name="username">DEVPRO</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="register">Register</string>
+</resources>
