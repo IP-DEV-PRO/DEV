@@ -15,6 +15,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import models.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,12 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private String mCustomToken;
     EditText username, password;
     Button registerButton;//DADAD
+    private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-           mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         registerButton = findViewById(R.id.register);
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//DA
+
     @Override
     public void onStart() {
         super.onStart();
@@ -81,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
+                            System.out.println(mDatabase);
+                            String userId = mDatabase.push().getKey();
+                            User registeredUser = new User(email,password,"","","");
+                            mDatabase.child(userId).setValue(registeredUser);
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
