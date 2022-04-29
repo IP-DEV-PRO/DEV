@@ -118,7 +118,7 @@ public class RegisterCompanyActivity extends AppCompatActivity {
     }
 
     private void updateUI_Ok() {
-        changeActiviy(MapsActivity.class);
+        changeActiviy(RegisterCompanyActivityWithMap.class);
     }
 
 }

@@ -38,11 +38,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".activities.RegisterCompanyActivityRoundTwo"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".activities.MapsActivity"
+            android:name=".activities.RegisterCompanyActivityWithMap"
             android:exported="true">
         </activity>
 
