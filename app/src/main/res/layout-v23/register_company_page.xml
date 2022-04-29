@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RegisterCompanyActivity">
+
+    <EditText
+        android:id="@+id/register_company_page_first_name"
+        android:layout_width="259dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:hint="@string/enter_your_first_name"
+        android:textAlignment="center"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/register_comapny_page_next_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_company_page_last_name"
+        app:layout_constraintVertical_bias="0.0"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/register_company_page_last_name"
+        android:layout_width="259dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:hint="@string/enter_your_last_name"
+        android:textAlignment="center"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/register_comapny_page_next_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_company_page_password"
+        app:layout_constraintVertical_bias="0.0"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/register_company_page_password"
+        android:layout_width="259dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:hint="@string/enter_your_password"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/register_comapny_page_next_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_comapny_page_email"
+        app:layout_constraintVertical_bias="0.005"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/register_comapny_page_email"
+        android:layout_width="259dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:hint="@string/enter_your_email"
+        android:textAlignment="center"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.223"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/register_comapny_page_next_button"
+        android:layout_width="237dp"
+        android:layout_height="87dp"
+        android:backgroundTint="#0BCF5C"
+        android:backgroundTintMode="src_over"
+        android:fadingEdge="vertical|none"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:foregroundGravity="fill_horizontal|top|fill_vertical"
+        android:foregroundTint="#66E813"
+        android:foregroundTintMode="add"
+        android:text="@string/Next"
+        android:textColor="#37474F"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.672" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

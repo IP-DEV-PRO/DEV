@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_1"
+    tools:context=".activities.MainActivity">
+
+    <Button
+        android:id="@+id/firstPage_registerButton"
+        android:layout_width="237dp"
+        android:layout_height="87dp"
+        android:layout_marginBottom="392dp"
+        android:backgroundTint="#BC3672"
+        android:backgroundTintMode="src_over"
+        android:fadingEdge="vertical|none"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:foregroundGravity="fill_horizontal|top|fill_vertical"
+        android:foregroundTint="#66E813"
+        android:foregroundTintMode="add"
+        android:text="@string/register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/firstPage_loginButton"
+        android:layout_width="237dp"
+        android:layout_height="87dp"
+        android:layout_marginBottom="300dp"
+        android:backgroundTint="#2190F3"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:foregroundGravity="fill_horizontal|top|fill_vertical"
+        android:foregroundTint="#05F408"
+        android:foregroundTintMode="src_over"
+        android:text="@string/login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
