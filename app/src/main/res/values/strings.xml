@@ -3,7 +3,12 @@
     <string name="username">DEVPRO</string>
     <string name="enter_your_username">Enter your username</string>
     <string name="enter_your_password">Enter your password</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_last_name">Enter your last name</string>
+    <string name="enter_your_first_name">Enter your first name</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="IAmACompany">… or register a company</string>
+    <string name="Next">Next</string>
 
 </resources>

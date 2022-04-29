@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.devpro.R;
-import com.devpro.fragments.FirstPageFragment;
 
 import java.util.Objects;
 
@@ -44,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.first_page);
         registerButton = findViewById(R.id.firstPage_registerButton);
         loginButton = findViewById(R.id.firstPage_loginButton);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Objects.requireNonNull(this.getSupportActionBar()).hide();
 

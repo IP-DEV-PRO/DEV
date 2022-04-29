@@ -26,6 +26,14 @@
             android:name=".activities.LoginActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".activities.RegisterCompanyActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".activities.RegisterCompanyActivityRoundTwo"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
