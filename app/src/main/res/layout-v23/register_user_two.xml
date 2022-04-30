@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RegisterUserTwo">
+
+    <EditText
+        android:id="@+id/register_user_two_telephoneNumber"
+        android:layout_width="259dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:hint="@string/telephone_number"
+        android:inputType="phone"
+        android:textAlignment="center"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/register_user_two_nextButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.994"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/register_user_two_first_name"
+        android:layout_width="259dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:autofillHints=""
+        android:gravity="center"
+        android:hint="@string/enter_your_first_name"
+        android:textAlignment="center"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/register_user_two_telephoneNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_user_two_lastname"
+        app:layout_constraintVertical_bias="0.195" />
+
+    <EditText
+        android:id="@+id/register_user_two_lastname"
+        android:layout_width="259dp"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:gravity="center"
+        android:hint="@string/enter_your_last_name"
+        android:textAlignment="center"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/register_user_two_telephoneNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.535" />
+
+    <Button
+        android:id="@+id/register_user_two_nextButton"
+        android:layout_width="237dp"
+        android:layout_height="87dp"
+        android:backgroundTint="#0BCF5C"
+        android:backgroundTintMode="src_over"
+        android:fadingEdge="vertical|none"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:foregroundGravity="fill_horizontal|top|fill_vertical"
+        android:foregroundTint="#66E813"
+        android:foregroundTintMode="add"
+        android:text="@string/Next"
+        android:textColor="#37474F"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.63" />
+</androidx.constraintlayout.widget.ConstraintLayout>

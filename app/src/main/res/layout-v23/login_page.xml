@@ -27,7 +27,7 @@
         android:layout_width="259dp"
         android:layout_height="45dp"
         android:gravity="center"
-        android:hint="@string/enter_your_username"
+        android:hint="@string/enter_your_email"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
