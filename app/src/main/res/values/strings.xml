@@ -10,5 +10,6 @@
     <string name="login">Login</string>
     <string name="IAmACompany">… or register a company</string>
     <string name="Next">Next</string>
+    <string name="search">Search</string>
 
 </resources>

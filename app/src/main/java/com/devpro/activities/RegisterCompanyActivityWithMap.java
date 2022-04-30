@@ -1,7 +1,9 @@
 package com.devpro.activities;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -39,6 +41,14 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         actionBar.setBackgroundDrawable(new ColorDrawable(0xff0BCF5C));
     }
 
+    @SuppressLint("ResourceType")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        // getMenuInflater().inflate(R.layout.activity_bar_map, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -61,12 +71,15 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+            case R.id.action_meu:
                 this.finish();
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
