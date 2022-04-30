@@ -1,16 +1,16 @@
 package models;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Location {
-    private Long longitude;
-    private Long latitude;
+    private LatLng location;
     private String street;
     private String city;
     private String country;
     private String number;
 
-    public Location(Long longitude, Long latitude, String street, String city, String country, String number) {
-        this.longitude = longitude;
-        this.latitude = latitude;
+    public Location(LatLng location, String street, String city, String country, String number) {
+        this.location = location;
         this.street = street;
         this.city = city;
         this.country = country;
@@ -49,19 +49,11 @@ public class Location {
         this.number = number;
     }
 
-    public Long getLongitude() {
-        return longitude;
+    public LatLng getLocation() {
+        return location;
     }
 
-    public void setLongitude(Long longitude) {
-        this.longitude = longitude;
-    }
-
-    public Long getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Long latitude) {
-        this.latitude = latitude;
+    public void setLocation(LatLng location) {
+        this.location = location;
     }
 }
