@@ -3,16 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout-v23/activity_bar_map.xml" value="0.25" />
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout-v23/first_page.xml" value="0.234375" />
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout-v23/login_page.xml" value="0.234375" />
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout-v23/register_company_choose_location.xml" value="0.234375" />
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout-v23/register_company_page.xml" value="0.234375" />
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout-v23/register_page.xml" value="0.264" />
+        <entry key="..\:/DEV/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2465" />
+        <entry key="..\:/DEV/app/src/main/res/drawable/ic_baseline_east_24.xml" value="0.3675" />
+        <entry key="..\:/DEV/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2955" />
+        <entry key="..\:/DEV/app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.3675" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/activity_bar_map.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/first_page.xml" value="0.33" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/login_page.xml" value="0.33" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/register_company_choose_location.xml" value="0.33" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/register_company_page.xml" value="0.33" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/register_company_page_round_two.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/register_page.xml" value="0.33" />
+        <entry key="..\:/DEV/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/DEV/app/src/main/res/layout/bar_meu.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout/first_page.xml" value="0.2916666666666667" />
+        <entry key="..\:/DEV/app/src/main/res/menu/menu_mail.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/menu/search_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/activity_maps.xml" value="0.234375" />
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/activity_user_home_page.xml" value="0.234375" />
-        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/menu/menu_mail.xml" value="0.2" />
       </map>
     </option>
   </component>

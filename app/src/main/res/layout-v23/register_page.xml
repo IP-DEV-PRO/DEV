@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerPage_username"
-        app:layout_constraintVertical_bias="0.016" />
+        app:layout_constraintVertical_bias="0.081" />
 
     <EditText
         android:id="@+id/registerPage_username"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.118" />
+        app:layout_constraintVertical_bias="0.199" />
 
     <EditText
         android:id="@+id/Name"
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerPage_password"
-        app:layout_constraintVertical_bias="0.141" />
+        app:layout_constraintVertical_bias="0.302" />
 
     <EditText
         android:id="@+id/TelephoneNumber"
@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Name"
-        app:layout_constraintVertical_bias="0.239" />
+        app:layout_constraintVertical_bias="0.809" />
 
     <Button
         android:id="@+id/registerPage_registerButton"
@@ -80,7 +80,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.678" />
 
     <Button
         android:id="@+id/registerPage_registerCompanyButton"
