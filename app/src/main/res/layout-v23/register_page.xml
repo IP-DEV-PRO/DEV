@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerPage_username"
-        app:layout_constraintVertical_bias="0.055" />
+        app:layout_constraintVertical_bias="0.016" />
 
     <EditText
         android:id="@+id/registerPage_username"
@@ -34,7 +34,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.344" />
+        app:layout_constraintVertical_bias="0.118" />
+
+    <EditText
+        android:id="@+id/Name"
+        android:layout_width="259dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:hint="@string/enter_your_name"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/registerPage_registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerPage_password"
+        app:layout_constraintVertical_bias="0.141" />
+
+    <EditText
+        android:id="@+id/TelephoneNumber"
+        android:layout_width="259dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:hint="@string/telephone_number"
+        android:inputType="phone"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/registerPage_registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Name"
+        app:layout_constraintVertical_bias="0.239" />
 
     <Button
         android:id="@+id/registerPage_registerButton"
@@ -51,8 +80,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/registerPage_registerCompanyButton"

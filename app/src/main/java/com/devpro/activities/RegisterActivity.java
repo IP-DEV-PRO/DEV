@@ -31,12 +31,14 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "CustomAuthActivity";
 
-    EditText username, password;
+    EditText username, password, name, telephone;
     Button registerButton, registerCompanyButton;
     private DatabaseReference mDatabase;
 
     void setListenersButtons() {
-        registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString()));
+        //registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString()));
+        registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString(),
+                name.getText().toString(),telephone.getText().toString()));
         registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivity.class));
         //registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivityWithMap.class));
     }
@@ -55,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         username = findViewById(R.id.registerPage_username);
         password = findViewById(R.id.registerPage_password);
+        name = findViewById(R.id.Name);
+        telephone = findViewById(R.id.TelephoneNumber);
         registerCompanyButton = findViewById(R.id.registerPage_registerCompanyButton);
         registerButton = findViewById(R.id.registerPage_registerButton);
 
@@ -63,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
                 return true;
@@ -71,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void register(String email, String password) {
+    private void register(String email, String password, String name, String telephone) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -82,11 +86,16 @@ public class RegisterActivity extends AppCompatActivity {
                         String userId = mDatabase.push().getKey();
                         assert userId != null;
 
-                        User registeredUser = new User("", password, "", "",email);
+                        User registeredUser = new User("", password, name, telephone, email);
                         mDatabase.child(userId).setValue(registeredUser);
 
                         Log.d(TAG, "createUserWithEmail:success");
                         updateUI(user);
+                        Toast.makeText(getApplicationContext(),
+                                "Register successful!!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                        finish();
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(RegisterActivity.this, "Authentication failed.",

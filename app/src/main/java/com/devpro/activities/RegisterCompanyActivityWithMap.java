@@ -43,6 +43,7 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     private DatabaseReference mDatabase;
     private String companyKey;
 
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +85,6 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
                 user_location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             }
         }
-
-
     }
 
     @Override

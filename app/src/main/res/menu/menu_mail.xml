@@ -9,7 +9,6 @@
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom|withText" />
 
-
     <!--<item android:id="@+id/action_meu"
         android:icon="@drawable/ic_baseline_check_24"
         android:title="@string/app_name"
