@@ -31,14 +31,14 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "CustomAuthActivity";
 
-    EditText username, password, name, telephone;
+    EditText username, password, name;
     Button registerButton, registerCompanyButton;
     private DatabaseReference mDatabase;
 
     void setListenersButtons() {
         //registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString()));
         registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString(),
-                name.getText().toString(),telephone.getText().toString()));
+                name.getText().toString()));
         registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivity.class));
         //registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivityWithMap.class));
     }
@@ -58,7 +58,6 @@ public class RegisterActivity extends AppCompatActivity {
         username = findViewById(R.id.registerPage_username);
         password = findViewById(R.id.registerPage_password);
         name = findViewById(R.id.Name);
-        telephone = findViewById(R.id.TelephoneNumber);
         registerCompanyButton = findViewById(R.id.registerPage_registerCompanyButton);
         registerButton = findViewById(R.id.registerPage_registerButton);
 
@@ -75,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void register(String email, String password, String name, String telephone) {
+    private void register(String email, String password, String name) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -86,11 +85,11 @@ public class RegisterActivity extends AppCompatActivity {
                         String userId = mDatabase.push().getKey();
                         assert userId != null;
 
-                        User registeredUser = new User("", password, name, telephone, email);
+                        User registeredUser = new User(name, password, "no-last-name", "no-first-name", "no-telephone", email);
                         mDatabase.child(userId).setValue(registeredUser);
 
                         Log.d(TAG, "createUserWithEmail:success");
-                        updateUI(user);
+                        updateUI(userId);
                         Toast.makeText(getApplicationContext(),
                                 "Register successful!!",
                                 Toast.LENGTH_LONG)
@@ -121,7 +120,9 @@ public class RegisterActivity extends AppCompatActivity {
         //updateUI(currentUser);
     }
 
-    private void updateUI(FirebaseUser user) {
-        changeActiviy(RegisterUserTwo.class);
+    private void updateUI(String key) {
+        Intent myIntent = new Intent(this, RegisterUserTwo.class);
+        myIntent.putExtra("key-user", key);
+        startActivity(myIntent);
     }
 }
