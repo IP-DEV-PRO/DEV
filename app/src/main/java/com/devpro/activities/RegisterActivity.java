@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 "Register successful!!",
                                 Toast.LENGTH_LONG)
                                 .show();
-                        finish();
+                        // finish();
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(RegisterActivity.this, "Authentication failed.",
@@ -118,10 +118,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        //updateUI(currentUser);
     }
 
     private void updateUI(FirebaseUser user) {
-
+        changeActiviy(RegisterUserTwo.class);
     }
 }

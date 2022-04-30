@@ -54,6 +54,9 @@
         <activity
             android:name=".activities.RegisterCompanyActivityWithMap"
             android:exported="true" />
+        <activity
+            android:name=".activities.RegisterUserTwo"
+            android:exported="true" />
     </application>
 
 </manifest>
