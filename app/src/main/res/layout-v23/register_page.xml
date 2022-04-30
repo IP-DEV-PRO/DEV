@@ -19,11 +19,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPage_username"
+        app:layout_constraintTop_toBottomOf="@+id/registerPage_email"
         app:layout_constraintVertical_bias="0.094" />
 
     <EditText
-        android:id="@+id/registerPage_username"
+        android:id="@+id/registerPage_email"
         android:layout_width="259dp"
         android:layout_height="45dp"
         android:gravity="center"
@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.255" />
 
     <EditText
-        android:id="@+id/Name"
+        android:id="@+id/regsiterPage_username"
         android:layout_width="259dp"
         android:layout_height="45dp"
         android:gravity="center"

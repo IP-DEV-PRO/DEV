@@ -31,14 +31,14 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "CustomAuthActivity";
 
-    EditText username, password, name;
+    EditText username, password, email;
     Button registerButton, registerCompanyButton;
     private DatabaseReference mDatabase;
 
     void setListenersButtons() {
         //registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString()));
         registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString(),
-                name.getText().toString()));
+                email.getText().toString()));
         registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivity.class));
         //registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivityWithMap.class));
     }
@@ -55,9 +55,9 @@ public class RegisterActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(0xffBC3672));
 
         mAuth = FirebaseAuth.getInstance();
-        username = findViewById(R.id.registerPage_username);
+        username = findViewById(R.id.regsiterPage_username);
         password = findViewById(R.id.registerPage_password);
-        name = findViewById(R.id.Name);
+        email = findViewById(R.id.registerPage_email);
         registerCompanyButton = findViewById(R.id.registerPage_registerCompanyButton);
         registerButton = findViewById(R.id.registerPage_registerButton);
 
@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void register(String email, String password, String name) {
+    private void register(String username, String password, String email) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                         String userId = mDatabase.push().getKey();
                         assert userId != null;
 
-                        User registeredUser = new User(name, password, "no-last-name", "no-first-name", "no-telephone", email);
+                        User registeredUser = new User(username, password, "no-last-name", "no-first-name", "no-telephone", email);
                         mDatabase.child(userId).setValue(registeredUser);
 
                         Log.d(TAG, "createUserWithEmail:success");
