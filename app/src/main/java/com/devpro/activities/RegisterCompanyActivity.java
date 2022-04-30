@@ -84,8 +84,9 @@ public class RegisterCompanyActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void changeActiviy(Class activityClass) {
+    private void changeActiviy(Class activityClass, String key) {
         Intent myIntent = new Intent(this, activityClass);
+        myIntent.putExtra("key-company", key);
         startActivity(myIntent);
     }
 
@@ -100,11 +101,12 @@ public class RegisterCompanyActivity extends AppCompatActivity {
                         String companyId = mDatabase.push().getKey();
                         assert companyId != null;
 
-                        Company registeredCompany = new Company(email, password, lastName, firstName);
+                        Company registeredCompany = new Company(null, password, null, lastName, firstName,
+                                null, email, null);
                         mDatabase.child(companyId).setValue(registeredCompany);
 
                         Log.d(TAG, "createUserWithEmail:success");
-                        updateUI_Ok();
+                        updateUI_Ok(companyId);
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(RegisterCompanyActivity.this, "Authentication failed.",
@@ -117,8 +119,8 @@ public class RegisterCompanyActivity extends AppCompatActivity {
                 });
     }
 
-    private void updateUI_Ok() {
-        changeActiviy(RegisterCompanyActivityWithMap.class);
+    private void updateUI_Ok(String key) {
+        changeActiviy(RegisterCompanyActivityWithMap.class, key);
     }
 
 }

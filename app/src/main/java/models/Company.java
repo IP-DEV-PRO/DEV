@@ -1,8 +1,10 @@
 package models;
 
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @IgnoreExtraProperties
@@ -16,21 +18,34 @@ public class Company {
     private String e_mail;
     private List<Location> locationList;
 
-    public Company(String username, String password, String name, CompanyType companyType, String lastName, String firstName, String phone, String e_mail, List<Location> locationList) {
+    public Company(String username, String password, CompanyType companyType, String lastName, String firstName, String phone, String e_mail, List<Location> locationList) {
+        if (username == null ){
+            this.username = "set-username";
+        }
+        else{
+            this.username = username;
+        }
         this.username = username;
         this.password = password;
-        this.companyType = companyType;
+        if (companyType == null) {
+            this.companyType = CompanyType.NONE;
+        } else {
+            this.companyType = companyType;
+        }
         this.lastName = lastName;
         this.firstName = firstName;
-        this.locationList = locationList;
-        this.phone = phone;
-        this.e_mail = e_mail;
-    }
+        if ( locationList == null ) {
+            this.locationList = new ArrayList<>();
+            this.locationList.add(new Location(new LatLng(0,0), "no-street", "no-city", "no-country", "no-number"));
+        }else{
+            this.locationList = locationList;
+        }
 
-    public Company(String e_mail, String password, String lastName, String firstName) {
-        this.password = password;
-        this.lastName = lastName;
-        this.firstName = firstName;
+        if (phone == null) {
+            this.phone = "no-phone";
+        } else {
+            this.phone = phone;
+        }
         this.e_mail = e_mail;
     }
 

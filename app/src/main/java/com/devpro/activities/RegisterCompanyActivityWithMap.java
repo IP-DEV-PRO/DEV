@@ -3,6 +3,7 @@ package com.devpro.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -29,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterCompanyActivityWithMap extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
@@ -39,7 +41,7 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     private Location user_location;
     private Marker marker;
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+    private String companyKey;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -51,6 +53,9 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
                 .findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
+
+        Intent intent = getIntent();
+        companyKey = intent.getStringExtra("key-company");
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -174,8 +179,11 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
 
     private void setMarkerExtractLocation() {
         LatLng location_final = marker.getPosition();
-        System.out.println(FirebaseDatabase.getInstance().getReference().push().getKey());
 
+        List<models.Location> locationList = new ArrayList<>();
+        locationList.add(new models.Location(location_final, "no-street", "no-city", "no-country", "no-number"));
+
+        FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies").child(companyKey).child("locationList").setValue(locationList);
         //mDatabase = FirebaseDatabase.getInstance().getReference().child("companies").orderByChild("host").equalTo("Mike 22");
     }
 

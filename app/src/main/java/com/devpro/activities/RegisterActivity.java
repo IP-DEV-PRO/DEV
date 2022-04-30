@@ -37,8 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     void setListenersButtons() {
         registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString()));
-        //registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivity.class));
-        registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivityWithMap.class));
+        registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivity.class));
+        //registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivityWithMap.class));
     }
 
     @Override
