@@ -34,35 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
-
-    <EditText
-        android:id="@+id/Name"
-        android:layout_width="259dp"
-        android:layout_height="45dp"
-        android:gravity="center"
-        android:hint="@string/enter_your_name"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/registerPage_registerButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPage_password"
-        app:layout_constraintVertical_bias="0.238" />
-
-    <EditText
-        android:id="@+id/TelephoneNumber"
-        android:layout_width="259dp"
-        android:layout_height="45dp"
-        android:gravity="center"
-        android:hint="@string/telephone_number"
-        android:textAlignment="center"
-        android:inputType="phone"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/registerPage_registerButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Name" />
+        app:layout_constraintVertical_bias="0.344" />
 
     <Button
         android:id="@+id/registerPage_registerButton"
@@ -78,10 +50,9 @@
         android:text="@string/register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.624" />
+        app:layout_constraintVertical_bias="0.563" />
 
     <Button
         android:id="@+id/registerPage_registerCompanyButton"
@@ -98,10 +69,8 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerPage_registerButton"
-        app:layout_constraintVertical_bias="0.135" />
-
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
