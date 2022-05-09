@@ -9,10 +9,45 @@
     <string name="enter_your_first_name">Enter your first name</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
-    <string name="IAmACompany">… or register a company</string>
+    <string name="IAmACompany">Register a company</string>
     <string name="Next">Next</string>
     <string name="search">Search</string>
     <string name="telephone_number">Telephone Number</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="subscription">Subscription</string>
+    <string name="requests">Requestss</string>
+
+    <!-- Checkout activity -->
+    <string name="title_activity_payment">Payment</string>
+    <string name="checkout_item_description">Description</string>
+    <string name="googlepay_status_unavailable" translatable="false">Unfortunately, Google Pay is
+        not available on this phone.
+    </string>
+    <string name="payments_show_name" translatable="false">Successfully received payment data for
+        %s!
+    </string>
+    <string name="buy">BUY</string>
+    <string name="e_mail">e-mail</string>
+    <string name="Phone">Phone</string>
+    <string name="password">Password</string>
+    <string name="save_changes">Save changes</string>
+    <string name="pay_subscrition">Pay subscrition</string>
+    <string name="change_password">Change password?</string>
+    <string name="enter_your_new_password">Enter your new password</string>
+    <string name="card_number">Card Number</string>
+    <string name="cardholder_name">Cardholder Name</string>
+    <string name="expiration">Expiration</string>
+    <string name="cvv">CVV</string>
+    <string name="pay">PAY</string>
+    <string name="company_details">Company Details</string>
+    <string name="company_owner_last_name">Company owner last name</string>
+    <string name="company_owner_first_name">Company owner first name</string>
+    <string name="company_phone_number">Company Phone Number</string>
+    <string name="company_registration_number">Company Registration Number</string>
+    <string name="company_name">Company Name</string>
+    <string name="view_accounts">View Accounts</string>
+    <string name="view_companies">View companies</string>
+    <string name="view_requests">View requests</string>
 
 </resources>

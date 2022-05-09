@@ -83,6 +83,7 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
                 });*/
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
                 user_location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                System.out.println(user_location == null);
             }
         }
     }

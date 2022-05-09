@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,19 +19,33 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.security.Key;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+import models.User;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText username, password;
     Button loginButton;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     void setListenersButtons() {
         loginButton.setOnClickListener(view -> login(username.getText().toString(),password.getText().toString()));
     }
 
-    private void changeActiviy(Class activityClass) {
+    private void changeActiviy(Class activityClass, String userId) {
         Intent myIntent = new Intent(this, activityClass);
+        myIntent.putExtra("key-user", userId);
         startActivity(myIntent);
     }
 
@@ -51,13 +66,19 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginPage_loginButton);
         setListenersButtons();
 
+        String encrypted="";
+            try {
+                encrypted = encrypt("devadmin");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println(encrypted);
+
     }
 
-    private void login(String email, String password) {
-        System.out.println(email);
-        System.out.println(password);
+    private void login(String username, String password) {
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(username)) {
             Toast.makeText(getApplicationContext(),
                     "Please enter email!!",
                     Toast.LENGTH_LONG)
@@ -73,28 +94,72 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),
+//        mAuth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            Toast.makeText(getApplicationContext(),
+//                                    "Login successful!!",
+//                                    Toast.LENGTH_LONG)
+//                                    .show();
+//                            // if sign-in is successful
+//                            // intent to home activity
+//                            mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
+//                            String userID = mDatabase.push().getKey();
+//                            System.out.println(userID);
+//                            changeActiviy(UserHomePage.class, userID);
+//                        } else {
+//                            Toast.makeText(getApplicationContext(),
+//                                    "Login failed!!",
+//                                    Toast.LENGTH_LONG)
+//                                    .show();
+//                            finish();
+//                        }
+//                    }
+//                });
+        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
+        mDatabase.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String encrypted="";
+                if(snapshot.exists()) {
+                    try {
+                        encrypted = encrypt(password);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    String user_paswsord = snapshot.child("password").getValue().toString();
+                    if(encrypted.equals(user_paswsord))
+                    {
+                        Toast.makeText(getApplicationContext(),
                                     "Login successful!!",
                                     Toast.LENGTH_LONG)
                                     .show();
-                            // if sign-in is successful
-                            // intent to home activity
-                            changeActiviy(RegisterCompanyActivityWithMap.class);
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(),
-                                    "Login failed!!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                            finish();
-                        }
+                        if(username.equals("admin"))
+                            changeActiviy(AdminPageActivity.class,username);
+                        else
+                            changeActiviy(UserHomePage.class, username);
                     }
-                });
+                    else {
+                        Toast.makeText(getApplicationContext(),
+                                "Incorrect username/password!!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                        finish();
+                    }
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"No account with that username",Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -105,5 +170,14 @@ public class LoginActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String encrypt(String password) throws Exception{
+        Key key = new SecretKeySpec("1Hbfh667adfDEJ78".getBytes(),"AES");
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        byte [] encryptedByteValue = cipher.doFinal(password.getBytes("utf-8"));
+        String encryptedValue64 = Base64.encodeToString(encryptedByteValue, Base64.DEFAULT);
+        return encryptedValue64;
     }
 }

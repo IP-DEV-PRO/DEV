@@ -20,7 +20,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerPage_email"
-        app:layout_constraintVertical_bias="0.094" />
+        app:layout_constraintVertical_bias="0.094"
+        android:drawablePadding= "8dp"
+        android:drawableStart= "@drawable/ic_baseline_lock_24"
+        />
 
     <EditText
         android:id="@+id/registerPage_email"
@@ -34,7 +37,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.255" />
+        app:layout_constraintVertical_bias="0.255"
+        android:drawablePadding= "8dp"
+        android:drawableStart= "@drawable/ic_baseline_email_24"
+        />
 
     <EditText
         android:id="@+id/regsiterPage_username"
@@ -48,7 +54,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerPage_password"
-        app:layout_constraintVertical_bias="0.736" />
+        app:layout_constraintVertical_bias="0.736"
+        android:drawablePadding= "8dp"
+        android:drawableStart= "@drawable/ic_baseline_person_24"
+        />
 
     <Button
         android:id="@+id/registerPage_registerButton"

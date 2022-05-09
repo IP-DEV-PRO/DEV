@@ -32,6 +32,7 @@ public class RegisterUserTwo extends AppCompatActivity {
         startActivity(myIntent);
     }
 
+
     private boolean saveInDatabase() {
         String telephoneString = telephone.getText().toString();
         String lastNameString = lastName.getText().toString();
@@ -43,6 +44,7 @@ public class RegisterUserTwo extends AppCompatActivity {
         }
 
         updateUser(lastNameString, firstNameString, telephoneString, userKey);
+        changeActiviy(LoginActivity.class);
         return true;
     }
 
@@ -59,6 +61,7 @@ public class RegisterUserTwo extends AppCompatActivity {
 
         Intent intent = getIntent();
         userKey = intent.getStringExtra("key-user");
+        System.out.println(userKey);
 
         lastName = findViewById(R.id.register_user_two_lastname);
         firstName = findViewById(R.id.register_user_two_first_name);

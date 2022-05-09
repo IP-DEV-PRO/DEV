@@ -18,6 +18,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DEVPRO">
+        <activity
+            android:name=".activities.AdminPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterCompanyTwo"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PaymentActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.SubscriptionActivity" />
+        <activity
+            android:name=".activities.SubscriptionActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.UserHomePage" />
+        <activity
+            android:name=".activities.EditAccountActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.UserHomePage" />
+        <activity
+            android:name=".activities.UserHomePage"
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 

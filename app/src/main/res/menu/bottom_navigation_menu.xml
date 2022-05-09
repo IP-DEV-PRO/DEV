@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_navigation_edit"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/edit_profile"/>
+    <item
+        android:id="@+id/bottom_navigation_subscription"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/subscription"/>
+    <item
+        android:id="@+id/bottom_navigation_requests"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_assignment_turned_in_24"
+        android:title="@string/requests"/>
+</menu>

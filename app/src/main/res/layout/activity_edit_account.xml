@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EditAccountActivity">
+
+    <EditText
+        android:id="@+id/edit_account_telephone"
+        android:layout_width="220dp"
+        android:layout_height="68dp"
+        android:drawableStart="@drawable/ic_baseline_phone_24"
+        android:gravity="center"
+        android:hint="@string/Phone"
+        android:text="@string/Phone"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_account_email"
+        app:layout_constraintVertical_bias="0.025" />
+
+    <EditText
+        android:id="@+id/edit_account_password"
+        android:layout_width="261dp"
+        android:layout_height="57dp"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:hint="@string/enter_your_new_password"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_account_telephone"
+        app:layout_constraintVertical_bias="0.341" />
+
+    <EditText
+        android:id="@+id/edit_account_email"
+        android:layout_width="220dp"
+        android:layout_height="68dp"
+        android:drawableStart="@drawable/ic_baseline_email_24"
+        android:gravity="center"
+        android:hint="@string/e_mail"
+        android:text="@string/e_mail"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.125" />
+
+    <TextView
+        android:id="@+id/edit_account_change_pass"
+        android:layout_width="207dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/change_password"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_account_telephone"
+        app:layout_constraintVertical_bias="0.58" />
+
+
+    <Button
+        android:id="@+id/edit_account_save"
+        android:layout_width="229dp"
+        android:layout_height="54dp"
+        android:text="@string/save_changes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_account_password"
+        app:layout_constraintVertical_bias="0.844" />
+
+    <RadioGroup
+        android:id="@+id/edit_account_radioGroup"
+        android:layout_width="147dp"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/edit_account_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_account_telephone"
+        app:layout_constraintVertical_bias="0.806">
+
+        <RadioButton
+            android:id="@+id/edit_account_yes"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:text="Yes" />
+
+        <RadioButton
+            android:id="@+id/edit_account_no"
+            android:layout_width="71dp"
+            android:layout_height="wrap_content"
+            android:text="No" />
+
+    </RadioGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
