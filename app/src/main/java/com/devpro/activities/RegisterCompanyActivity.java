@@ -26,7 +26,7 @@ import models.Company;
 import models.User;
 
 public class RegisterCompanyActivity extends AppCompatActivity {
-    EditText email, password, lastName, firstName;
+    /*EditText email, password, lastName, firstName;
     Button nextButton;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -122,5 +122,5 @@ public class RegisterCompanyActivity extends AppCompatActivity {
     private void updateUI_Ok(String key) {
         changeActiviy(RegisterCompanyActivityWithMap.class, key);
     }
-
+*/
 }

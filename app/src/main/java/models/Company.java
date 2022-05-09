@@ -10,23 +10,20 @@ import java.util.List;
 @IgnoreExtraProperties
 public class Company {
     private String username;
-    private String password;
     private CompanyType companyType;
     private String lastName;
     private String firstName;
     private String phone;
-    private String e_mail;
+    private String cui;
     private List<Location> locationList;
 
-    public Company(String username, String password, CompanyType companyType, String lastName, String firstName, String phone, String e_mail, List<Location> locationList) {
-        if (username == null ){
+    public Company(String username, CompanyType companyType, String cui, String lastName, String firstName, String phone, List<Location> locationList) {
+        if (username == null) {
             this.username = "set-username";
-        }
-        else{
+        } else {
             this.username = username;
         }
         this.username = username;
-        this.password = password;
         if (companyType == null) {
             this.companyType = CompanyType.NONE;
         } else {
@@ -34,10 +31,10 @@ public class Company {
         }
         this.lastName = lastName;
         this.firstName = firstName;
-        if ( locationList == null ) {
+        if (locationList == null) {
             this.locationList = new ArrayList<>();
-            this.locationList.add(new Location(new LatLng(0,0), "no-street", "no-city", "no-country", "no-number"));
-        }else{
+            this.locationList.add(new Location(new LatLng(0, 0), "no-street", "no-city", "no-country", "no-number"));
+        } else {
             this.locationList = locationList;
         }
 
@@ -46,7 +43,8 @@ public class Company {
         } else {
             this.phone = phone;
         }
-        this.e_mail = e_mail;
+
+        this.cui = cui;
     }
 
     public String getUsername() {
@@ -55,14 +53,6 @@ public class Company {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public CompanyType getCompanyType() {
@@ -75,6 +65,14 @@ public class Company {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getCui() {
+        return cui;
+    }
+
+    public void setCui(String cui) {
+        this.cui = cui;
     }
 
     public void setLastName(String lastName) {
@@ -95,14 +93,6 @@ public class Company {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getE_mail() {
-        return e_mail;
-    }
-
-    public void setE_mail(String e_mail) {
-        this.e_mail = e_mail;
     }
 
     public List<Location> getLocationList() {

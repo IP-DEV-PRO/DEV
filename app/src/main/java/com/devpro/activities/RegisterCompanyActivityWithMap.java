@@ -9,7 +9,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Choreographer;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -33,6 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Company;
+
 public class RegisterCompanyActivityWithMap extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap;
@@ -42,7 +46,7 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     private Marker marker;
     private DatabaseReference mDatabase;
     private String companyKey;
-
+    private String name, cui, first, last, phone;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -56,7 +60,11 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
-        companyKey = intent.getStringExtra("key-company");
+        name = intent.getStringExtra("name");
+        cui = intent.getStringExtra("cui");
+        first = intent.getStringExtra("first");
+        last = intent.getStringExtra("last");
+        phone = intent.getStringExtra("phone");
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -83,18 +91,19 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
                 });*/
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
                 user_location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                System.out.println(user_location == null);
             }
         }
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        System.out.println("UITE 134");
         user_location = location;
     }
 
     private boolean checkPermissions() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         // If we want background location
         // on Android 10.0 and higher,
@@ -157,6 +166,18 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
                         .draggable(true));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng, 12.0f));
 
+                mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+                    @Override
+                    public void onCameraMove() {
+                        LatLng now = mMap.getCameraPosition().target;
+                        marker.setPosition(now);
+                    }
+                });
+
+//                mMap.setOnCameraMoveStartedListener(i -> {
+//                    LatLng now1 = mMap.getCameraPosition().target;
+//                    marker.setPosition(now1);
+//                });
                 //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             }
         }
@@ -183,15 +204,29 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         List<models.Location> locationList = new ArrayList<>();
         locationList.add(new models.Location(location_final, "no-street", "no-city", "no-country", "no-number"));
 
-        FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies").child(companyKey).child("locationList").setValue(locationList);
+        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies");
+
+        Company registeredCompany = new Company(name,  null, cui, last,
+                first, phone, locationList);
+        mDatabase.child(name).setValue(registeredCompany);
+        //FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies").child(companyKey).child("locationList").setValue(locationList);
+       // mDatabase.child(username).setValue(registeredUser);
         //mDatabase = FirebaseDatabase.getInstance().getReference().child("companies").orderByChild("host").equalTo("Mike 22");
+    }
+
+
+
+    private void changeActiviy(Class activityClass, String key) {
+        //Intent myIntent = new Intent(this, activityClass);
+       // myIntent.putExtra("key-company", key);
+      //  startActivity(myIntent);
     }
 
     @Override
     public void onLocationChanged(@NonNull List<Location> locations) {
         LatLng now = mMap.getCameraPosition().target;
         marker.setPosition(now);
-
+        System.out.println("UITE" + now);
         LocationListener.super.onLocationChanged(locations);
     }
 
@@ -202,21 +237,31 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+        System.out.println("UITE2");
+
         LocationListener.super.onStatusChanged(provider, status, extras);
     }
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
+        System.out.println("UITE3");
+
+
         LocationListener.super.onProviderEnabled(provider);
     }
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
+        System.out.println("UITE4");
+
+
         LocationListener.super.onProviderDisabled(provider);
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+        System.out.println("UITE5");
+
         super.onPointerCaptureChanged(hasCapture);
     }
 }

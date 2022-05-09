@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeActiviy(RegisterActivity.class);
+                //changeActiviy(RegisterCompanyActivityWithMap.class);
             }
         });
 

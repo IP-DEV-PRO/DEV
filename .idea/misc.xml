@@ -3,6 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/activity_bar_map.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/login_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/register_company_choose_location.xml" value="0.25" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/register_company_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/register_page.xml" value="0.17291666666666666" />
+        <entry key="..\:/DEV/app/src/main/res/layout-v23/register_user_two.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout/activity_admin_page.xml" value="0.33" />
+        <entry key="..\:/DEV/app/src/main/res/layout/activity_edit_account.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/DEV/app/src/main/res/layout/activity_payment.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout/activity_register_company_two.xml" value="0.25" />
+        <entry key="..\:/DEV/app/src/main/res/layout/activity_subscription.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/layout/activity_user_home_page.xml" value="0.25" />
+        <entry key="..\:/DEV/app/src/main/res/layout/admin_toolbar.xml" value="0.36666666666666664" />
+        <entry key="..\:/DEV/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.21145833333333333" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/drawable/googlepay_button_background.xml" value="0.1335" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.1" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.2555" />

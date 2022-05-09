@@ -6,13 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".activities.UserHomePage">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/usermap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_navigation"
+        tools:context=".activities.UserHomePage" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/usermap"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation_menu"
-        android:background="?android:attr/windowBackground"/>
+        android:layout_marginTop="675dp"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>
