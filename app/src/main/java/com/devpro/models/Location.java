@@ -1,6 +1,8 @@
 package com.devpro.models;
 
 
+import com.devpro.models.LatLng;
+
 public class Location {
     private LatLng location;
     private String street;

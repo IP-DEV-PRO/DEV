@@ -44,7 +44,6 @@ public class Company {
         } else {
             this.phone = phone;
         }
-
         this.cui = cui;
     }
 

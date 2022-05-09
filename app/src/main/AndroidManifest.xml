@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DEVPRO">
         <activity
+            android:name=".activities.AdminUserDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AdminPageActivity"
             android:exported="false" />
         <activity

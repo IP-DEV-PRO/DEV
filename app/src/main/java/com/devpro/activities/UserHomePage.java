@@ -230,7 +230,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                             assert company != null;
                             for (com.devpro.models.Location location : company.getLocationList()) {
                                 Marker marker_company = mMap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(location.getLocation().getLatitude(), location.getLocation().getLongitude()))
+                                        .position(new com.google.android.gms.maps.model.LatLng(location.getLocation().getLatitude(), location.getLocation().getLongitude()))
                                         .title(company.getUsername())
                                         .draggable(true));
 

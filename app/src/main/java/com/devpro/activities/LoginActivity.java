@@ -117,36 +117,47 @@ public class LoginActivity extends AppCompatActivity {
         mDatabase.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String encrypted="";
-                if(snapshot.exists()) {
-                    try {
-                        encrypted = encrypt(password);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    String user_paswsord = snapshot.child("password").getValue().toString();
-                    if(encrypted.equals(user_paswsord))
-                    {
-                        Toast.makeText(getApplicationContext(),
+
+                boolean blocked = false;
+                if(!username.equals("admin"))
+                    blocked = Boolean.parseBoolean(snapshot.child("blocked").getValue().toString());
+                if(blocked)
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "Account banned. FUCK YOUl!!",
+                            Toast.LENGTH_LONG)
+                            .show();
+                    changeActiviy(MainActivity.class, username);
+                }
+                else {
+                    String encrypted = "";
+                    if (snapshot.exists()) {
+                        try {
+                            encrypted = encrypt(password);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        String user_paswsord = snapshot.child("password").getValue().toString();
+                        if (encrypted.equals(user_paswsord)) {
+                            Toast.makeText(getApplicationContext(),
                                     "Login successful!!",
                                     Toast.LENGTH_LONG)
                                     .show();
-                        if(username.equals("admin"))
-                            changeActiviy(AdminPageActivity.class,username);
-                        else
-                            changeActiviy(UserHomePage.class, username);
+                            if (username.equals("admin"))
+                                changeActiviy(AdminPageActivity.class, username);
+                            else
+                                changeActiviy(UserHomePage.class, username);
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    "Incorrect username/password!!",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                            changeActiviy(MainActivity.class, username);
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No account with that username", Toast.LENGTH_LONG).show();
+                        changeActiviy(MainActivity.class, username);
                     }
-                    else {
-                        Toast.makeText(getApplicationContext(),
-                                "Incorrect username/password!!",
-                                Toast.LENGTH_LONG)
-                                .show();
-                        finish();
-                    }
-                }
-                else {
-                    Toast.makeText(getApplicationContext(),"No account with that username",Toast.LENGTH_LONG).show();
-                    finish();
                 }
             }
 

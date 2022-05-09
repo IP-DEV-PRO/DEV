@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,18 +45,18 @@ public class AdminPageActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Admin Page");
-
+        actionBar.setBackgroundDrawable(new ColorDrawable(0xFF3F51B5));
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         usersLV = findViewById(R.id.admin_page_list);
         userArray = new ArrayList<String>();
         user =  new User();
         userArrayAdapter = new ArrayAdapter( this, android.R.layout.simple_list_item_1,userArray);
-        usersLV.setAdapter(userArrayAdapter);
 
         usersLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                changeActiviy(AdminUserDetailsActivity.class, userArray.get(i));
                 Toast.makeText(getApplicationContext(),userArray.get(i)+"",Toast.LENGTH_LONG).show();
             }
         });
@@ -66,7 +67,7 @@ public class AdminPageActivity extends AppCompatActivity {
                 for(DataSnapshot ds:snapshot.getChildren())
                 {
                     user = ds.getValue(User.class);
-                    userArray.add("Username " + user.getUsername());
+                    userArray.add(user.getUsername());
                 }
                 usersLV.setAdapter(userArrayAdapter);
             }
