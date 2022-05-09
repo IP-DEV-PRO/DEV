@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.User;
+import com.devpro.models.User;
 
 public class AdminPageActivity extends AppCompatActivity {
 

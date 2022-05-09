@@ -1,10 +1,6 @@
-package models;
+package com.devpro.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @IgnoreExtraProperties
 public class User {

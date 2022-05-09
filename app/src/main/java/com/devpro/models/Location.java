@@ -1,6 +1,5 @@
-package models;
+package com.devpro.models;
 
-import com.google.android.gms.maps.model.LatLng;
 
 public class Location {
     private LatLng location;
@@ -8,6 +7,10 @@ public class Location {
     private String city;
     private String country;
     private String number;
+
+    public Location () {
+        location = new LatLng(0, 0);
+    }
 
     public Location(LatLng location, String street, String city, String country, String number) {
         this.location = location;

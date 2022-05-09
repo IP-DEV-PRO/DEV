@@ -1,7 +1,6 @@
-package models;
+package com.devpro.models;
 
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
@@ -16,6 +15,8 @@ public class Company {
     private String phone;
     private String cui;
     private List<Location> locationList;
+
+    public Company() {}
 
     public Company(String username, CompanyType companyType, String cui, String lastName, String firstName, String phone, List<Location> locationList) {
         if (username == null) {

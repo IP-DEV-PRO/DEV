@@ -10,10 +10,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Choreographer;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,17 +27,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
+import com.devpro.models.*;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import models.Company;
+import com.devpro.models.Company;
 
 public class RegisterCompanyActivityWithMap extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
@@ -215,18 +212,19 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
                 mMap.setMyLocationEnabled(true);
                 LatLng user_latlng = new LatLng(user_location.getLatitude(), user_location.getLongitude());
 //                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12.0f));
-                LatLng now = googleMap.getCameraPosition().target;
+                com.google.android.gms.maps.model.LatLng now = googleMap.getCameraPosition().target;
+                com.google.android.gms.maps.model.LatLng user_latlng_google = new com.google.android.gms.maps.model.LatLng(user_latlng.getLatitude(), user_latlng.getLongitude());
 
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(user_latlng)
+                        .position(user_latlng_google)
                         .title("Mark your location")
                         .draggable(true));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng, 12.0f));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng_google, 12.0f));
 
                 mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
                     @Override
                     public void onCameraMove() {
-                        LatLng now = mMap.getCameraPosition().target;
+                        com.google.android.gms.maps.model.LatLng now = mMap.getCameraPosition().target;
                         marker.setPosition(now);
                     }
                 });
@@ -256,10 +254,10 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     }
 
     private void setMarkerExtractLocation() {
-        LatLng location_final = marker.getPosition();
+        com.google.android.gms.maps.model.LatLng location_final = marker.getPosition();
 
-        List<models.Location> locationList = new ArrayList<>();
-        locationList.add(new models.Location(location_final, "no-street", "no-city", "no-country", "no-number"));
+        List<com.devpro.models.Location> locationList = new ArrayList<>();
+        locationList.add(new com.devpro.models.Location(new LatLng(location_final.latitude, location_final.longitude), "no-street", "no-city", "no-country", "no-number"));
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies");
 
@@ -280,7 +278,7 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
 
     @Override
     public void onLocationChanged(@NonNull List<Location> locations) {
-        LatLng now = mMap.getCameraPosition().target;
+        com.google.android.gms.maps.model.LatLng now = mMap.getCameraPosition().target;
         marker.setPosition(now);
         System.out.println("UITE" + now);
         LocationListener.super.onLocationChanged(locations);

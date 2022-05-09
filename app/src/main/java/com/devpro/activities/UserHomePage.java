@@ -16,8 +16,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -31,9 +34,11 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.devpro.models.Company;
 
 public class UserHomePage extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
@@ -45,6 +50,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
     private LocationManager locationManager;
     private Location user_location;
     static String userId;
+    private ArrayList<Marker> markerArrayList;
 
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -86,7 +92,11 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         System.out.println(userId);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
+        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies");
+
+        markerArrayList = new ArrayList<>();
+
+
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -108,7 +118,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (checkPermissions()) {
-            System.out.println("A INTRAT");
             // check if location is enabled
             if (isLocationEnabled()) {
                 /*FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);;
@@ -124,7 +133,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
                 user_location = getLastKnownLocation();
-                System.out.println("LOCATIE ->> " + user_location);
             }
         }
     }
@@ -151,7 +159,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
 
-        System.out.println("OHOHOHO");
         return bestLocation;
     }
 
@@ -213,15 +220,30 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                         .title("Mark your location")
                         .draggable(true));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng, 12.0f));
-                System.out.println("iojjoijjo");
-                mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onCameraMove() {
-                        LatLng now = mMap.getCameraPosition().target;
-                        marker.setPosition(now);
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot ds:snapshot.getChildren()) {
+                            Company company = ds.getValue(Company.class);
+
+                            assert company != null;
+                            for (com.devpro.models.Location location : company.getLocationList()) {
+                                Marker marker_company = mMap.addMarker(new MarkerOptions()
+                                        .position(new LatLng(location.getLocation().getLatitude(), location.getLocation().getLongitude()))
+                                        .title(company.getUsername())
+                                        .draggable(true));
+
+                                markerArrayList.add(marker_company);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
-
 //                mMap.setOnCameraMoveStartedListener(i -> {
 //                    LatLng now1 = mMap.getCameraPosition().target;
 //                    marker.setPosition(now1);
