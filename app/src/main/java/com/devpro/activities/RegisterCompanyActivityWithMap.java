@@ -2,6 +2,7 @@ package com.devpro.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,12 +11,15 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Choreographer;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -48,6 +52,27 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     private String companyKey;
     private String name, cui, first, last, phone;
 
+    private static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.INTERNET
+    };
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private static final String[] PERMISSIONS_API = new String[]{
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+    };
+
+    public static void requestPermissionLocation(Activity activity, int requestCode) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
+            ActivityCompat.requestPermissions(activity, PERMISSIONS, requestCode);
+        else
+            ActivityCompat.requestPermissions(activity, PERMISSIONS_API, requestCode);
+    }
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +97,12 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         actionBar.setTitle("Add your location");
         actionBar.setBackgroundDrawable(new ColorDrawable(0xff0BCF5C));
 
-        requestPermissions();
+        //requestPermissions();
+        requestPermissionLocation(this, PERMISSION_ID);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (checkPermissions()) {
-
+            System.out.println("A INTRAT");
             // check if location is enabled
             if (isLocationEnabled()) {
                 /*FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);;
@@ -89,10 +115,33 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
                         longitTextView.setText(location.getLongitude() + "");
                     }
                 });*/
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                user_location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                user_location = getLastKnownLocation();
+                System.out.println("LOCATIE ->> " + user_location);
             }
         }
+    }
+
+    @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+    private Location getLastKnownLocation() {
+        List<String> providers = locationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+
+
+            Location l = locationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+
+        System.out.println("OHOHOHO");
+        return bestLocation;
     }
 
     @Override
@@ -102,8 +151,16 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     }
 
     private boolean checkPermissions() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        }
 
         // If we want background location
         // on Android 10.0 and higher,
@@ -206,20 +263,19 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies");
 
-        Company registeredCompany = new Company(name,  null, cui, last,
+        Company registeredCompany = new Company(name, null, cui, last,
                 first, phone, locationList);
         mDatabase.child(name).setValue(registeredCompany);
         //FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies").child(companyKey).child("locationList").setValue(locationList);
-       // mDatabase.child(username).setValue(registeredUser);
+        // mDatabase.child(username).setValue(registeredUser);
         //mDatabase = FirebaseDatabase.getInstance().getReference().child("companies").orderByChild("host").equalTo("Mike 22");
     }
 
 
-
     private void changeActiviy(Class activityClass, String key) {
         //Intent myIntent = new Intent(this, activityClass);
-       // myIntent.putExtra("key-company", key);
-      //  startActivity(myIntent);
+        // myIntent.putExtra("key-company", key);
+        //  startActivity(myIntent);
     }
 
     @Override
