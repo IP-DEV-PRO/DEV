@@ -1,23 +1,74 @@
 package com.devpro.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.devpro.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class UserHomePage extends AppCompatActivity {
+import java.util.List;
+
+public class UserHomePage extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
     private BottomNavigationView bottomNavigationView;
     private DatabaseReference mDatabase;
+    int PERMISSION_ID = 2; //44
+    private GoogleMap mMap;
+    private Marker marker;
+    private LocationManager locationManager;
+    private Location user_location;
     static String userId;
+
+    private static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.INTERNET
+    };
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private static final String[] PERMISSIONS_API = new String[]{
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+    };
+
+    public static void requestPermissionLocation(Activity activity, int requestCode) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
+            ActivityCompat.requestPermissions(activity, PERMISSIONS, requestCode);
+        else
+            ActivityCompat.requestPermissions(activity, PERMISSIONS_API, requestCode);
+    }
+
+
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +77,10 @@ public class UserHomePage extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setTitle("");
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
 
         userId = getIntent().getStringExtra("key-user");
         System.out.println(userId);
@@ -48,6 +103,56 @@ public class UserHomePage extends AppCompatActivity {
                 return false;
             }
         });
+
+        requestPermissions();
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (checkPermissions()) {
+            System.out.println("A INTRAT");
+            // check if location is enabled
+            if (isLocationEnabled()) {
+                /*FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);;
+                mFusedLocationClient.getLastLocation().addOnCompleteListener(task -> {
+                    Location location = task.getResult();
+                    if (location == null) {
+                        requestNewLocationData();
+                    } else {
+                        latitudeTextView.setText(location.getLatitude() + "");
+                        longitTextView.setText(location.getLongitude() + "");
+                    }
+                });*/
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                user_location = getLastKnownLocation();
+                System.out.println("LOCATIE ->> " + user_location);
+            }
+        }
+    }
+
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    @RequiresPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+    private Location getLastKnownLocation() {
+        List<String> providers = locationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+
+
+            Location l = locationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+
+        System.out.println("OHOHOHO");
+        return bestLocation;
     }
 
     private void changeActiviy(Class activityClass, String userId) {
@@ -56,4 +161,94 @@ public class UserHomePage extends AppCompatActivity {
         startActivity(myIntent);
     }
 
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull List<Location> locations) {
+        LocationListener.super.onLocationChanged(locations);
+    }
+
+    @Override
+    public void onFlushComplete(int requestCode) {
+        LocationListener.super.onFlushComplete(requestCode);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        LocationListener.super.onStatusChanged(provider, status, extras);
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        LocationListener.super.onProviderDisabled(provider);
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        requestPermissions();
+        if (checkPermissions()) {
+
+            // check if location is enabled
+            if (isLocationEnabled()) {
+                //user_location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                mMap.setMyLocationEnabled(true);
+                LatLng user_latlng = new LatLng(user_location.getLatitude(), user_location.getLongitude());
+//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12.0f));
+                LatLng now = googleMap.getCameraPosition().target;
+
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(user_latlng)
+                        .title("Mark your location")
+                        .draggable(true));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng, 12.0f));
+                System.out.println("iojjoijjo");
+                mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+                    @Override
+                    public void onCameraMove() {
+                        LatLng now = mMap.getCameraPosition().target;
+                        marker.setPosition(now);
+                    }
+                });
+
+//                mMap.setOnCameraMoveStartedListener(i -> {
+//                    LatLng now1 = mMap.getCameraPosition().target;
+//                    marker.setPosition(now1);
+//                });
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            }
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
+    }
+
+    private boolean checkPermissions() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        // If we want background location
+        // on Android 10.0 and higher,
+        // use:
+        // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
 }
