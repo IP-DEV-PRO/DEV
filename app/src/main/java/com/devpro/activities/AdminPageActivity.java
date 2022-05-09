@@ -67,7 +67,9 @@ public class AdminPageActivity extends AppCompatActivity {
                 for(DataSnapshot ds:snapshot.getChildren())
                 {
                     user = ds.getValue(User.class);
-                    userArray.add(user.getUsername());
+                    String username = user.getUsername();
+                    if(!username.equals("admin"))
+                        userArray.add(user.getUsername());
                 }
                 usersLV.setAdapter(userArrayAdapter);
             }
