@@ -165,7 +165,17 @@ public class RegisterActivity extends AppCompatActivity {
                             {
                                 registeredUser = new User(username, encrypted, "-", "-", "-",
                                         email, "-", "-", false, false);
-                                mDatabase.child(username).setValue(registeredUser);
+                                //mDatabase.child(username).setValue(registeredUser);
+                                mDatabase.child(username).child("username").setValue(username);
+                                mDatabase.child(username).child("password").setValue(encrypted);
+                                mDatabase.child(username).child("firstName").setValue("-");
+                                mDatabase.child(username).child("lastName").setValue("-");
+                                mDatabase.child(username).child("phone").setValue("-");
+                                mDatabase.child(username).child("e_mail").setValue(email);
+                                mDatabase.child(username).child("sub_start").setValue("-");
+                                mDatabase.child(username).child("sub_exp").setValue("-");
+                                mDatabase.child(username).child("sub_active").setValue(false);
+                                mDatabase.child(username).child("companyAdmin").setValue(false);
                                 mDatabase.child(username).child("reg_date").setValue(date);
                                 mDatabase.child(username).child("blocked").setValue(false);
                                 Toast.makeText(getApplicationContext(),
@@ -174,9 +184,14 @@ public class RegisterActivity extends AppCompatActivity {
                                         .show();
                                 changeActiviy(RegisterUserTwo.class, username);
                             }
-                            else{
-                                registeredUser = new User(username, encrypted,"-","-","-", email,true);
-                                mDatabase.child(username).setValue(registeredUser);
+                            else {
+                                //registeredUser = new User(username, encrypted,"-","-","-", email,true);
+                                //mDatabase.child(username).setValue(registeredUser);
+                                mDatabase.child(username).child("username").setValue(username);
+                                mDatabase.child(username).child("password").setValue(encrypted);
+                                mDatabase.child(username).child("e_mail").setValue(email);
+                                mDatabase.child(username).child("companyName").setValue("-");
+                                mDatabase.child(username).child("companyAdmin").setValue(true);
                                 mDatabase.child(username).child("reg_date").setValue(date);
                                 mDatabase.child(username).child("blocked").setValue(false);
                                 changeActiviy(RegisterCompanyTwo.class, username);

@@ -54,9 +54,9 @@ public class SubscriptionActivity extends AppCompatActivity {
                 String first_name = snapshot.child("firstName").getValue().toString();
                 String last_name = snapshot.child("lastName").getValue().toString();
                 fullname_text.setText("Name: " + first_name + " " + last_name);
-                boolean active = Boolean.parseBoolean(snapshot.child("activesub").getValue().toString());
-                String start =  snapshot.child("start").getValue().toString();
-                String end =  snapshot.child("expiration").getValue().toString();
+                boolean active = Boolean.parseBoolean(snapshot.child("sub_active").getValue().toString());
+                String start =  snapshot.child("sub_start").getValue().toString();
+                String end =  snapshot.child("sub_exp").getValue().toString();
                 if(active) {
                         active_text.setText("Subscription is paid");
                         start_text.setText("Start date is " + start);

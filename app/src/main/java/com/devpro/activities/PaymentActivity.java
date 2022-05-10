@@ -67,21 +67,21 @@ public class PaymentActivity extends AppCompatActivity {
                     else
                     {
                         Toast.makeText(getApplicationContext(),"Your payment was successful!",Toast.LENGTH_LONG).show();
-                        mDatabase.child(userId).child("activesub").setValue(true);
+                        mDatabase.child(userId).child("sub_active").setValue(true);
                         year += 2000;
-                        mDatabase.child(userId).child("start").setValue(day+"-"+month+"-"+year);
+                        mDatabase.child(userId).child("sub_start").setValue(day+"-"+month+"-"+year);
                         month++;
-                        mDatabase.child(userId).child("expiration").setValue(day+"-"+month+"-"+year);
+                        mDatabase.child(userId).child("sub_exp").setValue(day+"-"+month+"-"+year);
                         changeActiviy(SubscriptionActivity.class,userId);
                     }
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"Your payment was successful!",Toast.LENGTH_LONG).show();
-                    mDatabase.child(userId).child("activesub").setValue(true);
+                    mDatabase.child(userId).child("sub_active").setValue(true);
                     year += 2000;
-                    mDatabase.child(userId).child("start").setValue(day+"-"+month+"-"+year);
+                    mDatabase.child(userId).child("sub_start").setValue(day+"-"+month+"-"+year);
                     month++;
-                    mDatabase.child(userId).child("expiration").setValue(day+"-"+month+"-"+year);
+                    mDatabase.child(userId).child("sub_exp").setValue(day+"-"+month+"-"+year);
                     changeActiviy(SubscriptionActivity.class,userId);
                 }
             }

@@ -32,9 +32,68 @@ public class AdminPageActivity extends AppCompatActivity {
 
     ListView usersLV;
     private DatabaseReference mDatabase;
-    List<String> userArray;
-    ArrayAdapter<String> userArrayAdapter;
-    User user;
+
+    void viewAccounts()
+    {
+        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
+        List<String> userArray = new ArrayList<String>();
+        ArrayAdapter<String> userArrayAdapter = new ArrayAdapter( this, android.R.layout.simple_list_item_1,userArray);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds:snapshot.getChildren())
+                {
+                  String username = ds.getKey();
+                    if(!username.equals("admin"))
+                        userArray.add(username);
+                }
+                usersLV.setAdapter(userArrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        usersLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                changeActiviy(AdminUserDetailsActivity.class, userArray.get(i));
+                Toast.makeText(getApplicationContext(),userArray.get(i)+"",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    void viewRequests()
+    {
+        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
+        List<String> reqArray = new ArrayList<String>();
+        ArrayAdapter<String> reqArrayAdapter = new ArrayAdapter( this, android.R.layout.simple_list_item_1, reqArray);
+        mDatabase.child("admin").child("requests").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds:snapshot.getChildren())
+                {
+                    String companyName = ds.child("company_name").getValue().toString();
+                    reqArray.add(companyName);
+                }
+                usersLV.setAdapter(reqArrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        usersLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //changeActiviy(AdminUserDetailsActivity.class, reqArray.get(i));
+                Toast.makeText(getApplicationContext(),reqArray.get(i)+"",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,39 +106,11 @@ public class AdminPageActivity extends AppCompatActivity {
         actionBar.setTitle("Admin Page");
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFF3F51B5));
 
-        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         usersLV = findViewById(R.id.admin_page_list);
-        userArray = new ArrayList<String>();
-        user =  new User();
-        userArrayAdapter = new ArrayAdapter( this, android.R.layout.simple_list_item_1,userArray);
 
-        usersLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                changeActiviy(AdminUserDetailsActivity.class, userArray.get(i));
-                Toast.makeText(getApplicationContext(),userArray.get(i)+"",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds:snapshot.getChildren())
-                {
-                    user = ds.getValue(User.class);
-                    String username = user.getUsername();
-                    if(!username.equals("admin"))
-                        userArray.add(user.getUsername());
-                }
-                usersLV.setAdapter(userArrayAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        viewAccounts();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,12 +127,14 @@ public class AdminPageActivity extends AppCompatActivity {
                 return true;
             case R.id.admin_menu_accounts:
                 Toast.makeText(getApplicationContext(),"Accounts",Toast.LENGTH_LONG).show();
+                viewAccounts();
                 return true;
             case R.id.admin_menu_companies:
                 Toast.makeText(getApplicationContext(),"Companies",Toast.LENGTH_LONG).show();
                 return true;
             case R.id.admin_menu_requests:
                 Toast.makeText(getApplicationContext(),"Requests",Toast.LENGTH_LONG).show();
+                viewRequests();
                 return true;
         }
         return super.onOptionsItemSelected(item);

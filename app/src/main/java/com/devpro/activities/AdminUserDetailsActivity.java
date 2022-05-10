@@ -48,20 +48,33 @@ public class AdminUserDetailsActivity extends AppCompatActivity {
         mDatabase.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String firstName = snapshot.child("firstName").getValue().toString();
-                String lastName = snapshot.child("lastName").getValue().toString();
-                String email = snapshot.child("e_mail").getValue().toString();
-                String phone = snapshot.child("phone").getValue().toString();
-                String reg_date = snapshot.child("reg_date").getValue().toString();
-                boolean active = Boolean.parseBoolean(snapshot.child("activesub").getValue().toString());
-                fullname_text.setText("Full name: " + firstName + " " + lastName);
-                email_text.setText("E-mail: " + email);
-                phone_text.setText("Phone: " + phone);
-                if(active)
-                    sub_text.setText("User has active subscription");
-                else
-                    sub_text.setText("No subscription");
-                date_text.setText("Registration date: " + reg_date);
+
+                boolean companyAdmin = Boolean.parseBoolean(snapshot.child("companyAdmin").getValue().toString());
+                if(!companyAdmin) {
+                    String firstName = snapshot.child("firstName").getValue().toString();
+                    String lastName = snapshot.child("lastName").getValue().toString();
+                    String email = snapshot.child("e_mail").getValue().toString();
+                    String phone = snapshot.child("phone").getValue().toString();
+                    boolean active = Boolean.parseBoolean(snapshot.child("sub_active").getValue().toString());
+                    fullname_text.setText("Full name: " + firstName + " " + lastName);
+                    email_text.setText("E-mail: " + email);
+                    phone_text.setText("Phone: " + phone);
+                    if (active)
+                        sub_text.setText("User has active subscription");
+                    else
+                        sub_text.setText("No subscription");
+                    String reg_date = snapshot.child("reg_date").getValue().toString();
+                    date_text.setText("Registration date: " + reg_date);
+                }
+                else {
+                    String email = snapshot.child("e_mail").getValue().toString();
+                    email_text.setText("E-mail: " + email);
+                    String companyName = snapshot.child("companyName").getValue().toString();
+                    phone_text.setText("Company name: " + companyName);
+                    String reg_date = snapshot.child("reg_date").getValue().toString();
+                    sub_text.setText("Registration date: " + reg_date);
+
+                }
             }
 
             @Override

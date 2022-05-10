@@ -173,7 +173,8 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                this.finish();
+                Intent myIntent = new Intent(this, MainActivity.class);
+                startActivity(myIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
