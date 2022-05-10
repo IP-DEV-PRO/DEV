@@ -221,12 +221,9 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
                         .draggable(true));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng_google, 12.0f));
 
-                mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
-                    @Override
-                    public void onCameraMove() {
-                        com.google.android.gms.maps.model.LatLng now = mMap.getCameraPosition().target;
-                        marker.setPosition(now);
-                    }
+                mMap.setOnCameraMoveListener(() -> {
+                    com.google.android.gms.maps.model.LatLng now1 = mMap.getCameraPosition().target;
+                    marker.setPosition(now1);
                 });
 
 //                mMap.setOnCameraMoveStartedListener(i -> {
@@ -267,13 +264,14 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         //FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies").child(companyKey).child("locationList").setValue(locationList);
         // mDatabase.child(username).setValue(registeredUser);
         //mDatabase = FirebaseDatabase.getInstance().getReference().child("companies").orderByChild("host").equalTo("Mike 22");
+        changeActiviy(AddCompanyProfilePicture.class, name);
     }
 
 
     private void changeActiviy(Class activityClass, String key) {
-        //Intent myIntent = new Intent(this, activityClass);
-        // myIntent.putExtra("key-company", key);
-        //  startActivity(myIntent);
+        Intent myIntent = new Intent(this, activityClass);
+        myIntent.putExtra("key-company", key);
+        startActivity(myIntent);
     }
 
     @Override

@@ -123,7 +123,8 @@ public class PaymentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                changeActiviy(SubscriptionActivity.class, userId);
+                finish();
+                //changeActiviy(SubscriptionActivity.class, userId);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,8 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +54,12 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
     private Location user_location;
     static String userId;
     private ArrayList<Marker> markerArrayList;
+    BottomSheetDialog bottomSheetDialog;
+    LinearLayout copy;
+    LinearLayout share;
+    LinearLayout upload;
+    LinearLayout download;
+    LinearLayout delete;
 
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -73,6 +82,11 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(activity, PERMISSIONS_API, requestCode);
     }
 
+    private void showBottomSheetDialog() {
+
+
+        bottomSheetDialog.show();
+    }
 
     @SuppressLint("MissingPermission")
     @Override
@@ -133,6 +147,17 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
                 user_location = getLastKnownLocation();
+
+                bottomSheetDialog = new BottomSheetDialog(this);
+                bottomSheetDialog.setContentView(R.layout.bottom_sheet);
+
+                copy = bottomSheetDialog.findViewById(R.id.copyLinearLayout);
+                share = bottomSheetDialog.findViewById(R.id.shareLinearLayout);
+                upload = bottomSheetDialog.findViewById(R.id.uploadLinearLayout);
+                download = bottomSheetDialog.findViewById(R.id.download);
+                delete = bottomSheetDialog.findViewById(R.id.delete);
+
+
             }
         }
     }
@@ -164,7 +189,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
 
     private void changeActiviy(Class activityClass, String userId) {
         Intent myIntent = new Intent(this, activityClass);
-        myIntent.putExtra("key-user",userId);
+        myIntent.putExtra("key-user", userId);
         startActivity(myIntent);
     }
 
@@ -218,13 +243,14 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 marker = mMap.addMarker(new MarkerOptions()
                         .position(user_latlng)
                         .title("Mark your location")
+                        .snippet("")
                         .draggable(true));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng, 12.0f));
 
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot ds:snapshot.getChildren()) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
                             Company company = ds.getValue(Company.class);
 
                             assert company != null;
@@ -244,6 +270,13 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
 
                     }
                 });
+
+                mMap.setOnMarkerClickListener(marker -> {
+                    //showBottomSheetDialog();
+                    bottomSheetDialog.show();
+                    return false;
+                });
+
 //                mMap.setOnCameraMoveStartedListener(i -> {
 //                    LatLng now1 = mMap.getCameraPosition().target;
 //                    marker.setPosition(now1);
@@ -273,4 +306,5 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         // use:
         // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
+
 }

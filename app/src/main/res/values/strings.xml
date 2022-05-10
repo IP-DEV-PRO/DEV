@@ -49,5 +49,16 @@
     <string name="view_accounts">View Accounts</string>
     <string name="view_companies">View companies</string>
     <string name="view_requests">View requests</string>
+    <string name="share">Share</string>
+    <string name="get_link">Get link</string>
+    <string name="preview">Preview</string>
+    <string name="make_a_copy">Make a Copy</string>
+    <string name="email_a_copy">Email a Copy</string>
+    <string name="show_bottom_sheet">Show Bottom Sheet</string>
+    <string name="show_bottom_sheet_dialog">Show Bottom Sheet Dialog</string>
+    <string name="show_bottom_sheet_dialog_fragment">Show Bottom Sheet Dialog Fragment</string>
+    <string name="show_dialog">Show Dialog</string>
+    <string name="choose">Choose</string>
+    <string name="upload">Upload</string>
 
 </resources>

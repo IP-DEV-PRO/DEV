@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.Key;
+import java.util.Objects;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -120,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 boolean blocked = false;
                 if(!username.equals("admin"))
-                    blocked = Boolean.parseBoolean(snapshot.child("blocked").getValue().toString());
+                    blocked = Boolean.parseBoolean(Objects.requireNonNull(snapshot.child("blocked").getValue()).toString());
                 if(blocked)
                 {
                     Toast.makeText(getApplicationContext(),

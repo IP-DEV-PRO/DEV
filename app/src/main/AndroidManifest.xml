@@ -84,6 +84,9 @@
         <activity
             android:name=".activities.RegisterUserTwo"
             android:exported="true" />
+        <activity
+            android:name=".activities.AddCompanyProfilePicture"
+            android:exported="true" />
     </application>
 
 </manifest>
