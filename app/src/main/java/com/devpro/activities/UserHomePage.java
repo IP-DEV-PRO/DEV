@@ -51,6 +51,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserHomePage extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
     private BottomNavigationView bottomNavigationView;
@@ -283,8 +285,8 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                     //showBottomSheetDialog();
                     Company company = markerArrayList.get(marker);
 
-                    ImageView imageView;
-                    imageView = download.findViewById(R.id.profilepicturesheet);
+                    CircleImageView imageView;
+                    imageView = download.findViewById(R.id.profile_image);
 
                     StorageReference storageRef =
                             FirebaseStorage.getInstance("gs://devpro-c3528.appspot.com/").getReference();

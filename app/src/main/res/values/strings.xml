@@ -60,5 +60,6 @@
     <string name="show_dialog">Show Dialog</string>
     <string name="choose">Choose</string>
     <string name="upload">Upload</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>
 
 </resources>
