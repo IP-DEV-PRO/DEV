@@ -63,5 +63,6 @@
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>
     <string name="deny">Deny</string>
     <string name="accept">Accept</string>
+    <string name="Contact">Contact</string>
 
 </resources>

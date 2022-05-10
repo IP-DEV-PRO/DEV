@@ -45,6 +45,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import com.devpro.models.Company;
 import com.google.firebase.storage.FirebaseStorage;
@@ -262,8 +263,11 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             Company company = ds.getValue(Company.class);
+                            //String company_name_s = Objects.requireNonNull(snapshot.child("company_name").getValue()).toString();
+                            //owner_first_name_s = Objects.requireNonNull(snapshot.child("owner_first_name").getValue()).toString();
 
                             assert company != null;
+                            System.out.println(company.getUsername());
                             for (com.devpro.models.Location location : company.getLocationList()) {
                                 Marker marker_company = mMap.addMarker(new MarkerOptions()
                                         .position(new com.google.android.gms.maps.model.LatLng(location.getLocation().getLatitude(), location.getLocation().getLongitude()))

@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class AdminRequestDetailsActivity extends AppCompatActivity {
@@ -85,8 +86,10 @@ public class AdminRequestDetailsActivity extends AppCompatActivity {
                 company.setCompanyType(CompanyType.NONE);
                 company.setFirstName(owner_first_name_s);
                 company.setLastName(owner_last_name_s);
+                company.setUsername("ORICE");
                 company.setPhone(phone_s);
                 company.setCui(registration_number_s);
+                company.setLocationList(new ArrayList<>());
 
                 mDatabase_for_company.child(company_name_s).setValue(company);
 
