@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.devpro.models.User;
 
@@ -42,6 +43,7 @@ public class AdminPageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String username = ds.getKey();
+                    assert username != null;
                     if (!username.equals("admin"))
                         userArray.add(username);
                 }
@@ -64,14 +66,19 @@ public class AdminPageActivity extends AppCompatActivity {
 
     void viewRequests() {
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
-        List<String> reqArray = new ArrayList<String>();
+        List<String> reqArray = new ArrayList<>();
+        List<String> reqArray_cui = new ArrayList<>();
+
         ArrayAdapter<String> reqArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, reqArray);
         mDatabase.child("admin").child("requests").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    String companyName = ds.child("company_name").getValue().toString();
+                    System.out.println(ds.getKey());
+                    String companyName = Objects.requireNonNull(ds.child("company_name").getValue()).toString();
+                    String cui = Objects.requireNonNull(ds.child("registration_number").getValue()).toString();
                     reqArray.add(companyName);
+                    reqArray_cui.add(cui);
                 }
                 usersLV.setAdapter(reqArrayAdapter);
             }
@@ -82,8 +89,8 @@ public class AdminPageActivity extends AppCompatActivity {
         });
 
         usersLV.setOnItemClickListener((adapterView, view, i, l) -> {
-            changeActiviy(AdminRequestDetailsActivity.class, String.valueOf(i));
-            Toast.makeText(getApplicationContext(), reqArray.get(i) + " " + i, Toast.LENGTH_LONG).show();
+            changeActiviy(AdminRequestDetailsActivity.class, reqArray_cui.get(i));
+            Toast.makeText(getApplicationContext(), reqArray_cui.get(i) + " " + i, Toast.LENGTH_LONG).show();
         });
     }
 

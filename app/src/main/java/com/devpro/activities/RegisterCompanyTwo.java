@@ -48,14 +48,12 @@ public class RegisterCompanyTwo extends AppCompatActivity {
         mDatabase.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int noreq = Integer.parseInt(snapshot.child("no_req").getValue().toString());
-                mDatabase.child("admin").child("requests").child(String.valueOf(noreq)).child("company_name").setValue(name);
-                mDatabase.child("admin").child("requests").child(String.valueOf(noreq)).child("registration_number").setValue(cui);
-                mDatabase.child("admin").child("requests").child(String.valueOf(noreq)).child("owner_first_name").setValue(first);
-                mDatabase.child("admin").child("requests").child(String.valueOf(noreq)).child("owner_last_name").setValue(last);
-                mDatabase.child("admin").child("requests").child(String.valueOf(noreq)).child("phone").setValue(phone);
-                noreq++;
-                mDatabase.child("admin").child("no_req").setValue(noreq);
+                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("company_name").setValue(name);
+                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("registration_number").setValue(cui);
+                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("owner_first_name").setValue(first);
+                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("owner_last_name").setValue(last);
+                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("phone").setValue(phone);
+
                 mDatabase.child(userKey).child("companyName").setValue(name);
             }
 

@@ -14,6 +14,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.devpro.R;
+import com.devpro.models.Company;
+import com.devpro.models.CompanyType;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +28,10 @@ public class AdminRequestDetailsActivity extends AppCompatActivity {
     TextView company_name, owner_first_name, owner_last_name, phone, registration_number;
     Button acceptButton, denyButton;
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase_for_company;
+
     String requestId;
+    String company_name_s, owner_first_name_s, owner_last_name_s, phone_s, registration_number_s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class AdminRequestDetailsActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users")
                 .child("admin").child("requests");
+        mDatabase_for_company = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies");
 
         company_name = findViewById(R.id.admin_request_details_company_name);
         owner_first_name = findViewById(R.id.admin_request_details_owner_first_name);
@@ -54,11 +60,17 @@ public class AdminRequestDetailsActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                company_name.setText("Company name: " + Objects.requireNonNull(snapshot.child("company_name").getValue()));
-                owner_first_name.setText("Owner first name: " + Objects.requireNonNull(snapshot.child("owner_first_name").getValue()).toString());
-                owner_last_name.setText("Owner last name: " + Objects.requireNonNull(snapshot.child("owner_last_name").getValue()).toString());
-                phone.setText("Phone: " + Objects.requireNonNull(snapshot.child("phone").getValue()).toString());
-                registration_number.setText("Registration number: " + Objects.requireNonNull(snapshot.child("registration_number").getValue()).toString());
+                company_name_s = Objects.requireNonNull(snapshot.child("company_name").getValue()).toString();
+                owner_first_name_s = Objects.requireNonNull(snapshot.child("owner_first_name").getValue()).toString();
+                owner_last_name_s = Objects.requireNonNull(snapshot.child("owner_last_name").getValue()).toString();
+                phone_s = Objects.requireNonNull(snapshot.child("phone").getValue()).toString();
+                registration_number_s = Objects.requireNonNull(snapshot.child("registration_number").getValue()).toString();
+
+                company_name.setText("Company name: " + company_name_s);
+                owner_first_name.setText("Owner first name: " + owner_first_name_s);
+                owner_last_name.setText("Owner last name: " + owner_last_name_s);
+                phone.setText("Phone: " + phone_s);
+                registration_number.setText("Registration number: " + registration_number_s);
             }
 
             @Override
@@ -69,21 +81,26 @@ public class AdminRequestDetailsActivity extends AppCompatActivity {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                // TODO ADD COMPANY IN COMPANY DB AND DELETE REQUEST
+                Company company = new Company();
+                company.setCompanyType(CompanyType.NONE);
+                company.setFirstName(owner_first_name_s);
+                company.setLastName(owner_last_name_s);
+                company.setPhone(phone_s);
+                company.setCui(registration_number_s);
 
-                //mDatabase.child(userId).child("blocked").setValue(true);
+                mDatabase_for_company.child(company_name_s).setValue(company);
+
+                mDatabase.child(requestId).removeValue();
+
+                finish();
             }
         });
 
-        denyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO
+        denyButton.setOnClickListener(view -> {
+            // TODO
+            mDatabase.child(requestId).removeValue();
 
-                finish();
-                //mDatabase.child(userId).child("blocked").setValue(true);
-            }
+            finish();
         });
     }
 
