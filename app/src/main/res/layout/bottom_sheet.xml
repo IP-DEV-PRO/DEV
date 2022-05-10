@@ -14,9 +14,9 @@
         android:padding="8dp">
 
         <ImageView
+            android:id="@+id/profilepicturesheet"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_baseline_check_24"
             android:layout_margin="8dp"
             android:contentDescription="@string/search" />
 

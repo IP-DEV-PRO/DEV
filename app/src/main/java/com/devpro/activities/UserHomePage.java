@@ -15,6 +15,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
@@ -32,16 +34,22 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.devpro.models.Company;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class UserHomePage extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
@@ -53,7 +61,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
     private LocationManager locationManager;
     private Location user_location;
     static String userId;
-    private ArrayList<Marker> markerArrayList;
+    private HashMap<Marker, Company> markerArrayList;
     BottomSheetDialog bottomSheetDialog;
     LinearLayout copy;
     LinearLayout share;
@@ -108,7 +116,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies");
 
-        markerArrayList = new ArrayList<>();
+        markerArrayList = new HashMap<>();
 
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
@@ -260,7 +268,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                                         .title(company.getUsername())
                                         .draggable(true));
 
-                                markerArrayList.add(marker_company);
+                                markerArrayList.put(marker_company, company);
                             }
                         }
                     }
@@ -273,6 +281,26 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
 
                 mMap.setOnMarkerClickListener(marker -> {
                     //showBottomSheetDialog();
+                    Company company = markerArrayList.get(marker);
+
+                    ImageView imageView;
+                    imageView = download.findViewById(R.id.profilepicturesheet);
+
+                    StorageReference storageRef =
+                            FirebaseStorage.getInstance("gs://devpro-c3528.appspot.com/").getReference();
+                    assert company != null;
+                    System.out.println("images/" + company.getUsername() + "/" + "profile.jpeg");
+                    storageRef.child("images/" + company.getUsername() + "/" + "profile").getDownloadUrl()
+                            .addOnSuccessListener(uri -> {
+                                Picasso.get().load(uri).into(imageView);
+                                //System.out.println("CEVA");
+                            })
+                            .addOnFailureListener(e -> {
+                                //handle
+                                System.out.println("ALTCEVA");
+                            });
+                    // imageView.set
+
                     bottomSheetDialog.show();
                     return false;
                 });

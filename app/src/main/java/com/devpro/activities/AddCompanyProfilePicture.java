@@ -133,7 +133,7 @@ public class AddCompanyProfilePicture extends AppCompatActivity {
                     = storageReference
                     .child(
                             "images/" + companyName + "/"
-                                    + UUID.randomUUID().toString());
+                                    + "profile");
 
             // adding listeners on upload
             // or failure of image
