@@ -33,18 +33,16 @@ public class AdminPageActivity extends AppCompatActivity {
     ListView usersLV;
     private DatabaseReference mDatabase;
 
-    void viewAccounts()
-    {
+    void viewAccounts() {
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         List<String> userArray = new ArrayList<String>();
-        ArrayAdapter<String> userArrayAdapter = new ArrayAdapter( this, android.R.layout.simple_list_item_1,userArray);
+        ArrayAdapter<String> userArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, userArray);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds:snapshot.getChildren())
-                {
-                  String username = ds.getKey();
-                    if(!username.equals("admin"))
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String username = ds.getKey();
+                    if (!username.equals("admin"))
                         userArray.add(username);
                 }
                 usersLV.setAdapter(userArrayAdapter);
@@ -59,21 +57,19 @@ public class AdminPageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 changeActiviy(AdminUserDetailsActivity.class, userArray.get(i));
-                Toast.makeText(getApplicationContext(),userArray.get(i)+"",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), userArray.get(i) + "", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    void viewRequests()
-    {
+    void viewRequests() {
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         List<String> reqArray = new ArrayList<String>();
-        ArrayAdapter<String> reqArrayAdapter = new ArrayAdapter( this, android.R.layout.simple_list_item_1, reqArray);
+        ArrayAdapter<String> reqArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, reqArray);
         mDatabase.child("admin").child("requests").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds:snapshot.getChildren())
-                {
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     String companyName = ds.child("company_name").getValue().toString();
                     reqArray.add(companyName);
                 }
@@ -85,12 +81,9 @@ public class AdminPageActivity extends AppCompatActivity {
             }
         });
 
-        usersLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //changeActiviy(AdminUserDetailsActivity.class, reqArray.get(i));
-                Toast.makeText(getApplicationContext(),reqArray.get(i)+"",Toast.LENGTH_LONG).show();
-            }
+        usersLV.setOnItemClickListener((adapterView, view, i, l) -> {
+            changeActiviy(AdminRequestDetailsActivity.class, String.valueOf(i));
+            Toast.makeText(getApplicationContext(), reqArray.get(i) + " " + i, Toast.LENGTH_LONG).show();
         });
     }
 
@@ -126,14 +119,14 @@ public class AdminPageActivity extends AppCompatActivity {
                 changeActiviy(MainActivity.class, "admin");
                 return true;
             case R.id.admin_menu_accounts:
-                Toast.makeText(getApplicationContext(),"Accounts",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Accounts", Toast.LENGTH_LONG).show();
                 viewAccounts();
                 return true;
             case R.id.admin_menu_companies:
-                Toast.makeText(getApplicationContext(),"Companies",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Companies", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.admin_menu_requests:
-                Toast.makeText(getApplicationContext(),"Requests",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Requests", Toast.LENGTH_LONG).show();
                 viewRequests();
                 return true;
         }
@@ -142,7 +135,7 @@ public class AdminPageActivity extends AppCompatActivity {
 
     private void changeActiviy(Class activityClass, String userId) {
         Intent myIntent = new Intent(this, activityClass);
-        myIntent.putExtra("key-user",userId);
+        myIntent.putExtra("key-user", userId);
         startActivity(myIntent);
     }
 

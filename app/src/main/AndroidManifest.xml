@@ -87,6 +87,9 @@
         <activity
             android:name=".activities.AddCompanyProfilePicture"
             android:exported="true" />
+        <activity
+            android:name=".activities.AdminRequestDetailsActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
