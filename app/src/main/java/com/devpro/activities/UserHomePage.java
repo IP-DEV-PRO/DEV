@@ -121,22 +121,18 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
 
         markerArrayList = new HashMap<>();
 
-
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.bottom_navigation_edit:
-                        changeActiviy(EditAccountActivity.class, userId);
-                        return true;
-                    case R.id.bottom_navigation_subscription:
-                        changeActiviy(SubscriptionActivity.class, userId);
-                        return true;
-                    case R.id.bottom_navigation_requests:
-                        return true;
-                }
-                return false;
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.bottom_navigation_edit:
+                    changeActiviy(EditAccountActivity.class, userId);
+                    return true;
+                case R.id.bottom_navigation_subscription:
+                    changeActiviy(SubscriptionActivity.class, userId);
+                    return true;
+                case R.id.bottom_navigation_requests:
+                    return true;
             }
+            return false;
         });
 
         requestPermissions();

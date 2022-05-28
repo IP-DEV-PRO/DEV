@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                             if(user.getRole() == 1)
                                                 changeActiviy(CompanyAdminHomePageActivity.class, username);
                                             else
-                                                changeActiviy(CompanyOwnerHomePage.class, username);
+                                                changeActiviy(CompanyAdminHomePageActivity.class, username);
                                         }
                                     }
                                 });

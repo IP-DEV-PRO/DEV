@@ -16,7 +16,7 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="edit_profile">Edit profile</string>
     <string name="subscription">Subscription</string>
-    <string name="requests">Requestss</string>
+    <string name="requests">Requests</string>
 
     <!-- Checkout activity -->
     <string name="title_activity_payment">Payment</string>
@@ -68,5 +68,7 @@
     <string name="add_admin">Add Admin</string>
     <string name="admin_e_mail">Admin e-mail</string>
     <string name="admin_password">Admin password</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="accepted_requests">Accepted Requests</string>
 
 </resources>
