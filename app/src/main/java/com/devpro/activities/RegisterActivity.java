@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(email.isEmpty() || password.isEmpty() || username.isEmpty()) {
-                    Toast.makeText(getApplicationContext(),"Please complete all fields",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Please complete all fields",Toast.LENGTH_LONG).show();
                 }
                 else {
                     if(snapshot.exists())

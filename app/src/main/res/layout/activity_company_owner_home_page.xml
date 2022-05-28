@@ -6,4 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".activities.CompanyOwnerHomePage">
 
+    <Button
+        android:id="@+id/company_owner_homepage_view"
+        android:layout_width="194dp"
+        android:layout_height="92dp"
+        android:backgroundTint="#F43B3B"
+        android:text="@string/view_mangers"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.707" />
+
+    <Button
+        android:id="@+id/company_owner_homepage_register"
+        android:layout_width="194dp"
+        android:layout_height="92dp"
+        android:backgroundTint="#D9DD52"
+        android:text="@string/register_company_manager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.452" />
+
+    <Button
+        android:id="@+id/company_owner_homepage_edit"
+        android:layout_width="194dp"
+        android:layout_height="92dp"
+        android:backgroundTint="#2B9375"
+        android:text="@string/edit_company_details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.194" />
 </androidx.constraintlayout.widget.ConstraintLayout>

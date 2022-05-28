@@ -18,6 +18,7 @@ public class User {
     private String sub_start;
     private String sub_exp;
     private boolean sub_active;
+    private int accepted;
     private int role;
     private String companyName;
 
@@ -183,5 +184,21 @@ public class User {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getCom_reg_no() {
+        return com_reg_no;
+    }
+
+    public void setCom_reg_no(String com_reg_no) {
+        this.com_reg_no = com_reg_no;
+    }
+
+    public int getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(int accepted) {
+        this.accepted = accepted;
     }
 }

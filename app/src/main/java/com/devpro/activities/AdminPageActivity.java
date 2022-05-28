@@ -74,7 +74,6 @@ public class AdminPageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    System.out.println(ds.getKey());
                     String companyName = Objects.requireNonNull(ds.child("company_name").getValue()).toString();
                     String cui = Objects.requireNonNull(ds.child("registration_number").getValue()).toString();
                     reqArray.add(companyName);

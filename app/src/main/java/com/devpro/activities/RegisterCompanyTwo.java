@@ -26,46 +26,30 @@ public class RegisterCompanyTwo extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     void setListenersButtons() {
-        nextButton.setOnClickListener(view -> sendRequest(userKey, name_text.getText().toString(),
+        nextButton.setOnClickListener(view -> next(userKey, name_text.getText().toString(),
                 cui_text.getText().toString(), first_text.getText().toString(),
                 last_text.getText().toString(),phone_text.getText().toString()));
     }
 
-    private void sendRequest(String userKey, String name, String cui, String first, String last, String phone) {
-        Toast.makeText(getApplicationContext(),
-                "Request sent to application admin",
-                Toast.LENGTH_LONG)
-                .show();
-//        Intent myIntent = new Intent(this, RegisterCompanyActivityWithMap.class);
-//        myIntent.putExtra("userKey", userKey);
-///        myIntent.putExtra("name", name);
-//        myIntent.putExtra("cui", cui);
-//        myIntent.putExtra("first", first);
-//        myIntent.putExtra("last", last);
-//        myIntent.putExtra("phone", phone);
-//        startActivity(myIntent);
+    private void next(String userKey, String name, String cui, String first, String last, String phone) {
 
-        mDatabase.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("company_name").setValue(name);
-                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("registration_number").setValue(cui);
-                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("owner_first_name").setValue(first);
-                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("owner_last_name").setValue(last);
-                mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("phone").setValue(phone);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 
         mDatabase.child(userKey).child("companyName").setValue(name);
         mDatabase.child(userKey).child("firstName").setValue(first);
         mDatabase.child(userKey).child("lastName").setValue(last);
         mDatabase.child(userKey).child("phone").setValue(phone);
         mDatabase.child(userKey).child("comp_reg_no").setValue(cui);
+        mDatabase.child(userKey).child("accepted").setValue(0);
 
-        changeActiviy(LoginActivity.class,"");
+        Intent myIntent = new Intent(this, CompanyAdressActivity.class);
+        myIntent.putExtra("key-user", userKey);
+        myIntent.putExtra("name", name);
+        myIntent.putExtra("cui", cui);
+        myIntent.putExtra("first", first);
+        myIntent.putExtra("last", last);
+        myIntent.putExtra("phone", phone);
+        startActivity(myIntent);
+
     }
 
 

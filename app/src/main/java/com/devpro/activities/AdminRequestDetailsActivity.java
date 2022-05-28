@@ -32,7 +32,7 @@ public class AdminRequestDetailsActivity extends AppCompatActivity {
     private DatabaseReference mDatabase_for_company;
 
     String requestId;
-    String company_name_s, owner_first_name_s, owner_last_name_s, phone_s, registration_number_s;
+    String company_name_s, owner_first_name_s, owner_last_name_s, phone_s, registration_number_s, owner_username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class AdminRequestDetailsActivity extends AppCompatActivity {
                 owner_last_name_s = Objects.requireNonNull(snapshot.child("owner_last_name").getValue()).toString();
                 phone_s = Objects.requireNonNull(snapshot.child("phone").getValue()).toString();
                 registration_number_s = Objects.requireNonNull(snapshot.child("registration_number").getValue()).toString();
+                owner_username = Objects.requireNonNull(snapshot.child("owner_username").getValue()).toString();
 
                 company_name.setText("Company name: " + company_name_s);
                 owner_first_name.setText("Owner first name: " + owner_first_name_s);
@@ -86,23 +87,22 @@ public class AdminRequestDetailsActivity extends AppCompatActivity {
                 company.setCompanyType(CompanyType.NONE);
                 company.setFirstName(owner_first_name_s);
                 company.setLastName(owner_last_name_s);
-                company.setUsername("ORICE");
                 company.setPhone(phone_s);
                 company.setCui(registration_number_s);
                 company.setLocationList(new ArrayList<>());
 
                 mDatabase_for_company.child(company_name_s).setValue(company);
-
+                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
+                        getReference("users").child(owner_username).child("accepted").setValue(1);
                 mDatabase.child(requestId).removeValue();
-
                 finish();
             }
         });
 
         denyButton.setOnClickListener(view -> {
-            // TODO
+            FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
+                    getReference("users").child(owner_username).child("accepted").setValue(2);
             mDatabase.child(requestId).removeValue();
-
             finish();
         });
     }

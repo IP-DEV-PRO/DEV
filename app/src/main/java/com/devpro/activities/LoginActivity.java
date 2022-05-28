@@ -119,15 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         String user_paswsord = snapshot.child("password").getValue().toString();
                         if (encrypted.equals(user_paswsord)) {
-                            Toast.makeText(getApplicationContext(),
-                                    "Login successful!!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-
                             if (username.equals("admin"))
                                 changeActiviy(AdminPageActivity.class, username);
                             else {
-
                                 FirebaseDatabase
                                         .getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/")
                                         .getReference("users")
@@ -139,12 +133,34 @@ public class LoginActivity extends AppCompatActivity {
 
                                         assert user != null;
                                         if (user.getRole() == 0) {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Login successful!!",
+                                                    Toast.LENGTH_LONG)
+                                                    .show();
                                             changeActiviy(UserHomePage.class, username);
                                         } else {
-                                            if(user.getRole() == 1)
+                                            if(user.getRole() == 1) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Login successful!!",
+                                                        Toast.LENGTH_LONG)
+                                                        .show();
                                                 changeActiviy(CompanyAdminHomePageActivity.class, username);
-                                            else
-                                                changeActiviy(CompanyAdminHomePageActivity.class, username);
+                                            }
+                                            else {
+                                                int accepted = user.getAccepted();
+                                                if(accepted == 1) {
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Login successful!!",
+                                                            Toast.LENGTH_LONG)
+                                                            .show();
+                                                    changeActiviy(CompanyOwnerHomePage.class, username);
+                                                }
+                                                else if(accepted == 0)  {
+                                                    Toast.makeText(getApplicationContext(), "Your request has not been accepted yet", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "Your request has been declined", Toast.LENGTH_LONG).show();
+                                                }
+                                            }
                                         }
                                     }
                                 });
