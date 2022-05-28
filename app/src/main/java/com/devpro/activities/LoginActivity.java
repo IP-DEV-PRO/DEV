@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.devpro.R;
+import com.devpro.models.Company;
+import com.devpro.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.SuccessContinuation;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     void setListenersButtons() {
-        loginButton.setOnClickListener(view -> login(username.getText().toString(),password.getText().toString()));
+        loginButton.setOnClickListener(view -> login(username.getText().toString(), password.getText().toString()));
     }
 
     private void changeActiviy(Class activityClass, String userId) {
@@ -62,13 +68,13 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginPage_loginButton);
         setListenersButtons();
 
-        String encrypted="";
-            try {
-                encrypted = encrypt("devadmin");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            System.out.println(encrypted);
+        String encrypted = "";
+        try {
+            encrypted = encrypt("devadmin");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(encrypted);
     }
 
     private void login(String username, String password) {
@@ -119,17 +125,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 boolean blocked = false;
-                if(!username.equals("admin"))
+                if (!username.equals("admin"))
                     blocked = Boolean.parseBoolean(Objects.requireNonNull(snapshot.child("blocked").getValue()).toString());
-                if(blocked)
-                {
+                if (blocked) {
                     Toast.makeText(getApplicationContext(),
                             "Account banned",
                             Toast.LENGTH_LONG)
                             .show();
                     changeActiviy(MainActivity.class, username);
-                }
-                else {
+                } else {
                     String encrypted = "";
                     if (snapshot.exists()) {
                         try {
@@ -143,10 +147,29 @@ public class LoginActivity extends AppCompatActivity {
                                     "Login successful!!",
                                     Toast.LENGTH_LONG)
                                     .show();
+
                             if (username.equals("admin"))
                                 changeActiviy(AdminPageActivity.class, username);
-                            else
-                                changeActiviy(UserHomePage.class, username);
+                            else {
+
+                                FirebaseDatabase
+                                        .getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/")
+                                        .getReference("users")
+                                        .child(username).get().addOnCompleteListener(task -> {
+                                    if (!task.isSuccessful()) {
+                                        Log.e("firebase", "Error getting data", task.getException());
+                                    } else {
+                                        User user = task.getResult().getValue(User.class);
+
+                                        assert user != null;
+                                        if (user.getRole() == 1){
+                                            changeActiviy(UserHomePage.class, username);
+                                        } else {
+                                            changeActiviy(CompanyAdminHomePageActivity.class, username);
+                                        }
+                                    }
+                                });
+                            }
                         } else {
                             Toast.makeText(getApplicationContext(),
                                     "Incorrect username/password!!",
@@ -170,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 Intent myIntent = new Intent(this, MainActivity.class);
                 startActivity(myIntent);
@@ -179,12 +202,11 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private String encrypt(String password) throws Exception{
-        Key key = new SecretKeySpec("1Hbfh667adfDEJ78".getBytes(),"AES");
+    private String encrypt(String password) throws Exception {
+        Key key = new SecretKeySpec("1Hbfh667adfDEJ78".getBytes(), "AES");
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, key);
-        byte [] encryptedByteValue = cipher.doFinal(password.getBytes("utf-8"));
-        String encryptedValue64 = Base64.encodeToString(encryptedByteValue, Base64.DEFAULT);
-        return encryptedValue64;
+        byte[] encryptedByteValue = cipher.doFinal(password.getBytes("utf-8"));
+        return Base64.encodeToString(encryptedByteValue, Base64.DEFAULT);
     }
 }

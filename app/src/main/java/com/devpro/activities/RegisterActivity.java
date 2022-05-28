@@ -164,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if(!iscompany)
                             {
                                 registeredUser = new User(username, encrypted, "-", "-", "-",
-                                        email, "-", "-", false, false);
+                                        email, "-", "-", false, 0);
                                 //mDatabase.child(username).setValue(registeredUser);
                                 mDatabase.child(username).child("username").setValue(username);
                                 mDatabase.child(username).child("password").setValue(encrypted);

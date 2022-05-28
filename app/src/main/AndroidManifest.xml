@@ -90,6 +90,9 @@
         <activity
             android:name=".activities.AdminRequestDetailsActivity"
             android:exported="true" />
+        <activity
+            android:name=".activities.CompanyAdminHomePageActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
