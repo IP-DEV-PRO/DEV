@@ -70,5 +70,11 @@
     <string name="admin_password">Admin password</string>
     <string name="edit_details">Edit Details</string>
     <string name="accepted_requests">Accepted Requests</string>
+    <string name="add_location">Add Location</string>
+    <string name="add_description">Add Description</string>
+    <string name="add_service">Add Service</string>
+    <string name="change_phone_number">Change Phone Number</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_phone">Change Phone</string>
 
 </resources>

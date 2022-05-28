@@ -9,10 +9,9 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/company_component"
-        android:name="com.devpro.fragments.RequestsCompanyFragment"
+        android:name="com.devpro.fragments.EditDetailsCompanyFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_company"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
