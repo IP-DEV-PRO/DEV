@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.devpro.R;
 import com.google.firebase.database.DataSnapshot;
@@ -20,12 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AdminUserDetailsActivity extends AppCompatActivity {
 
-    TextView fullname_text, email_text, phone_text, sub_text, date_text;
-    Button banButton;
+    TextView fullname_text, email_text, phone_text, sub_text, date_text, banned_text;
+    Button banButton, unbanButton;
     private DatabaseReference mDatabase;
     String userId;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,10 @@ public class AdminUserDetailsActivity extends AppCompatActivity {
         phone_text = findViewById(R.id.admin_user_details_phone);
         sub_text = findViewById(R.id.admin_user_details_subscription);
         date_text = findViewById(R.id.admin_user_details_date);
+        banned_text = findViewById(R.id.admin_user_details_banned);
         banButton = findViewById(R.id.admin_user_details_ban);
+        unbanButton = findViewById(R.id.admin_user_details_unban);
+
         userId = getIntent().getStringExtra("key-user");
 
         mDatabase.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -65,6 +68,11 @@ public class AdminUserDetailsActivity extends AppCompatActivity {
                         sub_text.setText("No subscription");
                     String reg_date = snapshot.child("reg_date").getValue().toString();
                     date_text.setText("Registration date: " + reg_date);
+                    boolean banned = Boolean.parseBoolean(snapshot.child("blocked").getValue().toString());
+                    if(banned)
+                        banned_text.setText("Account Banned");
+                    else
+                        banned_text.setText("Active account");
                 }
                 else {
                     String email = snapshot.child("e_mail").getValue().toString();
@@ -73,7 +81,6 @@ public class AdminUserDetailsActivity extends AppCompatActivity {
                     phone_text.setText("Company name: " + companyName);
                     String reg_date = snapshot.child("reg_date").getValue().toString();
                     sub_text.setText("Registration date: " + reg_date);
-
                 }
             }
 
@@ -85,6 +92,16 @@ public class AdminUserDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mDatabase.child(userId).child("blocked").setValue(true);
+                Toast.makeText(getApplicationContext(), "Account " + userId + " has been banned", Toast.LENGTH_LONG).show();
+                changeActiviy(AdminPageActivity.class, "admin");
+            }
+        });
+        unbanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDatabase.child(userId).child("blocked").setValue(false);
+                Toast.makeText(getApplicationContext(), "Account " + userId + " has been unbanned", Toast.LENGTH_LONG).show();
+                changeActiviy(AdminPageActivity.class, "admin");
             }
         });
     }

@@ -69,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             System.out.println(encrypted);
-
     }
 
     private void login(String username, String password) {
@@ -125,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(blocked)
                 {
                     Toast.makeText(getApplicationContext(),
-                            "Account banned. FUCK YOUl!!",
+                            "Account banned",
                             Toast.LENGTH_LONG)
                             .show();
                     changeActiviy(MainActivity.class, username);

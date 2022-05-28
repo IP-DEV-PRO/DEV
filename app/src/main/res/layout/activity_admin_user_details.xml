@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".activities.AdminUserDetailsActivity">
 
+    <Button
+        android:id="@+id/admin_user_details_unban"
+        android:layout_width="188dp"
+        android:layout_height="72dp"
+        android:text="@string/unban_account"
+        android:textColorHighlight="#D81919"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89" />
+
+    <TextView
+        android:id="@+id/admin_user_details_banned"
+        android:layout_width="303dp"
+        android:layout_height="33dp"
+        android:gravity="center|left"
+        android:paddingStart="20dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.61" />
+
     <TextView
         android:id="@+id/admin_user_details_subscription"
         android:layout_width="303dp"
@@ -16,7 +42,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.424" />
 
     <TextView
         android:id="@+id/admin_user_details_phone"
@@ -30,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/admin_user_details_email"
-        app:layout_constraintVertical_bias="0.413" />
+        app:layout_constraintVertical_bias="0.186" />
 
     <TextView
         android:id="@+id/admin_user_details_email"
@@ -44,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.348" />
+        app:layout_constraintVertical_bias="0.29" />
 
     <TextView
         android:id="@+id/admin_user_details_date"
@@ -57,7 +84,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603" />
+        app:layout_constraintVertical_bias="0.515" />
 
     <TextView
         android:id="@+id/admin_user_details_fullname"
@@ -70,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212" />
+        app:layout_constraintVertical_bias="0.159" />
 
     <Button
         android:id="@+id/admin_user_details_ban"
@@ -83,5 +110,5 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.813" />
+        app:layout_constraintVertical_bias="0.754" />
 </androidx.constraintlayout.widget.ConstraintLayout>

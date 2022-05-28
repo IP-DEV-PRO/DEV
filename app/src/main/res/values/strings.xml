@@ -64,5 +64,6 @@
     <string name="deny">Deny</string>
     <string name="accept">Accept</string>
     <string name="Contact">Contact</string>
+    <string name="unban_account">Unban Account</string>
 
 </resources>

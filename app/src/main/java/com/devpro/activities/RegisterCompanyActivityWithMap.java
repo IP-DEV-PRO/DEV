@@ -49,7 +49,7 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     private String companyKey;
     private String name, cui, first, last, phone;
 
-    private static final String[] PERMISSIONS = new String[]{
+    private static final String[] PERMISSIONS = new String[] {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.INTERNET

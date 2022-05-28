@@ -36,14 +36,14 @@ public class RegisterCompanyTwo extends AppCompatActivity {
                 "Request sent to application admin",
                 Toast.LENGTH_LONG)
                 .show();
-//        Intent myIntent = new Intent(this, RegisterCompanyActivityWithMap.class);
-//        myIntent.putExtra("userKey", userKey);
-//        myIntent.putExtra("name", name);
-//        myIntent.putExtra("cui", cui);
-//        myIntent.putExtra("first", first);
-//        myIntent.putExtra("last", last);
-//        myIntent.putExtra("phone", phone);
-//        startActivity(myIntent);
+        Intent myIntent = new Intent(this, RegisterCompanyActivityWithMap.class);
+        myIntent.putExtra("userKey", userKey);
+        myIntent.putExtra("name", name);
+        myIntent.putExtra("cui", cui);
+        myIntent.putExtra("first", first);
+        myIntent.putExtra("last", last);
+        myIntent.putExtra("phone", phone);
+        startActivity(myIntent);
 
         mDatabase.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,8 +63,8 @@ public class RegisterCompanyTwo extends AppCompatActivity {
             }
         });
 
-        Intent myIntent = new Intent(this, LoginActivity.class);
-        startActivity(myIntent);
+        //Intent myIntent = new Intent(this, LoginActivity.class);
+        //startActivity(myIntent);
 
     }
 
