@@ -25,7 +25,7 @@ public class AdminUserDetailsActivity extends AppCompatActivity {
     Button banButton, unbanButton;
     private DatabaseReference mDatabase;
     String userId;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
