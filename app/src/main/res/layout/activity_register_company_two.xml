@@ -93,7 +93,7 @@
         android:paddingStart="20dp"
         app:layout_constraintBottom_toTopOf="@+id/register_company_two_cui"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_user_two_info2"
         app:layout_constraintVertical_bias="0.632"

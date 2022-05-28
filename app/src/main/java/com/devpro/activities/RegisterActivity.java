@@ -98,37 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String username, String password, String email, boolean iscompany) {
-//        mAuth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, task -> {
-//                    if (task.isSuccessful()) {
-//                        // Sign in success, update UI with the signed-in user's information
-//                        FirebaseUser user = mAuth.getCurrentUser();
-//                        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
-//
-//                        String userId = mDatabase.push().getKey();
-//                        assert userId != null;
-//
-//                        User registeredUser = new User(username, password, "no-last-name", "no-first-name", "no-telephone", email);
-//                        mDatabase.child(username).setValue(registeredUser);
-//
-//                        Log.d(TAG, "createUserWithEmail:success");
-//                        //System.out.println(userId);
-//                        updateUI(username);
-//                        Toast.makeText(getApplicationContext(),
-//                                "Register successful!!",
-//                                Toast.LENGTH_LONG)
-//                                .show();
-//                        // finish();
-//                    } else {
-//                        // If sign in fails, display a message to the user.
-//                        Toast.makeText(RegisterActivity.this, "Authentication failed.",
-//                                Toast.LENGTH_SHORT).show();
-//
-//                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                        finish();
-//                        //updateUI(null);
-//                    }
-//                });
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         mDatabase.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -159,13 +128,9 @@ public class RegisterActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            User registeredUser;
 
                             if(!iscompany)
                             {
-                                registeredUser = new User(username, encrypted, "-", "-", "-",
-                                        email, "-", "-", false, 0);
-                                //mDatabase.child(username).setValue(registeredUser);
                                 mDatabase.child(username).child("username").setValue(username);
                                 mDatabase.child(username).child("password").setValue(encrypted);
                                 mDatabase.child(username).child("firstName").setValue("-");
@@ -175,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 mDatabase.child(username).child("sub_start").setValue("-");
                                 mDatabase.child(username).child("sub_exp").setValue("-");
                                 mDatabase.child(username).child("sub_active").setValue(false);
-                                mDatabase.child(username).child("companyAdmin").setValue(false);
+                                mDatabase.child(username).child("role").setValue(0);
                                 mDatabase.child(username).child("reg_date").setValue(date);
                                 mDatabase.child(username).child("blocked").setValue(false);
                                 Toast.makeText(getApplicationContext(),
@@ -185,13 +150,11 @@ public class RegisterActivity extends AppCompatActivity {
                                 changeActiviy(RegisterUserTwo.class, username);
                             }
                             else {
-                                //registeredUser = new User(username, encrypted,"-","-","-", email,true);
-                                //mDatabase.child(username).setValue(registeredUser);
                                 mDatabase.child(username).child("username").setValue(username);
                                 mDatabase.child(username).child("password").setValue(encrypted);
                                 mDatabase.child(username).child("e_mail").setValue(email);
                                 mDatabase.child(username).child("companyName").setValue("-");
-                                mDatabase.child(username).child("companyAdmin").setValue(true);
+                                mDatabase.child(username).child("role").setValue(2);
                                 mDatabase.child(username).child("reg_date").setValue(date);
                                 mDatabase.child(username).child("blocked").setValue(false);
                                 changeActiviy(RegisterCompanyTwo.class, username);

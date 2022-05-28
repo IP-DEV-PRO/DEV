@@ -36,14 +36,14 @@ public class RegisterCompanyTwo extends AppCompatActivity {
                 "Request sent to application admin",
                 Toast.LENGTH_LONG)
                 .show();
-        Intent myIntent = new Intent(this, RegisterCompanyActivityWithMap.class);
-        myIntent.putExtra("userKey", userKey);
-        myIntent.putExtra("name", name);
-        myIntent.putExtra("cui", cui);
-        myIntent.putExtra("first", first);
-        myIntent.putExtra("last", last);
-        myIntent.putExtra("phone", phone);
-        startActivity(myIntent);
+//        Intent myIntent = new Intent(this, RegisterCompanyActivityWithMap.class);
+//        myIntent.putExtra("userKey", userKey);
+///        myIntent.putExtra("name", name);
+//        myIntent.putExtra("cui", cui);
+//        myIntent.putExtra("first", first);
+//        myIntent.putExtra("last", last);
+//        myIntent.putExtra("phone", phone);
+//        startActivity(myIntent);
 
         mDatabase.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -53,21 +53,20 @@ public class RegisterCompanyTwo extends AppCompatActivity {
                 mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("owner_first_name").setValue(first);
                 mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("owner_last_name").setValue(last);
                 mDatabase.child("admin").child("requests").child(String.valueOf(cui)).child("phone").setValue(phone);
-
-                mDatabase.child(userKey).child("companyName").setValue(name);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
-        //Intent myIntent = new Intent(this, LoginActivity.class);
-        //startActivity(myIntent);
+        mDatabase.child(userKey).child("companyName").setValue(name);
+        mDatabase.child(userKey).child("firstName").setValue(first);
+        mDatabase.child(userKey).child("lastName").setValue(last);
+        mDatabase.child(userKey).child("phone").setValue(phone);
+        mDatabase.child(userKey).child("comp_reg_no").setValue(cui);
 
+        changeActiviy(LoginActivity.class,"");
     }
-
 
 
     protected void onCreate(Bundle savedInstanceState) {

@@ -22,6 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DEVPRO">
         <activity
+            android:name=".activities.AddCompanyAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CompanyOwnerHomePage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AddNewLocationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AdminUserDetailsActivity"
             android:exported="false" />
         <activity

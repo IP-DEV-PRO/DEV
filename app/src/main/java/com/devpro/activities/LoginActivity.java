@@ -95,30 +95,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-//        mAuth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            Toast.makeText(getApplicationContext(),
-//                                    "Login successful!!",
-//                                    Toast.LENGTH_LONG)
-//                                    .show();
-//                            // if sign-in is successful
-//                            // intent to home activity
-//                            mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
-//                            String userID = mDatabase.push().getKey();
-//                            System.out.println(userID);
-//                            changeActiviy(UserHomePage.class, userID);
-//                        } else {
-//                            Toast.makeText(getApplicationContext(),
-//                                    "Login failed!!",
-//                                    Toast.LENGTH_LONG)
-//                                    .show();
-//                            finish();
-//                        }
-//                    }
-//                });
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         mDatabase.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -162,10 +138,13 @@ public class LoginActivity extends AppCompatActivity {
                                         User user = task.getResult().getValue(User.class);
 
                                         assert user != null;
-                                        if (user.getRole() == 1){
+                                        if (user.getRole() == 0) {
                                             changeActiviy(UserHomePage.class, username);
                                         } else {
-                                            changeActiviy(CompanyAdminHomePageActivity.class, username);
+                                            if(user.getRole() == 1)
+                                                changeActiviy(CompanyAdminHomePageActivity.class, username);
+                                            else
+                                                changeActiviy(CompanyOwnerHomePage.class, username);
                                         }
                                     }
                                 });

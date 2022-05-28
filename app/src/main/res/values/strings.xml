@@ -44,7 +44,7 @@
     <string name="company_owner_last_name">Company owner last name</string>
     <string name="company_owner_first_name">Company owner first name</string>
     <string name="company_phone_number">Company Phone Number</string>
-    <string name="company_registration_number">Company Registration Number</string>
+    <string name="company_registration_number">Registration Number</string>
     <string name="company_name">Company Name</string>
     <string name="view_accounts">View Accounts</string>
     <string name="view_companies">View companies</string>
@@ -65,5 +65,8 @@
     <string name="accept">Accept</string>
     <string name="Contact">Contact</string>
     <string name="unban_account">Unban Account</string>
+    <string name="add_admin">Add Admin</string>
+    <string name="admin_e_mail">Admin e-mail</string>
+    <string name="admin_password">Admin password</string>
 
 </resources>
