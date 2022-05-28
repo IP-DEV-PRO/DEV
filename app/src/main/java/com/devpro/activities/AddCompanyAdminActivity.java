@@ -65,6 +65,7 @@ public class AddCompanyAdminActivity extends AppCompatActivity {
         phone_text = findViewById(R.id.add_comp_adm_phone);
         addadmin_button = findViewById(R.id.add_comp_adm_add_c);
 
+
         setListenersButtons();
     }
 
@@ -127,6 +128,7 @@ public class AddCompanyAdminActivity extends AppCompatActivity {
                             mDatabase.child(username).child("companyName").setValue(companyName);
                             mDatabase.child(username).child("role").setValue(1);
                             mDatabase.child(username).child("reg_date").setValue(date);
+                            mDatabase.child(username).child("blocked").setValue(false);
                             Toast.makeText(getApplicationContext(),
                                     "Admin added!!",
                                     Toast.LENGTH_LONG)

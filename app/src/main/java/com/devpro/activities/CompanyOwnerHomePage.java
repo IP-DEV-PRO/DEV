@@ -15,7 +15,7 @@ import com.devpro.R;
 
 public class CompanyOwnerHomePage extends AppCompatActivity {
 
-    Button edit_button, reg_admin_button,  view_button;
+    Button edit_button, reg_admin_button,  view_button, change_adr_button;
     String userId;
 
 
@@ -30,6 +30,7 @@ public class CompanyOwnerHomePage extends AppCompatActivity {
         edit_button = findViewById(R.id.company_owner_homepage_edit);
         reg_admin_button = findViewById(R.id.company_owner_homepage_register);
         view_button = findViewById(R.id.company_owner_homepage_view);
+        change_adr_button = findViewById(R.id.company_owner_homepage_changeaddr);
 
         userId = getIntent().getStringExtra("key-user");
 

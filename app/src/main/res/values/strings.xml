@@ -91,5 +91,6 @@
     <string name="change_phone_number">Change Phone Number</string>
     <string name="change_email">Change Email</string>
     <string name="change_phone">Change Phone</string>
+    <string name="change_company_address">Change Company Address</string>
 
 </resources>
