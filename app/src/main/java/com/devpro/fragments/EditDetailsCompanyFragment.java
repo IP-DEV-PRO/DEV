@@ -1,5 +1,6 @@
 package com.devpro.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,14 +18,21 @@ import androidx.fragment.app.Fragment;
 import com.devpro.R;
 import com.devpro.activities.CompanyAdminHomePageActivity;
 import com.devpro.activities.RegisterCompanyActivityWithMap;
+import com.devpro.models.Company;
 import com.devpro.models.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class EditDetailsCompanyFragment   extends Fragment {
+public class EditDetailsCompanyFragment extends Fragment {
+    @SuppressLint("StaticFieldLeak")
+    public static EditDetailsCompanyFragment instance = null;
     Button add_location;
     AutoCompleteTextView add_service;
     TextInputLayout add_service_2;
@@ -33,6 +41,7 @@ public class EditDetailsCompanyFragment   extends Fragment {
     String companyName;
 
     public EditDetailsCompanyFragment() {
+        instance = this;
     }
 
     @Nullable
@@ -56,15 +65,16 @@ public class EditDetailsCompanyFragment   extends Fragment {
         companyName = ((CompanyAdminHomePageActivity) requireActivity()).returnCompanyName();
         setListenersButtons();
 
-        FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users")
-                .child(username).get().addOnCompleteListener(task -> {
+        /*FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("company")
+                .child(companyName).child("locationList").child(username).child("services").get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Log.e("firebase", "Error getting data", task.getException());
             } else {
-                User user = task.getResult().getValue(User.class);
+                Company company = task.getResult().getValue();
                 assert user != null;
-                String[] array = user.getServices();
+                ArrayList<String> array = user.getServices();
                 String[] array2={"first","second item" ,"third item"};
+                System.out.println(array + " d-asldasldasldpasdp,asdo,as0-o3049r39858432623467327847923978467236784662378462398");
                 if (array != null) {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                             R.layout.list_item, array);
@@ -75,7 +85,31 @@ public class EditDetailsCompanyFragment   extends Fragment {
                     add_service.setAdapter(adapter);
                 }
             }
-        });
+        });*/
+
+        System.out.println(companyName + " " + username);
+        if (companyName != null && username != null) {
+            FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("company")
+                    .child(companyName).child("locationList").child(username).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("services").exists()) {
+                        for (DataSnapshot service_name : snapshot.child("services").getChildren()) {
+                            System.out.println("dasda " + service_name.getKey());
+                            /*for (DataSnapshot ds : snapshot.getChildren()) {
+                                System.out.println("dasda " + ds.getKey());
+
+                            }*/
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
         //String[] array={"first","second item" ,"third item"};
 
 
@@ -85,6 +119,13 @@ public class EditDetailsCompanyFragment   extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        System.out.println("AICI");
+        Bundle bundle = new Bundle();
+        bundle = this.getArguments();
+        if (bundle != null) {
+            companyName = bundle.getString("key-company");
+            System.out.println(companyName + " dasd");
+        }
     }
 
     private void setListenersButtons() {
@@ -98,7 +139,10 @@ public class EditDetailsCompanyFragment   extends Fragment {
         add_service_2.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(add_service_4.getText().toString() + " d asdaosmdoasodmasmdoimasoidmoiasmdoimasoidmoiasd");
+                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                        .child(companyName).child("locationList").child(username).child("services").child(add_service_4.getText().toString()).setValue(0);
+             //   System.out.println(add_service_4.getText().toString() + " d asdaosmdoasodmasmdoimasoidmoiasmdoimasoidmoiasd");
+                //System.out.println(");
             }
         });
     }

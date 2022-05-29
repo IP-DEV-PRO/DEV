@@ -258,7 +258,7 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         System.out.println(companyKey + " " + username + "--------------------------------------------------------------------- ");
         mDatabase.child(companyKey).child("locationList").child(username).setValue(new com.devpro.models.Location(
                         new LatLng(location_final.latitude, location_final.longitude), "no-line1","no-line2", "no-city",
-                "no-code","no-country","no-desc","no-services","no-phone", username));
+                "no-code","no-country","no-desc",new ArrayList<String>(),"no-phone", username));
 
         //FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies").child(companyKey).child("locationList").setValue(locationList);
         // mDatabase.child(username).setValue(registeredUser);

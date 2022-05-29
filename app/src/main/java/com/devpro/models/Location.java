@@ -3,6 +3,8 @@ package com.devpro.models;
 
 import com.devpro.models.LatLng;
 
+import java.util.ArrayList;
+
 public class Location {
     private LatLng location;
     private String line1;
@@ -11,15 +13,16 @@ public class Location {
     private String postal_code;
     private String country;
     private String desctiption;
-    private String services;
     private String phone;
     private String owner;
+    private ArrayList<String> services;
 
     public Location () {
         location = new LatLng(0, 0);
     }
 
-    public Location(LatLng location, String line1, String line2, String city, String postal_code, String country, String desctiption, String services, String phone, String owner) {
+    public Location(LatLng location, String line1, String line2, String city, String postal_code, String country,
+                    String desctiption, ArrayList<String> services, String phone, String owner) {
         this.location = location;
         this.line1 = line1;
         this.line2 = line2;
@@ -110,11 +113,7 @@ public class Location {
         this.desctiption = desctiption;
     }
 
-    public String getServices() {
-        return services;
-    }
-
-    public void setServices(String services) {
+    public void setServices(ArrayList<String> services) {
         this.services = services;
     }
 

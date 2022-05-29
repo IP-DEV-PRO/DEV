@@ -72,15 +72,13 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
         username = intent.getStringExtra("key-user");
 
         Bundle bundle = new Bundle();
-        bundle.putString("key-user", username);
 
         Fragment requestsFragment = new RequestsCompanyFragment();
         Fragment acceptFragment = new AcceptedCompanyFragment();
         Fragment editFragment = new EditDetailsCompanyFragment();
 
-        requestsFragment.setArguments(bundle);
-        acceptFragment.setArguments(bundle);
-        editFragment.setArguments(bundle);
+       // requestsFragment.setArguments(bundle);
+       // acceptFragment.setArguments(bundle);
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         mDatabase.child(username).get().addOnCompleteListener(task -> {
@@ -90,6 +88,12 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
                 User user = task.getResult().getValue(User.class);
                 assert user != null;
                 companyName = user.getCompanyName();
+                bundle.putString("key-company", companyName);
+                editFragment.setArguments(bundle);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.company_component, editFragment)
+                        .commit();
             }
         });
         // add_location = editFragment.requireView().findViewById(R.id.company_add_location_button);
@@ -121,6 +125,7 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
                     //changeActiviy(SubscriptionActivity.class, userId);
                     return true;
                 case R.id.edit_details_comapany_nav:
+                    editFragment.setArguments(bundle);
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.company_component, editFragment)
