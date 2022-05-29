@@ -89,7 +89,6 @@ public class EditDetailsCompanyFragment   extends Fragment {
 
     private void setListenersButtons() {
         add_location.setOnClickListener(view -> {
-            //System.out.println("AMDOSDMOSDOSMDOI0000000000------------------------------------------------------------");
             changeActiviy(RegisterCompanyActivityWithMap.class);
         });
         add_service.setOnClickListener(view -> {

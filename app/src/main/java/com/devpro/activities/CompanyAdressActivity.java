@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.devpro.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,17 +21,37 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CompanyAdressActivity extends AppCompatActivity {
 
-    EditText adr1_text, adr2_text, city_text, postal_text, country_text;
+    TextInputEditText adr1_text, adr2_text, city_text, postal_text, country_text;
     Button register_button;
     String userId, companyName, firstName, lastName, phone, comp_reg_no;
     int back_flag;
     private DatabaseReference mDatabase;
 
     void setListenersButtons() {
-        register_button.setOnClickListener(view -> sendRequest(adr1_text.getText().toString(), adr2_text.getText().toString(),
+        if(back_flag == 0)
+            register_button.setOnClickListener(view -> sendRequest(adr1_text.getText().toString(), adr2_text.getText().toString(),
                                                                 city_text.getText().toString(),postal_text.getText().toString(),
                                                                 country_text.getText().toString()));
+        else
+        {
+            register_button.setOnClickListener(view -> saveChanges(adr1_text.getText().toString(), adr2_text.getText().toString(),
+                    city_text.getText().toString(),postal_text.getText().toString(),
+                    country_text.getText().toString()));
+        }
+
     }
+
+    private void saveChanges(String adr1, String adr2, String city, String postal, String country) {
+        mDatabase.child(userId).child("company_address").child("line1").setValue(adr1);
+        mDatabase.child(userId).child("company_address").child("line2").setValue(adr2);
+        mDatabase.child(userId).child("company_address").child("city").setValue(city);
+        mDatabase.child(userId).child("company_address").child("postal_code").setValue(postal);
+        mDatabase.child(userId).child("company_address").child("country").setValue(country);
+
+        changeActiviy(CompanyOwnerHomePage.class, userId);
+
+    }
+
 
     private void sendRequest(String adr1, String adr2, String city, String postal, String country) {
 
@@ -73,7 +94,6 @@ public class CompanyAdressActivity extends AppCompatActivity {
         userId = intent.getStringExtra("key-user");
         back_flag = intent.getIntExtra("back_flag",0);
 
-
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
 
         adr1_text = findViewById(R.id.comp_adress_adress_line1);
@@ -89,13 +109,18 @@ public class CompanyAdressActivity extends AppCompatActivity {
             lastName = intent.getStringExtra("last");
             phone = intent.getStringExtra("phone");
             comp_reg_no = intent.getStringExtra("cui");
+            register_button.setText("Register Company");
         }
         else
         {
-            mDatabase.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            mDatabase.child(userId).child("company_address").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                   // adr1_text.setText(snapshot.child());
+                   adr1_text.setText(snapshot.child("line1").getValue().toString());
+                   adr2_text.setText(snapshot.child("line2").getValue().toString());
+                   city_text.setText(snapshot.child("city").getValue().toString());
+                   postal_text.setText(snapshot.child("postal_code").getValue().toString());
+                   country_text.setText(snapshot.child("country").getValue().toString());
                 }
 
                 @Override
@@ -103,6 +128,7 @@ public class CompanyAdressActivity extends AppCompatActivity {
 
                 }
             });
+            register_button.setText("Save changes");
         }
 
         setListenersButtons();

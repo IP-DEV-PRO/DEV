@@ -81,18 +81,7 @@ public class AddCompanyAdminActivity extends AppCompatActivity {
     private void addAdmin(String username, String password, String email, String first, String last, String phone) {
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
-        mDatabase.child(userId).child("companyName").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    companyName = task.getResult().getValue(String.class);
-                    System.out.println("dadad " +companyName);
-                }
-            }
-        });
+
         mDatabase.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -119,14 +108,24 @@ public class AddCompanyAdminActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            System.out.println(companyName);
+                            mDatabase.child(userId).child("companyName").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.e("firebase", "Error getting data", task.getException());
+                                    }
+                                    else {
+                                        companyName = task.getResult().getValue(String.class);
+                                        mDatabase.child(username).child("companyName").setValue(companyName);
+                                    }
+                                }
+                            });
                             mDatabase.child(username).child("username").setValue(username);
                             mDatabase.child(username).child("password").setValue(encrypted);
                             mDatabase.child(username).child("firstName").setValue(first);
                             mDatabase.child(username).child("lastName").setValue(last);
                             mDatabase.child(username).child("phone").setValue(phone);
                             mDatabase.child(username).child("e_mail").setValue(email);
-                            mDatabase.child(username).child("companyName").setValue(companyName);
                             mDatabase.child(username).child("role").setValue(1);
                             mDatabase.child(username).child("reg_date").setValue(date);
                             mDatabase.child(username).child("blocked").setValue(false);

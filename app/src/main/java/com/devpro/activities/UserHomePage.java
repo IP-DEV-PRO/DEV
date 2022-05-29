@@ -64,7 +64,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
     private LocationManager locationManager;
     private Location user_location;
     static String userId;
-    private HashMap<Marker, Company> markerArrayList;
+    private HashMap<Marker, com.devpro.models.Location> markerArrayList;
     BottomSheetDialog bottomSheetDialog;
     LinearLayout copy;
     LinearLayout share;
@@ -163,8 +163,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 upload = bottomSheetDialog.findViewById(R.id.uploadLinearLayout);
                 download = bottomSheetDialog.findViewById(R.id.download);
                 delete = bottomSheetDialog.findViewById(R.id.delete);
-
-
             }
         }
     }
@@ -241,10 +239,8 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
 
             // check if location is enabled
             if (isLocationEnabled()) {
-                //user_location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 mMap.setMyLocationEnabled(true);
                 LatLng user_latlng = new LatLng(user_location.getLatitude(), user_location.getLongitude());
-//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12.0f));
                 LatLng now = googleMap.getCameraPosition().target;
 
                 marker = mMap.addMarker(new MarkerOptions()
@@ -258,12 +254,23 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot ds : snapshot.getChildren()) {
-                            Company company = ds.getValue(Company.class);
+                            //Company company = ds.getValue(Company.class);
+                            System.out.println("adiadiadiai " + ds.getKey());
                             //String company_name_s = Objects.requireNonNull(snapshot.child("company_name").getValue()).toString();
                             //owner_first_name_s = Objects.requireNonNull(snapshot.child("owner_first_name").getValue()).toString();
-
-                            assert company != null;
-                            System.out.println(company.getUsername());
+                            for(DataSnapshot location: ds.child("locationList").getChildren())
+                            {
+                                double latitude =  (Double)location.child("location").child("latitude").getValue();
+                                double longitude = (Double)location.child("location").child("longitude").getValue();
+                                Marker marker_company = mMap.addMarker(new MarkerOptions()
+                                        .position(new com.google.android.gms.maps.model.LatLng(latitude, longitude))
+                                        .title(ds.getKey())
+                                        .draggable(true));
+                                com.devpro.models.Location loc = (com.devpro.models.Location) location.getValue(com.devpro.models.Location.class);
+                                markerArrayList.put(marker_company, loc);
+                            }
+//                            assert company != null;
+//                            System.out.println(company.getUsername());
 //                            for (com.devpro.models.Location location : company.getLocationList()) {
 //                                Marker marker_company = mMap.addMarker(new MarkerOptions()
 //                                        .position(new com.google.android.gms.maps.model.LatLng(location.getLocation().getLatitude(), location.getLocation().getLongitude()))
@@ -283,25 +290,25 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
 
                 mMap.setOnMarkerClickListener(marker -> {
                     //showBottomSheetDialog();
-                    Company company = markerArrayList.get(marker);
+                    com.devpro.models.Location loc = markerArrayList.get(marker);
 
-                    CircleImageView imageView;
-                    imageView = download.findViewById(R.id.profile_image);
-
-                    StorageReference storageRef =
-                            FirebaseStorage.getInstance("gs://devpro-c3528.appspot.com/").getReference();
-                    assert company != null;
-                    System.out.println("images/" + company.getUsername() + "/" + "profile.jpeg");
-                    storageRef.child("images/" + company.getUsername() + "/" + "profile").getDownloadUrl()
-                            .addOnSuccessListener(uri -> {
-                                Picasso.get().load(uri).into(imageView);
-                                //System.out.println("CEVA");
-                            })
-                            .addOnFailureListener(e -> {
-                                //handle
-                                System.out.println("ALTCEVA");
-                            });
-                    // imageView.set
+//                    CircleImageView imageView;
+//                    imageView = download.findViewById(R.id.profile_image);
+//
+//                    StorageReference storageRef =
+//                            FirebaseStorage.getInstance("gs://devpro-c3528.appspot.com/").getReference();
+                    assert loc != null;
+//                    System.out.println("images/" + company.getUsername() + "/" + "profile.jpeg");
+//                    storageRef.child("images/" + company.getUsername() + "/" + "profile").getDownloadUrl()
+//                            .addOnSuccessListener(uri -> {
+//                                Picasso.get().load(uri).into(imageView);
+//                                //System.out.println("CEVA");
+//                            })
+//                            .addOnFailureListener(e -> {
+//                                //handle
+//                                System.out.println("ALTCEVA");
+//                            });
+//                    // imageView.set
 
                     bottomSheetDialog.show();
                     return false;

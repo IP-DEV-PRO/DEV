@@ -6,75 +6,110 @@
     android:layout_height="match_parent"
     tools:context=".activities.CompanyAdressActivity">
 
-    <EditText
-        android:id="@+id/comp_adress_adress_country"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="321dp"
         android:layout_height="67dp"
         android:gravity="center|left"
         android:hint="@string/country"
-        android:paddingStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.665">
 
-    <EditText
-        android:id="@+id/comp_adress_adress_city"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comp_adress_adress_country"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#F4A364"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="380dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="321dp"
         android:layout_height="67dp"
         android:gravity="center|left"
         android:hint="@string/city"
-        android:paddingStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.378" />
+        app:layout_constraintVertical_bias="0.378">
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/comp_adress_adress_city"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="#F4A364"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="380dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/comp_adress_adress_postal"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="321dp"
         android:layout_height="67dp"
         android:gravity="center|left"
         android:hint="@string/postal_code"
-        android:paddingStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.518" />
+        app:layout_constraintVertical_bias="0.518" >
 
-    <EditText
-        android:id="@+id/comp_adress_adress_line2"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comp_adress_adress_postal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#F4A364"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="380dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="321dp"
         android:layout_height="67dp"
         android:gravity="center|left"
         android:hint="@string/apartment_suite_unit_building_floor"
-        android:paddingStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.243" />
+        app:layout_constraintVertical_bias="0.243" >
 
-    <EditText
-        android:id="@+id/comp_adress_adress_line1"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/comp_adress_adress_line2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="#F4A364"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="380dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="321dp"
         android:layout_height="67dp"
         android:gravity="center|left"
         android:hint="@string/street_address_p_o_box"
-        android:paddingStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintVertical_bias="0.105" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comp_adress_adress_line1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#F4A364"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="380dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/comp_adress_adress_register"
         android:layout_width="263dp"
         android:layout_height="47dp"
+        android:backgroundTint="#1B75FB"
         android:text="@string/register_company"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

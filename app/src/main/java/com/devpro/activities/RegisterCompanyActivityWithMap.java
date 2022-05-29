@@ -257,20 +257,21 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies");
         System.out.println(companyKey + " " + username + "--------------------------------------------------------------------- ");
         mDatabase.child(companyKey).child("locationList").child(username).setValue(new com.devpro.models.Location(
-                        new LatLng(location_final.latitude, location_final.longitude), "no-street",
-                        "no-city", "no-country", "no-number", username));
+                        new LatLng(location_final.latitude, location_final.longitude), "no-line1","no-line2", "no-city",
+                "no-code","no-country","no-desc","no-services","no-phone", username));
 
         //FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies").child(companyKey).child("locationList").setValue(locationList);
         // mDatabase.child(username).setValue(registeredUser);
         //mDatabase = FirebaseDatabase.getInstance().getReference().child("companies").orderByChild("host").equalTo("Mike 22");
-        changeActiviy(ChangeAdressLocationActivity.class, username);
         finish();
+        changeActiviy(ChangeAdressLocationActivity.class, username , companyKey);
     }
 
 
-    private void changeActiviy(Class activityClass, String key) {
+    private void changeActiviy(Class activityClass, String usernameKey, String companyKey) {
         Intent myIntent = new Intent(this, activityClass);
-        myIntent.putExtra("key-company", key);
+        myIntent.putExtra("key-user", usernameKey);
+        myIntent.putExtra("key-company", companyKey);
         startActivity(myIntent);
     }
 

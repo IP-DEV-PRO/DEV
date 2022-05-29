@@ -18,7 +18,6 @@ public class CompanyOwnerHomePage extends AppCompatActivity {
     Button edit_button, reg_admin_button,  view_button, change_adr_button;
     String userId;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +52,13 @@ public class CompanyOwnerHomePage extends AppCompatActivity {
                 changeActiviy(CompanyAdressActivity.class, userId, 1);
             }
         });
+
+        view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeActiviy(ViewMangers.class, userId, -1);
+            }
+        });
     }
 
     private void changeActiviy(Class activityClass, String userId, int back_flag) {
@@ -62,5 +68,4 @@ public class CompanyOwnerHomePage extends AppCompatActivity {
             myIntent.putExtra("back_flag",1);
         startActivity(myIntent);
     }
-
 }
