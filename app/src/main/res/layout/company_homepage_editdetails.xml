@@ -24,24 +24,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.635" />
 
-    <Button
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/company_add_service"
+        android:hint="@string/add_service"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="237dp"
         android:layout_height="87dp"
         android:layout_marginTop="172dp"
-        android:backgroundTint="#00BFA5"
-        android:backgroundTintMode="src_over"
-        android:fadingEdge="vertical|none"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:foregroundGravity="fill_horizontal|top|fill_vertical"
-        android:foregroundTint="#66E813"
-        android:foregroundTintMode="add"
-        android:text="@string/add_service"
+        android:inputType="text"
+        app:startIconDrawable="@drawable/ic_baseline_settings_accessibility_24"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0">
+
+        <AutoCompleteTextView
+            android:id="@+id/company_add_service2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -76,6 +81,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_description_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_description_text2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layout_editor_absoluteX="2dp"
@@ -95,6 +101,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_phone_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_phone_textInput2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -115,6 +122,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_email_Input2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
@@ -135,6 +143,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_password_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_password_input2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"

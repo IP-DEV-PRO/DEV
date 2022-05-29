@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 public class EditDetailsCompanyFragment   extends Fragment {
-    Button add_location, add_service;
+    Button add_location;
+    AutoCompleteTextView add_service;
     String username;
     String companyName;
 
@@ -40,7 +42,7 @@ public class EditDetailsCompanyFragment   extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         add_location = requireActivity().findViewById(R.id.company_add_location_button);
-        add_service = requireActivity().findViewById(R.id.company_add_service);
+        add_service = requireActivity().findViewById(R.id.company_add_service2);
 
         username = ((CompanyAdminHomePageActivity) requireActivity()).returnUsername();
         companyName = ((CompanyAdminHomePageActivity) requireActivity()).returnCompanyName();
