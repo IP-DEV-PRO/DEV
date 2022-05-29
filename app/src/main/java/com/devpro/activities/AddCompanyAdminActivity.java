@@ -89,7 +89,7 @@ public class AddCompanyAdminActivity extends AppCompatActivity {
                 }
                 else {
                     companyName = task.getResult().getValue(String.class);
-                    System.out.println(companyName);
+                    System.out.println("dadad " +companyName);
                 }
             }
         });
@@ -119,6 +119,7 @@ public class AddCompanyAdminActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                            System.out.println(companyName);
                             mDatabase.child(username).child("username").setValue(username);
                             mDatabase.child(username).child("password").setValue(encrypted);
                             mDatabase.child(username).child("firstName").setValue(first);

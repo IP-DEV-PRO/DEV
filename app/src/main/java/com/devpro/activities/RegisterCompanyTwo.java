@@ -48,6 +48,7 @@ public class RegisterCompanyTwo extends AppCompatActivity {
         myIntent.putExtra("first", first);
         myIntent.putExtra("last", last);
         myIntent.putExtra("phone", phone);
+        myIntent.putExtra("back_flag",0);
         startActivity(myIntent);
 
     }

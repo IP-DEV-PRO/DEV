@@ -1,10 +1,12 @@
 package com.devpro.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ public class CompanyAdressActivity extends AppCompatActivity {
     EditText adr1_text, adr2_text, city_text, postal_text, country_text;
     Button register_button;
     String userId, companyName, firstName, lastName, phone, comp_reg_no;
+    int back_flag;
     private DatabaseReference mDatabase;
 
     void setListenersButtons() {
@@ -61,13 +64,15 @@ public class CompanyAdressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_adress);
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("");
+
         Intent intent = getIntent();
         userId = intent.getStringExtra("key-user");
-        companyName = intent.getStringExtra("name");
-        firstName = intent.getStringExtra("first");
-        lastName = intent.getStringExtra("last");
-        phone = intent.getStringExtra("phone");
-        comp_reg_no = intent.getStringExtra("cui");
+        back_flag = intent.getIntExtra("back_flag",0);
+
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
 
@@ -78,6 +83,28 @@ public class CompanyAdressActivity extends AppCompatActivity {
         country_text = findViewById(R.id.comp_adress_adress_country);
         register_button = findViewById(R.id.comp_adress_adress_register);
 
+        if(back_flag == 0) {
+            companyName = intent.getStringExtra("name");
+            firstName = intent.getStringExtra("first");
+            lastName = intent.getStringExtra("last");
+            phone = intent.getStringExtra("phone");
+            comp_reg_no = intent.getStringExtra("cui");
+        }
+        else
+        {
+            mDatabase.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   // adr1_text.setText(snapshot.child());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
         setListenersButtons();
     }
 
@@ -85,5 +112,18 @@ public class CompanyAdressActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, activityClass);
         myIntent.putExtra("key-user",userId);
         startActivity(myIntent);
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if(back_flag == 1)
+                    changeActiviy(CompanyOwnerHomePage.class, userId);
+                else
+                    changeActiviy(RegisterCompanyTwo.class, userId);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

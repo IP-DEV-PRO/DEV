@@ -37,20 +37,29 @@ public class CompanyOwnerHomePage extends AppCompatActivity {
         edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeActiviy(EditCompanyDetailsActivity.class, userId);
+                changeActiviy(EditCompanyDetailsActivity.class, userId, -1);
             }
         });
         reg_admin_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeActiviy(AddCompanyAdminActivity.class, userId);
+                changeActiviy(AddCompanyAdminActivity.class, userId, -1);
+            }
+        });
+
+        change_adr_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeActiviy(CompanyAdressActivity.class, userId, 1);
             }
         });
     }
 
-    private void changeActiviy(Class activityClass, String userId) {
+    private void changeActiviy(Class activityClass, String userId, int back_flag) {
         Intent myIntent = new Intent(this, activityClass);
         myIntent.putExtra("key-user", userId);
+        if(back_flag != -1)
+            myIntent.putExtra("back_flag",1);
         startActivity(myIntent);
     }
 
