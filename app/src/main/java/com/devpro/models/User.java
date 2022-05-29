@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
+
 @IgnoreExtraProperties
 public class User {
     private boolean blocked;
@@ -21,6 +23,7 @@ public class User {
     private int accepted;
     private int role;
     private String companyName;
+    private String[] services;
 
     public String getCompanyName() {
         return companyName;
@@ -74,7 +77,7 @@ public class User {
         this.role = has_company;
     }
     public User(boolean blocked,String companyName, String e_mail, String password,
-                String sub_start, String sub_exp, boolean sub_active, int role, String comp_reg_no) {
+                String sub_start, String sub_exp, boolean sub_active, int role, String comp_reg_no, String[] services) {
         this.blocked = blocked;
         this.companyName = companyName;
         this.e_mail = e_mail;
@@ -84,6 +87,7 @@ public class User {
         this.sub_active = sub_active;
         this.role = role;
         this.com_reg_no = comp_reg_no;
+        this.services = services;
     }
 
 
@@ -200,5 +204,13 @@ public class User {
 
     public void setAccepted(int accepted) {
         this.accepted = accepted;
+    }
+
+    public String[] getServices() {
+        return services;
+    }
+
+    public void setServices(String[] services) {
+        this.services = services;
     }
 }

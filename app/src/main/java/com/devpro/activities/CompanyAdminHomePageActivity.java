@@ -24,6 +24,7 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     Button add_location, add_service;
     TextInputEditText add_description, change_phone, change_email, change_password;
+
     String username;
     private DatabaseReference mDatabase;
     private String companyName;

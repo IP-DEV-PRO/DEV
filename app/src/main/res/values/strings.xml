@@ -93,5 +93,10 @@
     <string name="change_phone">Change Phone</string>
     <string name="change_company_address">Change Company Address</string>
     <string name="save_location">Save Location</string>
+    <string name="delete_service">Delete Service</string>
+    <string name="service">Service</string>
+    <string name="adauga_serviciu">Adauga Serviciu</string>
+    <string name="delete_selected_service">Delete Selected Service</string>
+
 
 </resources>

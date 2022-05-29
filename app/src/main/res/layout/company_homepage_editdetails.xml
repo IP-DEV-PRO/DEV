@@ -27,26 +27,74 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/company_add_service"
-        android:hint="@string/add_service"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="237dp"
-        android:layout_height="87dp"
+        android:layout_height="90dp"
         android:layout_marginTop="172dp"
+        android:hint="@string/add_service"
         android:inputType="text"
-        app:startIconDrawable="@drawable/ic_baseline_settings_accessibility_24"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        app:startIconDrawable="@drawable/ic_baseline_settings_accessibility_24">
 
         <AutoCompleteTextView
             android:id="@+id/company_add_service2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="49dp"
             android:inputType="none"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            tools:text="Add Service" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/company_add_service3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:hint="@string/adauga_serviciu"
+            app:endIconContentDescription="@string/adauga_serviciu"
+            app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
+            app:endIconMode="custom"
+            app:startIconDrawable="@drawable/ic_baseline_add_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_service_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="0dp"
+                android:gravity="center"
+                android:inputType="text"
+                android:paddingTop="5dp"
+                android:paddingBottom="0dp"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/remove_service"
+        android:layout_width="237dp"
+        android:layout_height="30dp"
+        android:backgroundTint="#BC3672"
+        android:layout_marginTop="0dp"
+        android:backgroundTintMode="src_over"
+        android:fadingEdge="vertical|none"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:foregroundGravity="fill_horizontal|top|fill_vertical"
+        android:foregroundTint="#66E813"
+        android:foregroundTintMode="add"
+        android:text="@string/delete_selected_service"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/company_add_service"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SmallSp" />
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -151,8 +199,7 @@
                     tools:layout_editor_absoluteY="380dp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-    </ScrollView>
-    <!--
+    </ScrollView><!--
         locatia
         descriere
         add / remove tipul serviciilor prestate
