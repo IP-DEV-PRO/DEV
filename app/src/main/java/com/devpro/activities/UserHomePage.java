@@ -37,10 +37,13 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,13 +67,17 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
     private LocationManager locationManager;
     private Location user_location;
     static String userId;
-    private HashMap<Marker, com.devpro.models.Location> markerArrayList;
+    private HashMap<Marker, Pair<String, com.devpro.models.Location>> markerArrayList;
     BottomSheetDialog bottomSheetDialog;
     LinearLayout copy;
     LinearLayout share;
     LinearLayout upload;
     LinearLayout download;
     LinearLayout delete;
+    TextView title_text, descr_text, address_text, phone_text, email_text;
+    Button select_button;
+
+
 
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -124,10 +131,10 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.bottom_navigation_edit:
-                    changeActiviy(EditAccountActivity.class, userId);
+                    changeActiviy(EditAccountActivity.class, userId, null);
                     return true;
                 case R.id.bottom_navigation_subscription:
-                    changeActiviy(SubscriptionActivity.class, userId);
+                    changeActiviy(SubscriptionActivity.class, userId, null);
                     return true;
                 case R.id.bottom_navigation_requests:
                     return true;
@@ -163,6 +170,13 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 upload = bottomSheetDialog.findViewById(R.id.uploadLinearLayout);
                 download = bottomSheetDialog.findViewById(R.id.download);
                 delete = bottomSheetDialog.findViewById(R.id.delete);
+
+                title_text = bottomSheetDialog.findViewById(R.id.title_marker);
+                descr_text = bottomSheetDialog.findViewById(R.id.description_marker);
+                address_text = bottomSheetDialog.findViewById(R.id.address_marker);
+                phone_text = bottomSheetDialog.findViewById(R.id.phone_marker);
+                email_text = bottomSheetDialog.findViewById(R.id.email_marker);
+                select_button = bottomSheetDialog.findViewById(R.id.button_marker);
             }
         }
     }
@@ -192,9 +206,11 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         return bestLocation;
     }
 
-    private void changeActiviy(Class activityClass, String userId) {
+    private void changeActiviy(Class activityClass, String userId, String ownerKey) {
         Intent myIntent = new Intent(this, activityClass);
         myIntent.putExtra("key-user", userId);
+        if(ownerKey != null)
+            myIntent.putExtra("key-owner",ownerKey);
         startActivity(myIntent);
     }
 
@@ -243,11 +259,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 LatLng user_latlng = new LatLng(user_location.getLatitude(), user_location.getLongitude());
                 LatLng now = googleMap.getCameraPosition().target;
 
-                marker = mMap.addMarker(new MarkerOptions()
-                        .position(user_latlng)
-                        .title("Mark your location")
-                        .snippet("")
-                        .draggable(true));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng, 12.0f));
 
                 mDatabase.addValueEventListener(new ValueEventListener() {
@@ -267,7 +278,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                                         .title(ds.getKey())
                                         .draggable(true));
                                 com.devpro.models.Location loc = (com.devpro.models.Location) location.getValue(com.devpro.models.Location.class);
-                                markerArrayList.put(marker_company, loc);
+                                markerArrayList.put(marker_company, new Pair(ds.getKey(), loc));
                             }
 //                            assert company != null;
 //                            System.out.println(company.getUsername());
@@ -289,28 +300,43 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 });
 
                 mMap.setOnMarkerClickListener(marker -> {
+                    bottomSheetDialog.show();
                     //showBottomSheetDialog();
-                    com.devpro.models.Location loc = markerArrayList.get(marker);
+                    Pair<String, com.devpro.models.Location> loc =  markerArrayList.get(marker);
+                    title_text.setText(loc.first);
+                    descr_text.setText(loc.second.getDesctiption());
+                    address_text.setText(loc.second.getLine1() + " " + loc.second.getLine2());
+                    phone_text.setText(loc.second.getPhone());
+                    email_text.setText(loc.second.getEmail());
+                    for(int i=0;i<loc.second.getServices().size();i++)
+                    {
+                        System.out.println(loc.second.getServices().get(i));
+                    }
+                    select_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                            bottomSheetDialog.cancel();
+                            changeActiviy(MakeReservationActivity.class, userId, loc.second.getOwner());
+                        }
+                    });
 
-//                    CircleImageView imageView;
-//                    imageView = download.findViewById(R.id.profile_image);
-//
-//                    StorageReference storageRef =
-//                            FirebaseStorage.getInstance("gs://devpro-c3528.appspot.com/").getReference();
+                    CircleImageView imageView;
+                    imageView = download.findViewById(R.id.profile_image);
+
+                    StorageReference storageRef =
+                            FirebaseStorage.getInstance("gs://devpro-c3528.appspot.com/").getReference();
                     assert loc != null;
 //                    System.out.println("images/" + company.getUsername() + "/" + "profile.jpeg");
-//                    storageRef.child("images/" + company.getUsername() + "/" + "profile").getDownloadUrl()
-//                            .addOnSuccessListener(uri -> {
-//                                Picasso.get().load(uri).into(imageView);
-//                                //System.out.println("CEVA");
-//                            })
-//                            .addOnFailureListener(e -> {
-//                                //handle
-//                                System.out.println("ALTCEVA");
-//                            });
-//                    // imageView.set
-
-                    bottomSheetDialog.show();
+                    storageRef.child("images/" + loc.first + "/" + loc.second.getOwner() + "/profile").getDownloadUrl()
+                            .addOnSuccessListener(uri -> {
+                                Picasso.get().load(uri).into(imageView);
+                                //System.out.println("CEVA");
+                            })
+                            .addOnFailureListener(e -> {
+                                //handle
+                                System.out.println("ALTCEVA");
+                            });
                     return false;
                 });
 
