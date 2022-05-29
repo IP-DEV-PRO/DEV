@@ -9,17 +9,19 @@ public class Location {
     private String city;
     private String country;
     private String number;
+    private String owner;
 
     public Location () {
         location = new LatLng(0, 0);
     }
 
-    public Location(LatLng location, String street, String city, String country, String number) {
+    public Location(LatLng location, String street, String city, String country, String number, String owner) {
         this.location = location;
         this.street = street;
         this.city = city;
         this.country = country;
         this.number = number;
+        this.owner = owner;
     }
 
     public String getStreet() {
@@ -60,5 +62,13 @@ public class Location {
 
     public void setLocation(LatLng location) {
         this.location = location;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

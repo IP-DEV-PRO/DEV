@@ -34,7 +34,7 @@ public class Company {
         this.firstName = firstName;
         if (locationList == null) {
             this.locationList = new ArrayList<>();
-            this.locationList.add(new Location(new LatLng(0, 0), "no-street", "no-city", "no-country", "no-number"));
+            this.locationList.add(new Location(new LatLng(0, 0), "no-street", "no-city", "no-country", "no-number", "no"));
         } else {
             this.locationList = locationList;
         }

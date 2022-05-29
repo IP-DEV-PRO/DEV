@@ -3,6 +3,7 @@ package com.devpro.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.ActionBar;
@@ -13,14 +14,19 @@ import com.devpro.R;
 import com.devpro.fragments.AcceptedCompanyFragment;
 import com.devpro.fragments.EditDetailsCompanyFragment;
 import com.devpro.fragments.RequestsCompanyFragment;
+import com.devpro.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CompanyAdminHomePageActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     Button add_location, add_service;
     TextInputEditText add_description, change_phone, change_email, change_password;
     String username;
+    private DatabaseReference mDatabase;
+    private String companyName;
 
     Fragment requestsFragment;
     Fragment acceptFragment;
@@ -41,6 +47,7 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
     private void changeActiviy(Class activityClass) {
         Intent myIntent = new Intent(this, activityClass);
         myIntent.putExtra("key-user", username);
+        myIntent.putExtra("key-company", companyName);
         startActivity(myIntent);
     }
 
@@ -74,6 +81,16 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
         acceptFragment.setArguments(bundle);
         editFragment.setArguments(bundle);
 
+        mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
+        mDatabase.child(username).get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e("firebase", "Error getting data", task.getException());
+            } else {
+                User user = task.getResult().getValue(User.class);
+                assert user != null;
+                companyName = user.getCompanyName();
+            }
+        });
         // add_location = editFragment.requireView().findViewById(R.id.company_add_location_button);
        /* add_service = findViewById(R.id.company_add_service);
         add_description = findViewById(R.id.add_description_text);
@@ -119,5 +136,9 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
 
     public String returnUsername() {
         return username;
+    }
+
+    public String returnCompanyName() {
+        return companyName;
     }
 }

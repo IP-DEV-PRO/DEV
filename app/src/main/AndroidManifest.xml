@@ -108,6 +108,8 @@
         <activity
             android:name=".activities.CompanyAdminHomePageActivity"
             android:exported="true" />
+        <activity android:name=".activities.ChangeAdressLocationActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

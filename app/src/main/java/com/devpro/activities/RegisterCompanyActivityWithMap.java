@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -47,9 +48,9 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     private Marker marker;
     private DatabaseReference mDatabase;
     private String companyKey;
-    private String name, cui, first, last, phone;
+    private String username;
 
-    private static final String[] PERMISSIONS = new String[] {
+    private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.INTERNET
@@ -82,11 +83,8 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
-        name = intent.getStringExtra("name");
-        cui = intent.getStringExtra("cui");
-        first = intent.getStringExtra("first");
-        last = intent.getStringExtra("last");
-        phone = intent.getStringExtra("phone");
+        companyKey = intent.getStringExtra("key-company");
+        username = intent.getStringExtra("key-user");
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -253,18 +251,20 @@ public class RegisterCompanyActivityWithMap extends AppCompatActivity implements
     private void setMarkerExtractLocation() {
         com.google.android.gms.maps.model.LatLng location_final = marker.getPosition();
 
-        List<com.devpro.models.Location> locationList = new ArrayList<>();
-        locationList.add(new com.devpro.models.Location(new LatLng(location_final.latitude, location_final.longitude), "no-street", "no-city", "no-country", "no-number"));
+        //List<com.devpro.models.Location> locationList = new ArrayList<>();
+        //locationList.add(new com.devpro.models.Location(new LatLng(location_final.latitude, location_final.longitude), "no-street", "no-city", "no-country", "no-number"));
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies");
+        System.out.println(companyKey + " " + username + "--------------------------------------------------------------------- ");
+        mDatabase.child(companyKey).child("locationList").child(username).setValue(new com.devpro.models.Location(
+                        new LatLng(location_final.latitude, location_final.longitude), "no-street",
+                        "no-city", "no-country", "no-number", username));
 
-        Company registeredCompany = new Company(name, null, cui, last,
-                first, phone, locationList);
-        mDatabase.child(name).setValue(registeredCompany);
         //FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies").child(companyKey).child("locationList").setValue(locationList);
         // mDatabase.child(username).setValue(registeredUser);
         //mDatabase = FirebaseDatabase.getInstance().getReference().child("companies").orderByChild("host").equalTo("Mike 22");
-        changeActiviy(AddCompanyProfilePicture.class, name);
+        changeActiviy(ChangeAdressLocationActivity.class, username);
+        finish();
     }
 
 
