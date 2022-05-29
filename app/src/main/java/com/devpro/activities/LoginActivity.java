@@ -137,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     "Login successful!!",
                                                     Toast.LENGTH_LONG)
                                                     .show();
+                                            finish();
                                             changeActiviy(UserHomePage.class, username);
                                         } else {
                                             if(user.getRole() == 1) {
@@ -144,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         "Login successful!!",
                                                         Toast.LENGTH_LONG)
                                                         .show();
+                                                finish();
                                                 changeActiviy(CompanyAdminHomePageActivity.class, username);
                                             }
                                             else {
@@ -153,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                                                             "Login successful!!",
                                                             Toast.LENGTH_LONG)
                                                             .show();
+                                                    finish();
                                                     changeActiviy(CompanyOwnerHomePage.class, username);
                                                 }
                                                 else if(accepted == 0)  {
@@ -170,10 +173,12 @@ public class LoginActivity extends AppCompatActivity {
                                     "Incorrect username/password!!",
                                     Toast.LENGTH_LONG)
                                     .show();
+                            finish();
                             changeActiviy(MainActivity.class, username);
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "No account with that username", Toast.LENGTH_LONG).show();
+                        finish();
                         changeActiviy(MainActivity.class, username);
                     }
                 }

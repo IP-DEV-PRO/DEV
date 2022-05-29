@@ -42,7 +42,7 @@ public class AddCompanyProfilePicture extends AppCompatActivity {
     // instance for firebase storage and StorageReference
     FirebaseStorage storage;
     StorageReference storageReference;
-    String companyName;
+    String companyName, userId;
 
     void setListenersButtons() {
         btnSelect.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +132,7 @@ public class AddCompanyProfilePicture extends AppCompatActivity {
             StorageReference ref
                     = storageReference
                     .child(
-                            "images/" + companyName + "/"
+                            "images/" + companyName + "/" + userId + "/"
                                     + "profile");
 
             // adding listeners on upload
@@ -154,6 +154,7 @@ public class AddCompanyProfilePicture extends AppCompatActivity {
                                                     "Image Uploaded!!",
                                                     Toast.LENGTH_SHORT)
                                             .show();
+                                    changeActiviy(CompanyAdminHomePageActivity.class, userId);
                                 }
                             })
 
@@ -208,7 +209,16 @@ public class AddCompanyProfilePicture extends AppCompatActivity {
 
         Intent intent = getIntent();
         companyName = intent.getStringExtra("key-company");
+        userId = intent.getStringExtra("key-user");
+
+        System.out.println(userId + " " + companyName);
 
         setListenersButtons();
+    }
+
+    private void changeActiviy(Class activityClass, String userId) {
+        Intent myIntent = new Intent(this, activityClass);
+        myIntent.putExtra("key-user",userId);
+        startActivity(myIntent);
     }
 }

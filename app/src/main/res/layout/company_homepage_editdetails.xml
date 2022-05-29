@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
     <Button
         android:id="@+id/company_add_location_button"
         android:layout_width="237dp"
@@ -22,8 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.635" />
-
+        app:layout_constraintVertical_bias="0.188" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/company_add_service"
@@ -199,7 +199,20 @@
                     tools:layout_editor_absoluteY="380dp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-    </ScrollView><!--
+    </ScrollView>
+
+    <Button
+        android:id="@+id/company_add_location_add_image"
+        android:layout_width="232dp"
+        android:layout_height="38dp"
+        android:backgroundTint="#BC3672"
+        android:text="@string/add_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.171" /><!--
         locatia
         descriere
         add / remove tipul serviciilor prestate

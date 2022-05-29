@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DEVPRO">
         <activity
+            android:name=".activities.MakeReservationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ViewMangers"
             android:exported="false" />
         <activity
@@ -111,7 +114,8 @@
         <activity
             android:name=".activities.CompanyAdminHomePageActivity"
             android:exported="true" />
-        <activity android:name=".activities.ChangeAdressLocationActivity"
+        <activity
+            android:name=".activities.ChangeAdressLocationActivity"
             android:exported="true" />
     </application>
 

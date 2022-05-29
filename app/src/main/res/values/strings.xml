@@ -97,6 +97,10 @@
     <string name="service">Service</string>
     <string name="adauga_serviciu">Adauga Serviciu</string>
     <string name="delete_selected_service">Delete Selected Service</string>
+    <string name="address">Address</string>
+    <string name="services">Services</string>
+    <string name="select">Select</string>
+    <string name="add_image">Add image</string>
 
 
 </resources>

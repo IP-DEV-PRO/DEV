@@ -97,7 +97,6 @@ public class PaymentActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("");
-        actionBar.setBackgroundDrawable(new ColorDrawable(0xbe4d25));
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         userId = getIntent().getStringExtra("key-user");
@@ -107,7 +106,6 @@ public class PaymentActivity extends AppCompatActivity {
         exp_text = findViewById(R.id.payment_exp);
         cvv_text = findViewById(R.id.payment_cvv);
         pay_button = findViewById(R.id.payment_pay);
-
 
         setListenersButtons();
     }
@@ -124,7 +122,7 @@ public class PaymentActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                //changeActiviy(SubscriptionActivity.class, userId);
+                changeActiviy(SubscriptionActivity.class, userId);
                 return true;
         }
         return super.onOptionsItemSelected(item);

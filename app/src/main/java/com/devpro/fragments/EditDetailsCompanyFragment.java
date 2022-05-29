@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.devpro.R;
+import com.devpro.activities.AddCompanyProfilePicture;
 import com.devpro.activities.CompanyAdminHomePageActivity;
 import com.devpro.activities.RegisterCompanyActivityWithMap;
 import com.devpro.models.Company;
@@ -33,7 +34,7 @@ import java.util.Objects;
 public class EditDetailsCompanyFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     public static EditDetailsCompanyFragment instance = null;
-    Button add_location;
+    Button add_location, add_image;
     AutoCompleteTextView add_service;
     TextInputLayout add_service_2;
     TextInputEditText add_service_4;
@@ -56,10 +57,10 @@ public class EditDetailsCompanyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         add_location = requireActivity().findViewById(R.id.company_add_location_button);
+        add_image = requireActivity().findViewById(R.id.company_add_location_add_image);
         add_service = requireActivity().findViewById(R.id.company_add_service2);
         add_service_2 = requireActivity().findViewById(R.id.company_add_service3);
         add_service_4 = requireActivity().findViewById(R.id.add_service_4);
-
 
         username = ((CompanyAdminHomePageActivity) requireActivity()).returnUsername();
         companyName = ((CompanyAdminHomePageActivity) requireActivity()).returnCompanyName();
@@ -136,11 +137,18 @@ public class EditDetailsCompanyFragment extends Fragment {
             System.out.println("AMDOSDMOSDOSMDOI0000000000------------------------------------------------------------");
         });
 
+        add_image.setOnClickListener(view -> changeActiviy(AddCompanyProfilePicture.class));
+
         add_service_2.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<String> ad = new ArrayList<>();
+                ad.add("dada");
+                ad.add("dasdasda");
                 FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                        .child(companyName).child("locationList").child(username).child("services").child(add_service_4.getText().toString()).setValue(0);
+                        .child(companyName).child("locationList").child(username).child("services").setValue(ad);
+//                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+//                        .child(companyName).child("locationList").child(username).child("services").child(add_service_4.getText().toString()).setValue(0);
              //   System.out.println(add_service_4.getText().toString() + " d asdaosmdoasodmasmdoimasoidmoiasmdoimasoidmoiasd");
                 //System.out.println(");
             }
@@ -161,6 +169,5 @@ public class EditDetailsCompanyFragment extends Fragment {
                 startActivity(myIntent);
             }
         });
-
     }
 }
