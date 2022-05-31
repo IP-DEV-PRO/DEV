@@ -6,4 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".activities.MakeReservationActivity">
 
+    <CalendarView
+        android:id="@+id/make_res_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#2B7DF4"
+        android:dateTextAppearance="@android:style/TextAppearance.Medium"
+        android:theme="@style/CalenderViewCustom"
+        android:weekDayTextAppearance="@android:style/TextAppearance.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.157">
+
+    </CalendarView>
+
+    <NumberPicker
+
+        android:id="@+id/make_res_hour"
+        android:layout_width="81dp"
+        android:layout_height="127dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.794" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -260,6 +260,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 LatLng now = googleMap.getCameraPosition().target;
 
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user_latlng, 12.0f));
+                locationManager.removeUpdates(this);
 
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -308,10 +309,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                     address_text.setText(loc.second.getLine1() + " " + loc.second.getLine2());
                     phone_text.setText(loc.second.getPhone());
                     email_text.setText(loc.second.getEmail());
-                    for(int i=0;i<loc.second.getServices().size();i++)
-                    {
-                        System.out.println(loc.second.getServices().get(i));
-                    }
                     select_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
