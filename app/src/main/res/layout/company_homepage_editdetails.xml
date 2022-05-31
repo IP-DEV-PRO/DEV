@@ -10,7 +10,7 @@
     <Button
         android:id="@+id/company_add_location_button"
         android:layout_width="237dp"
-        android:layout_height="87dp"
+        android:layout_height="38dp"
         android:backgroundTint="#BC3672"
         android:backgroundTintMode="src_over"
         android:fadingEdge="vertical|none"
@@ -21,16 +21,17 @@
         android:text="@string/add_location"
         app:layout_constraintBottom_toTopOf="@+id/company_add_service"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.188" />
+        app:layout_constraintVertical_bias="0.55" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/company_add_service"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="237dp"
         android:layout_height="90dp"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="170dp"
         android:hint="@string/add_service"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
@@ -57,8 +58,7 @@
             android:hint="@string/adauga_serviciu"
             app:endIconContentDescription="@string/adauga_serviciu"
             app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
-            app:endIconMode="custom"
-            app:startIconDrawable="@drawable/ic_baseline_add_24">
+            app:endIconMode="custom">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_service_4"
@@ -78,7 +78,7 @@
     <Button
         android:id="@+id/remove_service"
         android:layout_width="237dp"
-        android:layout_height="30dp"
+        android:layout_height="38dp"
         android:backgroundTint="#BC3672"
         android:layout_marginTop="0dp"
         android:backgroundTintMode="src_over"
@@ -88,7 +88,7 @@
         android:foregroundTint="#66E813"
         android:foregroundTintMode="add"
         android:text="@string/delete_selected_service"
-        android:textSize="8sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +101,7 @@
         android:layout_width="237dp"
         android:layout_height="0dp"
         android:layout_marginTop="300dp"
-        android:layout_marginBottom="59dp"
+        android:layout_marginBottom="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,12 +120,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="237dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="5dp"
                 android:hint="@string/add_description"
                 android:maxHeight="5dp"
                 android:paddingTop="2dp"
                 app:counterEnabled="true"
-                app:counterMaxLength="30"
+                app:counterMaxLength="25"
                 app:startIconDrawable="@drawable/ic_baseline_description_24">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -145,7 +145,7 @@
                 android:hint="@string/change_phone"
                 android:maxHeight="100dp"
                 android:minHeight="50dp"
-                android:paddingTop="26dp"
+                android:paddingTop="6dp"
                 app:startIconDrawable="@drawable/ic_baseline_phone_24">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -166,7 +166,7 @@
                 android:hint="@string/change_email"
                 android:maxHeight="100dp"
                 android:minHeight="50dp"
-                android:paddingTop="30dp"
+                android:paddingTop="10dp"
                 app:startIconDrawable="@drawable/ic_baseline_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -187,7 +187,7 @@
                 android:hint="@string/change_password"
                 android:maxHeight="100dp"
                 android:minHeight="50dp"
-                android:paddingTop="30dp"
+                android:paddingTop="10dp"
                 app:startIconDrawable="@drawable/ic_baseline_password_24">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -209,15 +209,22 @@
         android:text="@string/add_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.171" /><!--
-        locatia
-        descriere
-        add / remove tipul serviciilor prestate
-        telefon
-        email
+        app:layout_constraintVertical_bias="0.168" />
 
-        -->
+    <Button
+        android:id="@+id/saveDetails"
+        android:layout_width="232dp"
+        android:layout_height="38dp"
+        android:backgroundTint="#BC3672"
+        android:text="@string/save_details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.891" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

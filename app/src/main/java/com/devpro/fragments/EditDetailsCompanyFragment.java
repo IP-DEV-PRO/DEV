@@ -3,6 +3,7 @@ package com.devpro.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,8 +33,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.regex.Pattern;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 public class EditDetailsCompanyFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
@@ -45,6 +52,10 @@ public class EditDetailsCompanyFragment extends Fragment {
     String username;
     String companyName;
     String currentSelectedService = null;
+
+    Button saveDetails;
+    TextInputEditText add_phone_textInput2, add_email_Input2, add_description_text2, add_password_input2;
+
 
     public EditDetailsCompanyFragment() {
         instance = this;
@@ -67,7 +78,11 @@ public class EditDetailsCompanyFragment extends Fragment {
         add_service_2 = requireActivity().findViewById(R.id.company_add_service3);
         add_service_4 = requireActivity().findViewById(R.id.add_service_4);
         remove_service = requireActivity().findViewById(R.id.remove_service);
-
+        saveDetails = requireActivity().findViewById(R.id.saveDetails);
+        add_phone_textInput2 = requireActivity().findViewById(R.id.add_phone_textInput2);
+        add_email_Input2 = requireActivity().findViewById(R.id.add_email_Input2);
+        add_description_text2 = requireActivity().findViewById(R.id.add_description_text2);
+        add_password_input2 = requireActivity().findViewById(R.id.add_password_input2);
 
         username = ((CompanyAdminHomePageActivity) requireActivity()).returnUsername();
         companyName = ((CompanyAdminHomePageActivity) requireActivity()).returnCompanyName();
@@ -147,6 +162,14 @@ public class EditDetailsCompanyFragment extends Fragment {
         }
     }
 
+    private String encrypt(String password) throws Exception {
+        Key key = new SecretKeySpec("1Hbfh667adfDEJ78".getBytes(), "AES");
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encryptedByteValue = cipher.doFinal(password.getBytes("utf-8"));
+        return Base64.encodeToString(encryptedByteValue, Base64.DEFAULT);
+    }
+
     private void setListenersButtons() {
         add_location.setOnClickListener(view -> {
             changeActiviy(RegisterCompanyActivityWithMap.class);
@@ -160,9 +183,58 @@ public class EditDetailsCompanyFragment extends Fragment {
             }
         });
 
+        saveDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Objects.requireNonNull(add_description_text2.getText()).toString().compareTo("") != 0) {
+                    if (add_description_text2.getText().toString().length() > 25) {
+                        Toast.makeText(getActivity(), "Description is too long", Toast.LENGTH_LONG).show();
+                    } else {
+                        FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                                .child(companyName).child("locationList").child(username).child("description").setValue(add_description_text2.getText().toString());
+                        add_description_text2.setText("");
+                    }
+                }
+                //System.out.println("DESCRIPTION: " + add_description_text2.getText());
+                if (Objects.requireNonNull(add_phone_textInput2.getText()).toString().compareTo("") != 0) {
+                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                            .child(companyName).child("locationList").child(username).child("phone").setValue(add_phone_textInput2.getText().toString());
+                    add_phone_textInput2.setText("");
+                }
+                if (Objects.requireNonNull(add_email_Input2.getText()).toString().compareTo("") != 0) {
+                    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+                            "[a-zA-Z0-9_+&*-]+)*@" +
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                            "A-Z]{2,7}$";
+                    Pattern pat = Pattern.compile(emailRegex);
+                    if (!pat.matcher(add_email_Input2.getText().toString()).matches()) {
+                        Toast.makeText(getActivity(), "Invalid e-mail address", Toast.LENGTH_LONG).show();
+                    } else {
+                        FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                                .child(companyName).child("locationList").child(username).child("e_mail").setValue(add_email_Input2.getText().toString());
+                        add_email_Input2.setText("");
+                    }
+                }
+                if (Objects.requireNonNull(add_password_input2.getText()).toString().compareTo("") != 0) {
+                    String encrypted = "";
+                    try {
+                        encrypted = encrypt(add_password_input2.getText().toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users")
+                            .child(username).child("password").setValue(encrypted);
+                    add_password_input2.setText("");
+                }
+
+            }
+        });
+
         remove_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                add_service.setText("");
+
                 FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
                         .child(companyName).child("locationList").child(username).child("services").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
@@ -206,6 +278,7 @@ public class EditDetailsCompanyFragment extends Fragment {
 
                             }
                             a.add(add_service_4.getText().toString());
+                            add_service_4.setText("");
                             FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
                                     .child(companyName).child("locationList").child(username).child("services").setValue(a);
                         }
