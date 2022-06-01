@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DEVPRO">
         <activity
+            android:name=".activities.UserViewSentRequests"
+            android:exported="false" />
+        <activity
             android:name=".activities.MakeReservationActivity"
             android:exported="false" />
         <activity

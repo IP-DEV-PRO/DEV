@@ -11,16 +11,16 @@
     <NumberPicker
 
         android:id="@+id/make_res_end_pick"
-        android:layout_width="61dp"
-        android:layout_height="67dp"
-        android:scaleY="0.7"
+        android:layout_width="80dp"
+        android:layout_height="87dp"
+        android:scaleY="0.8"
         android:theme="@style/ThemeOverlay.NumberPicker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.68"
+        app:layout_constraintHorizontal_bias="0.743"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintVertical_bias="0.639" />
 
     <CalendarView
         android:id="@+id/make_res_calendar"
@@ -43,9 +43,9 @@
     <NumberPicker
 
         android:id="@+id/make_res_start_pick"
-        android:layout_width="63dp"
-        android:layout_height="63dp"
-        android:scaleY="0.7"
+        android:layout_width="74dp"
+        android:layout_height="83dp"
+        android:scaleY="0.8"
         android:theme="@style/ThemeOverlay.NumberPicker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.563"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.632" />

@@ -45,7 +45,7 @@ public class MakeReservationActivity extends AppCompatActivity {
     String date;
     Calendar calendar_date;
     SimpleDateFormat dateFormat;
-    String selectedService;
+    String selected;
 
     void setListenersButtons() {
         send_res_button.setOnClickListener(view -> sendRequest());
@@ -91,7 +91,7 @@ public class MakeReservationActivity extends AppCompatActivity {
                                                 a.add(ds.getValue(Request.class));
                                             }
                                             a.add(new Request(userId, companyName, userPhone, date,
-                                                    timeSlotsStart[start_time], timeSlotsEnd[end_time], selectedService, false,
+                                                    timeSlotsStart[start_time], timeSlotsEnd[end_time], selected, false,
                                                     firstName, lastName));
                                             FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
                                                     getReference("companies").child(companyName).child("locationList").child(ownerKey).child("requests").setValue(a);
@@ -113,9 +113,12 @@ public class MakeReservationActivity extends AppCompatActivity {
                                 for (DataSnapshot ds : task.getResult().getChildren()) {
                                     a.add(ds.getValue(Request.class));
                                 }
-                                a.add(new Request(userId, companyName, userPhone, date, timeSlotsStart[start_time], timeSlotsEnd[end_time], selectedService, false, null, null));
+                                a.add(new Request(userId, companyName, userPhone, date, timeSlotsStart[start_time], timeSlotsEnd[end_time], selected, false, null, null));
                                 FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
                                         getReference("users").child(userId).child("requests").setValue(a);
+                                Toast.makeText(getApplicationContext(), "Request sent", Toast.LENGTH_SHORT).show();
+                                finish();
+                                changeActiviy(UserHomePage.class, userId);
                             }
                         }
                     });
@@ -139,8 +142,7 @@ public class MakeReservationActivity extends AppCompatActivity {
 
         userId = getIntent().getStringExtra("key-user");
         ownerKey = getIntent().getStringExtra("key-owner");
-        selectedService = getIntent().getStringExtra("key-service");
-
+        selected = getIntent().getStringExtra("key-service");
         System.out.println(userId + " " + ownerKey);
 
         mDatabase.child(userId).child("phone").get().addOnCompleteListener(task -> {
@@ -184,8 +186,6 @@ public class MakeReservationActivity extends AppCompatActivity {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                String msg = "Selected date Day: " + i2 + " Month : " + (i1 + 1) + " Year " + i;
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                 if(i1 < 10)
                     date = +i2 +"-0"+(i1 + 1) + "-" + i;
                 else
