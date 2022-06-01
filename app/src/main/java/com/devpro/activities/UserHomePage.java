@@ -292,7 +292,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                                         .position(new com.google.android.gms.maps.model.LatLng(latitude, longitude))
                                         .title(ds.getKey())
                                         .draggable(true));
-                                com.devpro.models.Location loc = (com.devpro.models.Location) location.getValue(com.devpro.models.Location.class);
+                                com.devpro.models.Location loc = location.getValue(com.devpro.models.Location.class);
                                 markerArrayList.put(marker_company, new Pair(ds.getKey(), loc));
                             }
                         }

@@ -1,6 +1,8 @@
 package com.devpro.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +48,8 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
     String username;
     private DatabaseReference mDatabase;
     private String companyName;
+    RecyclerView recyclerView;
+    LinearLayoutManager linearLayoutManager;
 
     Fragment requestsFragment;
     Fragment acceptFragment;
@@ -193,20 +198,53 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
     }
 
     public void setupRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView2);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView = findViewById(R.id.recyclerView2);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(requestsDataAdapter);
 
         SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onLeftClicked(int position) {
-                requestsDataAdapter.requests.remove(position);
-                requestsDataAdapter.notifyItemRemoved(position);
-                requestsDataAdapter.notifyItemRangeChanged(position, requestsDataAdapter.getItemCount());
+                /*
+                * FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                        .child(companyName).child("locationList").child(username).child("requests").child(String.valueOf(position)).removeValue();
+                *
+                * */
 
                 FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                        .child(companyName).child("locationList").child(username).child("requests").child(String.valueOf(position)).removeValue();
+                        .child(companyName).child("locationList").child(username).child("requests").get().addOnCompleteListener(task -> {
+                    ArrayList<Request> a = new ArrayList<>();
+                    int i = 0;
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        if (i != position) {
+                            a.add(ds.getValue(Request.class));
+                        }
+                        i++;
+                    }
+
+                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                            .child(companyName).child("locationList").child(username).child("requests").setValue(a);
+
+                });
+
+                requestsDataAdapter.requests.remove(position);
+                linearLayoutManager.removeAllViews();
+                List<Request> a = requestsDataAdapter.requests;
+                requestsDataAdapter.requests.clear();
+                requestsDataAdapter.notifyDataSetChanged();
+                requestsDataAdapter.requests = a;
+                requestsDataAdapter.notifyDataSetChanged();
+
+                //requestsDataAdapter.notifyItemRangeRemoved(position, requestsDataAdapter.getItemCount());
+                // requestsDataAdapter.notifyItemRangeChanged(0, requestsDataAdapter.requests.size());
+               // requestsDataAdapter.notifyItemRangeChanged(position, requestsDataAdapter.getItemCount());
+               /* final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.detach(requestsFragment);
+                ft.attach(requestsFragment);
+                ft.commit();
+                */System.out.println(requestsDataAdapter.requests.toString());
             }
 
             @Override
