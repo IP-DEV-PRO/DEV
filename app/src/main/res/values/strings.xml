@@ -106,6 +106,13 @@
     <string name="change_description">Change Description</string>
     <string name="change_image">Change Image</string>
     <string name="change_location">Change Location</string>
+    <string name="content_description_media" />
+    <string name="title">Titlu</string>
+    <string name="content_description">content description</string>
+    <string name="text_secundar">Text secundar</string>
+    <string name="supporting_text">Supporting text</string>
+    <string name="action_1">Action 1</string>
+    <string name="action_2">Action 2</string>
 
 
 </resources>
