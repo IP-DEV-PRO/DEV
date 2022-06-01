@@ -2,24 +2,30 @@ package com.devpro.models;
 
 public class Request {
     private String username;
+    private String companyName;
     private String phone;
     private String date;
     private String startTime;
     private String endTime;
     private String service;
+    private boolean accepted;
 
-    public Request(String username, String phone, String date, String startTime, String endTime, String service) {
+    public Request()
+    {
+
+    }
+
+    public Request(String username, String companyName, String phone, String date, String startTime, String endTime, String service, boolean accepted) {
         this.username = username;
+        this.companyName = companyName;
         this.phone = phone;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.service = service;
+        this.accepted = accepted;
     }
-    public Request()
-    {
 
-    }
 
     public String getUsername() {
         return username;
@@ -67,5 +73,34 @@ public class Request {
 
     public void setService(String service) {
         this.service = service;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "username='" + username + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", date='" + date + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", service='" + service + '\'' +
+                '}';
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 }

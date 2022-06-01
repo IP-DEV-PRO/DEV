@@ -14,6 +14,7 @@ public class Location {
     private String country;
     private String description;
     private ArrayList<String> services;
+    private ArrayList<Request> requests;
     private String phone;
     private String owner;
     private String email;
@@ -22,7 +23,7 @@ public class Location {
         location = new LatLng(0, 0);
     }
 
-    public Location(LatLng location, String line1, String line2, String city, String postal_code, String country, String description, String email, ArrayList<String> services, String phone, String owner) {
+    public Location(LatLng location, String line1, String line2, String city, String postal_code, String country, String description, ArrayList<String> services, ArrayList<Request> requests, String phone, String owner, String email) {
         this.location = location;
         this.line1 = line1;
         this.line2 = line2;
@@ -31,6 +32,7 @@ public class Location {
         this.country = country;
         this.description = description;
         this.services = services;
+        this.requests = requests;
         this.phone = phone;
         this.owner = owner;
         this.email = email;
@@ -136,5 +138,13 @@ public class Location {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ArrayList<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(ArrayList<Request> requests) {
+        this.requests = requests;
     }
 }

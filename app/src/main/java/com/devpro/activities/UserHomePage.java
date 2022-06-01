@@ -281,16 +281,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                                 com.devpro.models.Location loc = (com.devpro.models.Location) location.getValue(com.devpro.models.Location.class);
                                 markerArrayList.put(marker_company, new Pair(ds.getKey(), loc));
                             }
-//                            assert company != null;
-//                            System.out.println(company.getUsername());
-//                            for (com.devpro.models.Location location : company.getLocationList()) {
-//                                Marker marker_company = mMap.addMarker(new MarkerOptions()
-//                                        .position(new com.google.android.gms.maps.model.LatLng(location.getLocation().getLatitude(), location.getLocation().getLongitude()))
-//                                        .title(company.getUsername())
-//                                        .draggable(true));
-//
-//                                markerArrayList.put(marker_company, company);
-//                            }
                         }
                     }
 
