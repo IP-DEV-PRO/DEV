@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,8 @@ import com.devpro.fragments.EditDetailsCompanyFragment;
 import com.devpro.fragments.RequestsCompanyFragment;
 import com.devpro.models.Request;
 import com.devpro.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -92,7 +95,7 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
         Fragment editFragment = new EditDetailsCompanyFragment();
 
         // requestsFragment.setArguments(bundle);
-       // acceptFragment.setArguments(bundle);
+        // acceptFragment.setArguments(bundle);
 
         mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
         mDatabase.child(username).get().addOnCompleteListener(task -> {
@@ -198,7 +201,12 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
         SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
             @Override
             public void onLeftClicked(int position) {
-                super.onLeftClicked(position);
+                requestsDataAdapter.requests.remove(position);
+                requestsDataAdapter.notifyItemRemoved(position);
+                requestsDataAdapter.notifyItemRangeChanged(position, requestsDataAdapter.getItemCount());
+
+                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                        .child(companyName).child("locationList").child(username).child("requests").child(String.valueOf(position)).removeValue();
             }
 
             @Override
