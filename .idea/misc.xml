@@ -4,7 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/DEV/app/src/main/res/drawable/circle.xml" value="0.3675" />
-        <entry key="..\:/DEV/app/src/main/res/drawable/company_homepage_editdetails_2.xml" value="0.2965" />
         <entry key="..\:/DEV/app/src/main/res/drawable/img.xml" value="0.3675" />
         <entry key="..\:/DEV/app/src/main/res/layout-v23/activity_bar_map.xml" value="0.36666666666666664" />
         <entry key="..\:/DEV/app/src/main/res/layout-v23/first_page.xml" value="0.2388888888888889" />
@@ -24,8 +23,6 @@
         <entry key="..\:/DEV/app/src/main/res/layout/activity_user_home_page.xml" value="0.25" />
         <entry key="..\:/DEV/app/src/main/res/layout/admin_toolbar.xml" value="0.36666666666666664" />
         <entry key="..\:/DEV/app/src/main/res/layout/bottom_sheet.xml" value="0.36666666666666664" />
-        <entry key="..\:/DEV/app/src/main/res/layout/company_homepage_editdetails.xml" value="0.36666666666666664" />
-        <entry key="..\:/DEV/app/src/main/res/layout/company_homepage_editdetails_2.xml" value="0.36666666666666664" />
         <entry key="..\:/DEV/app/src/main/res/layout/content.xml" value="0.36666666666666664" />
         <entry key="..\:/DEV/app/src/main/res/layout/content_main.xml" value="0.3625" />
         <entry key="..\:/DEV/app/src/main/res/layout/upload_image.xml" value="0.21979166666666666" />
@@ -67,6 +64,8 @@
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/buy_with_googlepay_button.xml" value="0.264" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/company_admin_home_page.xml" value="0.196875" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/company_homepage_editdetails.xml" value="0.4" />
+        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/company_homepage_requests.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/requests_list_owner_location.xml" value="0.1" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/layout/upload_image.xml" value="0.1" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/menu/admin_menu.xml" value="0.22916666666666666" />
         <entry key="..\:/Users/bebed/OneDrive/Desktop/IP/DEVPRO/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
