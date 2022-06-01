@@ -146,6 +146,7 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
 
                                 setRequestsAdapter(requests);
                                 setupRecyclerView();
+
                             }
                         }
 
@@ -158,7 +159,6 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
                             .beginTransaction()
                             .replace(R.id.company_component, requestsFragment)
                             .commit();
-
                     //changeActiviy(SubscriptionActivity.class, userId);
                     return true;
                 case R.id.edit_details_comapany_nav:
@@ -190,7 +190,7 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
     }
 
     public void setupRecyclerView() {
-        RecyclerView recyclerView = requestsFragment.requireView().findViewById(R.id.recyclerView2);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView2);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(requestsDataAdapter);

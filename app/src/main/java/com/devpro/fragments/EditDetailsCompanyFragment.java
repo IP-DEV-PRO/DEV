@@ -82,12 +82,12 @@ public class EditDetailsCompanyFragment extends Fragment {
 
         username = ((CompanyAdminHomePageActivity) requireActivity()).returnUsername();
         companyName = ((CompanyAdminHomePageActivity) requireActivity()).returnCompanyName();
-        setListenersButtons();
 
         System.out.println(companyName + " " + username);
         if (companyName != null && username != null) {
         }
 
+        setListenersButtons();
     }
 
     @Override
