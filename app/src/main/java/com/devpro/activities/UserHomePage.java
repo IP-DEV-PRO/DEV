@@ -218,6 +218,16 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         startActivity(myIntent);
     }
 
+    private void changeActiviyFromSelect(Class activityClass, String userId, String ownerKey, String selectedService) {
+        Intent myIntent = new Intent(this, activityClass);
+        myIntent.putExtra("key-user", userId);
+        if(ownerKey != null)
+            myIntent.putExtra("key-owner",ownerKey);
+        myIntent.putExtra("key-service", selectedService);
+        startActivity(myIntent);
+    }
+
+
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
@@ -337,7 +347,8 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                         public void onClick(View view) {
                             finish();
                             bottomSheetDialog.cancel();
-                            changeActiviy(MakeReservationActivity.class, userId, loc.second.getOwner());
+                            String service =  get_service.getText().toString();
+                            changeActiviyFromSelect(MakeReservationActivity.class, userId, loc.second.getOwner(), service);
                         }
                     });
 
