@@ -2,38 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/make_res___"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MakeReservationActivity">
 
+
     <NumberPicker
 
         android:id="@+id/make_res_end_pick"
-        android:layout_width="106dp"
-        android:layout_height="57dp"
+        android:layout_width="61dp"
+        android:layout_height="67dp"
+        android:scaleY="0.7"
         android:theme="@style/ThemeOverlay.NumberPicker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.606"
+        app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.78" />
-
-    <TextView
-        android:id="@+id/make_res_end"
-        android:layout_width="112dp"
-        android:layout_height="61dp"
-        android:gravity="center"
-        android:outlineProvider="none"
-        android:text="@string/end_time"
-        android:textColor="#74A5ED"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <CalendarView
         android:id="@+id/make_res_calendar"
@@ -52,46 +39,61 @@
 
     </CalendarView>
 
+
     <NumberPicker
 
         android:id="@+id/make_res_start_pick"
-        android:layout_width="106dp"
-        android:layout_height="57dp"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:scaleY="0.7"
         android:theme="@style/ThemeOverlay.NumberPicker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.606"
+        app:layout_constraintHorizontal_bias="0.405"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.648" />
-
-    <TextView
-        android:id="@+id/make_res_start"
-        android:layout_width="112dp"
-        android:layout_height="61dp"
-        android:gravity="center"
-        android:outlineProvider="none"
-        android:text="@string/start_time"
-        android:textColor="#74A5ED"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.159"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.652" />
+        app:layout_constraintVertical_bias="0.636" />
 
     <Button
         android:id="@+id/make_res_request"
         android:layout_width="292dp"
         android:layout_height="45dp"
         android:backgroundTint="#2B7DF4"
-        android:text="Send request"
+        android:text="@string/send_request"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.909" />
+
+    <TextView
+        android:id="@+id/make_res_interval"
+        android:layout_width="91dp"
+        android:layout_height="31dp"
+        android:gravity="center"
+        android:text="@string/interval"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="15dp"
+        android:layout_height="31dp"
+        android:gravity="center"
+        android:text="@string/minus"
+        android:textSize="20dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

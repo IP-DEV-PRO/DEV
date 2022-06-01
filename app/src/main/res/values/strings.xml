@@ -120,6 +120,9 @@
     <string name="phone_si_email">Phone si Email</string>
     <string name="name">Name</string>
     <string name="time_slot">Time slot</string>
+    <string name="interval">Interval</string>
+    <string name="minus">-</string>
+    <string name="send_request">Send request</string>
 
 
 </resources>
