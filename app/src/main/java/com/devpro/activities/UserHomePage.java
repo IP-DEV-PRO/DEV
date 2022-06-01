@@ -40,6 +40,8 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,6 +77,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
     LinearLayout download;
     LinearLayout delete;
     TextView title_text, descr_text, address_text, phone_text, email_text;
+    AutoCompleteTextView get_service;
     Button select_button;
 
 
@@ -177,6 +180,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 phone_text = bottomSheetDialog.findViewById(R.id.phone_marker);
                 email_text = bottomSheetDialog.findViewById(R.id.email_marker);
                 select_button = bottomSheetDialog.findViewById(R.id.button_marker);
+                get_service = bottomSheetDialog.findViewById(R.id.command_service_2);
             }
         }
     }
@@ -299,6 +303,35 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                     address_text.setText(loc.second.getLine1() + " " + loc.second.getLine2());
                     phone_text.setText(loc.second.getPhone());
                     email_text.setText(loc.second.getEmail());
+
+                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                            .child(loc.first).child("locationList").child(loc.second.getOwner()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.child("services").exists()) {
+                                //String[]array = new String[];
+                                ArrayList<String> array = new ArrayList<>();
+                                for (DataSnapshot service_name : snapshot.child("services").getChildren()) {
+                                    array.add(Objects.requireNonNull(service_name.getValue()).toString());
+                                }
+
+                                if (array.size() > 0) {
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UserHomePage.this, R.layout.list_item, array);
+                                    get_service.setAdapter(adapter);
+                                } else {
+                                    array.add("");
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(UserHomePage.this, R.layout.list_item, array);
+                                    get_service.setAdapter(adapter);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     select_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
