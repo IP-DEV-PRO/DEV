@@ -1,5 +1,6 @@
 package com.devpro.activities;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,16 +33,17 @@ class RequestsDataAdapter extends RecyclerView.Adapter<RequestsDataAdapter.Reque
         return new RequestsViewHolder(itemView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RequestsDataAdapter.RequestsViewHolder holder, int position) {
 
         Request request = requests.get(position);
 
-        holder.username.setText("Username: " + request.getUsername());
-        holder.name.setText(request.getFirstName() + " " + request.getLastName());
-        holder.date.setText("Date: " + request.getDate());
-        holder.service.setText(request.getService());
-        holder.time_slot.setText("Time slot: " + request.getStartTime()+"-"+request.getEndTime());
+        holder.username.setText(request.getUsername());
+        holder.name.setText("Name : " + request.getFirstName() + " " + request.getLastName());
+        holder.date.setText("Date : " + request.getDate());
+        holder.service.setText("Service : " + request.getService());
+        holder.time_slot.setText("Time slot : " + request.getStartTime()+" - "+request.getEndTime());
     }
 
     @Override

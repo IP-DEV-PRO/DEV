@@ -124,6 +124,7 @@
     <string name="minus">-</string>
     <string name="send_request">Send request</string>
     <string name="select_service">Select service</string>
+    <string name="username3">Username :</string>
 
 
 </resources>

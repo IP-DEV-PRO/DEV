@@ -1,106 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="true"
-    android:clickable="true"
     android:layout_margin="8dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Media -->
-        <!--            <ImageView-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="194dp"-->
-        <!--                android:layout_marginTop="10dp"-->
-        <!--                android:layout_marginBottom="10dp"-->
-        <!--                android:contentDescription="@string/content_description"-->
-        <!--                android:padding="10dp"-->
-        <!--                android:scaleType="centerCrop"-->
-        <!--                app:srcCompat="@drawable/background_1" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            tools:ignore="UselessParent">
 
             <!-- Title, secondary and supporting text -->
-            <TextView
-                android:id="@+id/username_cardview"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username"
-                android:textSize="25dp"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:orientation="horizontal"
+                android:paddingLeft="8dp">
+
+                <TextView
+                    android:id="@+id/username_cardview_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill_horizontal"
+                    android:text="@string/username3"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/username_cardview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill_horizontal"
+                    android:paddingLeft="8dp"
+                    android:text="@string/username"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/name_cardview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:paddingLeft="8dp"
                 android:text="@string/name"
-                android:textSize="20dp"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/service_cardview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:paddingLeft="8dp"
                 android:text="@string/serviciu"
-                android:textSize="20dp"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/date_cardview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:paddingLeft="8dp"
                 android:text="@string/date"
-                android:textSize="20dp"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/slot_cardview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:paddingLeft="8dp"
                 android:text="@string/time_slot"
-                android:textSize="20dp"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="20sp" />
 
         </LinearLayout>
-
-        <!-- Buttons -->
-        <!--            <LinearLayout-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_margin="8dp"-->
-        <!--                android:orientation="horizontal">-->
-
-        <!--                <com.google.android.material.button.MaterialButton-->
-        <!--                    style="?attr/borderlessButtonStyle"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_marginEnd="8dp"-->
-        <!--                    android:text="@string/action_1" />-->
-
-        <!--                <com.google.android.material.button.MaterialButton-->
-        <!--                    style="?attr/borderlessButtonStyle"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:text="@string/action_2" />-->
-        <!--            </LinearLayout>-->
 
     </LinearLayout>
 
