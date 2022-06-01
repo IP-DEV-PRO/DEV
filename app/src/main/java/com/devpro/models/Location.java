@@ -12,7 +12,7 @@ public class Location {
     private String city;
     private String postal_code;
     private String country;
-    private String desctiption;
+    private String description;
     private ArrayList<String> services;
     private String phone;
     private String owner;
@@ -22,14 +22,14 @@ public class Location {
         location = new LatLng(0, 0);
     }
 
-    public Location(LatLng location, String line1, String line2, String city, String postal_code, String country, String desctiption, String email, ArrayList<String> services, String phone, String owner) {
+    public Location(LatLng location, String line1, String line2, String city, String postal_code, String country, String description, String email, ArrayList<String> services, String phone, String owner) {
         this.location = location;
         this.line1 = line1;
         this.line2 = line2;
         this.city = city;
         this.postal_code = postal_code;
         this.country = country;
-        this.desctiption = desctiption;
+        this.description = description;
         this.services = services;
         this.phone = phone;
         this.owner = owner;
@@ -106,14 +106,6 @@ public class Location {
                 '}';
     }
 
-    public String getDesctiption() {
-        return desctiption;
-    }
-
-    public void setDesctiption(String desctiption) {
-        this.desctiption = desctiption;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -136,5 +128,13 @@ public class Location {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

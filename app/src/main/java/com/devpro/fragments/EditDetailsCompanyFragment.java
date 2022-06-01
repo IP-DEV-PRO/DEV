@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -52,10 +53,8 @@ public class EditDetailsCompanyFragment extends Fragment {
     String username;
     String companyName;
     String currentSelectedService = null;
-
-    Button saveDetails;
-    TextInputEditText add_phone_textInput2, add_email_Input2, add_description_text2, add_password_input2;
-
+    Bundle bundle;
+    Button nextButton_editDetails;
 
     public EditDetailsCompanyFragment() {
         instance = this;
@@ -78,43 +77,16 @@ public class EditDetailsCompanyFragment extends Fragment {
         add_service_2 = requireActivity().findViewById(R.id.company_add_service3);
         add_service_4 = requireActivity().findViewById(R.id.add_service_4);
         remove_service = requireActivity().findViewById(R.id.remove_service);
-        saveDetails = requireActivity().findViewById(R.id.saveDetails);
-        add_phone_textInput2 = requireActivity().findViewById(R.id.add_phone_textInput2);
-        add_email_Input2 = requireActivity().findViewById(R.id.add_email_Input2);
-        add_description_text2 = requireActivity().findViewById(R.id.add_description_text2);
-        add_password_input2 = requireActivity().findViewById(R.id.add_password_input2);
+        nextButton_editDetails = requireActivity().findViewById(R.id.nextButton_editDetails);
+
 
         username = ((CompanyAdminHomePageActivity) requireActivity()).returnUsername();
         companyName = ((CompanyAdminHomePageActivity) requireActivity()).returnCompanyName();
         setListenersButtons();
 
-        /*FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("company")
-                .child(companyName).child("locationList").child(username).child("services").get().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.e("firebase", "Error getting data", task.getException());
-            } else {
-                Company company = task.getResult().getValue();
-                assert user != null;
-                ArrayList<String> array = user.getServices();
-                String[] array2={"first","second item" ,"third item"};
-                System.out.println(array + " d-asldasldasldpasdp,asdo,as0-o3049r39858432623467327847923978467236784662378462398");
-                if (array != null) {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                            R.layout.list_item, array);
-                    add_service.setAdapter(adapter);
-                } else {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                            R.layout.list_item, array2);
-                    add_service.setAdapter(adapter);
-                }
-            }
-        });*/
-
         System.out.println(companyName + " " + username);
         if (companyName != null && username != null) {
         }
-        //String[] array={"first","second item" ,"third item"};
-
 
     }
 
@@ -123,7 +95,7 @@ public class EditDetailsCompanyFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         System.out.println("AICI");
-        Bundle bundle = new Bundle();
+
         bundle = this.getArguments();
         if (bundle != null) {
             companyName = bundle.getString("key-company");
@@ -141,16 +113,18 @@ public class EditDetailsCompanyFragment extends Fragment {
                         ArrayList<String> array = new ArrayList<>();
                         for (DataSnapshot service_name : snapshot.child("services").getChildren()) {
                             array.add(service_name.getValue().toString());
-                            // System.out.println("dasda " +  service_name.getValue());
-                            /*for (DataSnapshot ds : snapshot.getChildren()) {
-                                System.out.println("dasda " + ds.getKey());
-
-                            }*/
                         }
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                                R.layout.list_item, array);
-                        add_service.setAdapter(adapter);
+                        if (array.size() > 0) {
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                                    R.layout.list_item, array);
+                            add_service.setAdapter(adapter);
+                        } else {
+                            array.add("");
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                                    R.layout.list_item, array);
+                            add_service.setAdapter(adapter);
+                        }
                     }
                 }
 
@@ -162,13 +136,6 @@ public class EditDetailsCompanyFragment extends Fragment {
         }
     }
 
-    private String encrypt(String password) throws Exception {
-        Key key = new SecretKeySpec("1Hbfh667adfDEJ78".getBytes(), "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        byte[] encryptedByteValue = cipher.doFinal(password.getBytes("utf-8"));
-        return Base64.encodeToString(encryptedByteValue, Base64.DEFAULT);
-    }
 
     private void setListenersButtons() {
         add_location.setOnClickListener(view -> {
@@ -183,50 +150,16 @@ public class EditDetailsCompanyFragment extends Fragment {
             }
         });
 
-        saveDetails.setOnClickListener(new View.OnClickListener() {
+        nextButton_editDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Objects.requireNonNull(add_description_text2.getText()).toString().compareTo("") != 0) {
-                    if (add_description_text2.getText().toString().length() > 25) {
-                        Toast.makeText(getActivity(), "Description is too long", Toast.LENGTH_LONG).show();
-                    } else {
-                        FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                                .child(companyName).child("locationList").child(username).child("description").setValue(add_description_text2.getText().toString());
-                        add_description_text2.setText("");
-                    }
-                }
-                //System.out.println("DESCRIPTION: " + add_description_text2.getText());
-                if (Objects.requireNonNull(add_phone_textInput2.getText()).toString().compareTo("") != 0) {
-                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                            .child(companyName).child("locationList").child(username).child("phone").setValue(add_phone_textInput2.getText().toString());
-                    add_phone_textInput2.setText("");
-                }
-                if (Objects.requireNonNull(add_email_Input2.getText()).toString().compareTo("") != 0) {
-                    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
-                            "[a-zA-Z0-9_+&*-]+)*@" +
-                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                            "A-Z]{2,7}$";
-                    Pattern pat = Pattern.compile(emailRegex);
-                    if (!pat.matcher(add_email_Input2.getText().toString()).matches()) {
-                        Toast.makeText(getActivity(), "Invalid e-mail address", Toast.LENGTH_LONG).show();
-                    } else {
-                        FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                                .child(companyName).child("locationList").child(username).child("e_mail").setValue(add_email_Input2.getText().toString());
-                        add_email_Input2.setText("");
-                    }
-                }
-                if (Objects.requireNonNull(add_password_input2.getText()).toString().compareTo("") != 0) {
-                    String encrypted = "";
-                    try {
-                        encrypted = encrypt(add_password_input2.getText().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users")
-                            .child(username).child("password").setValue(encrypted);
-                    add_password_input2.setText("");
-                }
+                Fragment editDetailsCompanyFragment2 = new EditDetailsCompanyFragment2();
+                editDetailsCompanyFragment2.setArguments(bundle);
 
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.company_component, editDetailsCompanyFragment2)
+                        .commit();
             }
         });
 
@@ -250,7 +183,9 @@ public class EditDetailsCompanyFragment extends Fragment {
                                 }
                             }
                             currentSelectedService = null;
-
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                                    R.layout.list_item, a);
+                            add_service.setAdapter(adapter);
                             FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
                                     .child(companyName).child("locationList").child(username).child("services").setValue(a);
                         }
@@ -284,32 +219,6 @@ public class EditDetailsCompanyFragment extends Fragment {
                         }
                     }
                 });
-
-                        /*.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<String> a = new ArrayList<>();
-                        for (DataSnapshot ds : snapshot.getChildren()){
-                           a.add(ds.getValue().toString());
-                        }
-
-                        a.add(add_service_4.getText().toString());
-                        FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                                .child(companyName).child("locationList").child(username).child("services").setValue(a);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });*/
-                // a.add(add_service_4.getText().toString());
-                //    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                //          .child(companyName).child("locationList").child(username).child("services").setValue(new ArrayList<>().add("nana"));
-                //     FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                //             .child(companyName).child("locationList").child(username).child("services").child(add_service_4.getText().toString()).setValue(0);
-                //   System.out.println(add_service_4.getText().toString() + " d asdaosmdoasodmasmdoimasoidmoiasmdoimasoidmoiasd");
-                //System.out.println(");
             }
         });
     }

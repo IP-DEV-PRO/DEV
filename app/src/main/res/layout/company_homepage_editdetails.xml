@@ -10,7 +10,7 @@
     <Button
         android:id="@+id/company_add_location_button"
         android:layout_width="237dp"
-        android:layout_height="38dp"
+        android:layout_height="69dp"
         android:backgroundTint="#BC3672"
         android:backgroundTintMode="src_over"
         android:fadingEdge="vertical|none"
@@ -18,7 +18,7 @@
         android:foregroundGravity="fill_horizontal|top|fill_vertical"
         android:foregroundTint="#66E813"
         android:foregroundTintMode="add"
-        android:text="@string/add_location"
+        android:text="@string/change_location"
         app:layout_constraintBottom_toTopOf="@+id/company_add_service"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
@@ -30,11 +30,10 @@
         android:id="@+id/company_add_service"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="237dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="170dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="260dp"
         android:hint="@string/add_service"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -44,18 +43,18 @@
         <AutoCompleteTextView
             android:id="@+id/company_add_service2"
             android:layout_width="match_parent"
-            android:layout_height="49dp"
+            android:layout_height="69dp"
             android:inputType="none"
             tools:ignore="LabelFor"
-            tools:text="Add Service" />
+            tools:text="View Services" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/company_add_service3"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             android:gravity="center"
-            android:hint="@string/adauga_serviciu"
+            android:hint="@string/add_service"
             app:endIconContentDescription="@string/adauga_serviciu"
             app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
             app:endIconMode="custom">
@@ -63,7 +62,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_service_4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="0dp"
                 android:gravity="center"
@@ -78,9 +77,8 @@
     <Button
         android:id="@+id/remove_service"
         android:layout_width="237dp"
-        android:layout_height="38dp"
+        android:layout_height="50dp"
         android:backgroundTint="#BC3672"
-        android:layout_marginTop="0dp"
         android:backgroundTintMode="src_over"
         android:fadingEdge="vertical|none"
         android:foreground="?attr/selectableItemBackgroundBorderless"
@@ -96,130 +94,25 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="SmallSp" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="237dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginBottom="130dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ExtraText,ScrollViewCount">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:isScrollContainer="true"
-            android:orientation="vertical"
-            app:layout_constraintVertical_bias="0.0">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_description_text"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="237dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="@string/add_description"
-                android:maxHeight="5dp"
-                android:paddingTop="2dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="25"
-                app:startIconDrawable="@drawable/ic_baseline_description_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_description_text2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:layout_editor_absoluteX="2dp"
-                    tools:layout_editor_absoluteY="380dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_phone_textInput"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="237dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:hint="@string/change_phone"
-                android:maxHeight="100dp"
-                android:minHeight="50dp"
-                android:paddingTop="6dp"
-                app:startIconDrawable="@drawable/ic_baseline_phone_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_phone_textInput2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    tools:layout_editor_absoluteX="2dp"
-                    tools:layout_editor_absoluteY="380dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_email_Input"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="237dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:hint="@string/change_email"
-                android:maxHeight="100dp"
-                android:minHeight="50dp"
-                android:paddingTop="10dp"
-                app:startIconDrawable="@drawable/ic_baseline_email_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_email_Input2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    tools:layout_editor_absoluteX="2dp"
-                    tools:layout_editor_absoluteY="380dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_password_input"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="237dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:hint="@string/change_password"
-                android:maxHeight="100dp"
-                android:minHeight="50dp"
-                android:paddingTop="10dp"
-                app:startIconDrawable="@drawable/ic_baseline_password_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_password_input2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    tools:layout_editor_absoluteX="2dp"
-                    tools:layout_editor_absoluteY="380dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-    </ScrollView>
-
     <Button
         android:id="@+id/company_add_location_add_image"
-        android:layout_width="232dp"
-        android:layout_height="38dp"
+        android:layout_width="237dp"
+        android:layout_height="59dp"
         android:backgroundTint="#BC3672"
-        android:text="@string/add_image"
+        android:text="@string/change_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.168" />
+        app:layout_constraintVertical_bias="0.276" />
 
     <Button
-        android:id="@+id/saveDetails"
-        android:layout_width="232dp"
-        android:layout_height="38dp"
+        android:id="@+id/nextButton_editDetails"
+        android:layout_width="237dp"
+        android:layout_height="69dp"
         android:backgroundTint="#BC3672"
-        android:text="@string/save_details"
+        android:text="@string/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

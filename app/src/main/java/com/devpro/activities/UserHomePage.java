@@ -305,7 +305,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                     //showBottomSheetDialog();
                     Pair<String, com.devpro.models.Location> loc =  markerArrayList.get(marker);
                     title_text.setText(loc.first);
-                    descr_text.setText(loc.second.getDesctiption());
+                    descr_text.setText(loc.second.getDescription());
                     address_text.setText(loc.second.getLine1() + " " + loc.second.getLine2());
                     phone_text.setText(loc.second.getPhone());
                     email_text.setText(loc.second.getEmail());

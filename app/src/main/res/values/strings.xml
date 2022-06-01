@@ -102,6 +102,10 @@
     <string name="select">Select</string>
     <string name="add_image">Add image</string>
     <string name="save_details">Save Details</string>
+    <string name="next">Next</string>
+    <string name="change_description">Change Description</string>
+    <string name="change_image">Change Image</string>
+    <string name="change_location">Change Location</string>
 
 
 </resources>
