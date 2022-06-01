@@ -115,6 +115,9 @@
     <string name="supporting_text">Supporting text</string>
     <string name="action_1">Action 1</string>
     <string name="action_2">Action 2</string>
+    <string name="date">Date</string>
+    <string name="serviciu">Serviciu</string>
+    <string name="phone_si_email">Phone si Email</string>
 
 
 </resources>
