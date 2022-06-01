@@ -1,21 +1,17 @@
 package com.devpro.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,8 +22,6 @@ import com.devpro.fragments.EditDetailsCompanyFragment;
 import com.devpro.fragments.RequestsCompanyFragment;
 import com.devpro.models.Request;
 import com.devpro.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CompanyAdminHomePageActivity extends AppCompatActivity {
@@ -44,27 +42,36 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
     Button add_location, add_service;
     TextInputEditText add_description, change_phone, change_email, change_password;
     public RequestsDataAdapter requestsDataAdapter;
+    public RequestsDataAdapter acceptedRequestsDataAdapter;
 
     String username;
     private DatabaseReference mDatabase;
     private String companyName;
-    RecyclerView recyclerView;
-    LinearLayoutManager linearLayoutManager;
+    RecyclerView recyclerView, recyclerViewAccepted;
+    LinearLayoutManager linearLayoutManager, linearLayoutManagerAccepted;
 
     Fragment requestsFragment;
     Fragment acceptFragment;
     Fragment editFragment;
+    boolean ok = false;
+    boolean set1 = false;
+    boolean set2 = false;
 
     void setListenersButtons() {
         //registerButton.setOnClickListener(view -> register(username.getText().toString(),password.getText().toString()));
         add_location.setOnClickListener(view -> {
-            System.out.println("AMDOSDMOSDOSMDOI0000000000------------------------------------------------------------");
             //    changeActiviy(RegisterCompanyActivityWithMap.class);
         });
 
-//        add_service.setOnClickListener(view -> registerUser(username.getText().toString(),password.getText().toString(),
-//                email.getText().toString(),false));
-        //registerCompanyButton.setOnClickListener(view -> changeActiviy(RegisterCompanyActivityWithMap.class));
+    }
+
+    public static Date StringToDate(String dob) throws ParseException {
+        //Instantiating the SimpleDateFormat class
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        //Parsing the given String to Date object
+        Date date = formatter.parse(dob);
+        System.out.println("Date object value: " + date);
+        return date;
     }
 
     private void changeActiviy(Class activityClass) {
@@ -96,7 +103,7 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
 
         requestsFragment = new RequestsCompanyFragment();
-        Fragment acceptFragment = new AcceptedCompanyFragment();
+        acceptFragment = new AcceptedCompanyFragment();
         Fragment editFragment = new EditDetailsCompanyFragment();
 
         // requestsFragment.setArguments(bundle);
@@ -121,20 +128,48 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
                         .commit();
             }
         });
-        // add_location = editFragment.requireView().findViewById(R.id.company_add_location_button);
-       /* add_service = findViewById(R.id.company_add_service);
-        add_description = findViewById(R.id.add_description_text);
-        change_phone = findViewById(R.id.add_phone_textInput);
-        change_email = findViewById(R.id.add_email_Input);
-        change_password = findViewById(R.id.add_password_input);
-*/
-        //setListenersButtons();
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.acceptedRequests_company:
-                    //mapFragment.requireView().setBackgroundColor(Color.GREEN);
-                    //changeActiviy(EditAccountActivity.class, userId);
+                    List<Request> requestsAccepted = new ArrayList<Request>();
+                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                            .child(companyName).child("locationList").child(username).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (ok) {
+                                if (snapshot.child("requests").exists()) {
+                                    for (DataSnapshot request : snapshot.child("requests").getChildren()) {
+                                        Request request1 = request.getValue(Request.class);
+                                        assert request1 != null;
+                                        String date = request1.getDate();
+                                        Date my_date = null;
+                                        try {
+                                            my_date = StringToDate(date);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                        if (request1.isAccepted()) {
+                                            assert my_date != null;
+                                            if (my_date.after(Calendar.getInstance().getTime())) {
+
+                                                requestsAccepted.add(request1);
+                                            }
+                                        }
+                                    }
+
+                                    setAcceptedRequestsAdapter(requestsAccepted);
+                                    setupAcceptedRecyclerView();
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.company_component, acceptFragment)
@@ -147,14 +182,20 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
                             .child(companyName).child("locationList").child(username).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.child("requests").exists()) {
-                                for (DataSnapshot request : snapshot.child("requests").getChildren()) {
-                                    requests.add(request.getValue(Request.class));
+                            if (ok) {
+                                if (snapshot.child("requests").exists()) {
+                                    for (DataSnapshot request : snapshot.child("requests").getChildren()) {
+                                        Request request1 = request.getValue(Request.class);
+                                        assert request1 != null;
+                                        if (!request1.isAccepted()) {
+                                            requests.add(request.getValue(Request.class));
+                                        }
+                                    }
+
+                                    setRequestsAdapter(requests);
+                                    setupRecyclerView();
+
                                 }
-
-                                setRequestsAdapter(requests);
-                                setupRecyclerView();
-
                             }
                         }
 
@@ -180,9 +221,72 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
             }
             return false;
         });
-        //editare informatii
-        //cereri
-        //cereri acceptare
+
+        ok = true;
+    }
+
+    private void setAcceptedRequestsAdapter(List<Request> requests) {
+        acceptedRequestsDataAdapter = new RequestsDataAdapter(requests);
+    }
+
+    public void setupAcceptedRecyclerView() {
+        recyclerViewAccepted = findViewById(R.id.recyclerViewAccepted);
+
+            linearLayoutManagerAccepted = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            recyclerViewAccepted.setLayoutManager(linearLayoutManagerAccepted);
+            set1 = true;
+        recyclerViewAccepted.setAdapter(acceptedRequestsDataAdapter);
+
+        SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onLeftClicked(int position) {
+                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                        .child(companyName).child("locationList").child(username).child("requests").get().addOnCompleteListener(task -> {
+                    ArrayList<Request> a = new ArrayList<>();
+                    int i = 0;
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        if (i != position) {
+                            a.add(ds.getValue(Request.class));
+                        }
+                        i++;
+                    }
+
+                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                            .child(companyName).child("locationList").child(username).child("requests").setValue(a);
+
+                });
+
+                acceptedRequestsDataAdapter.requests.remove(position);
+                linearLayoutManagerAccepted.removeAllViews();
+                List<Request> a = acceptedRequestsDataAdapter.requests;
+                acceptedRequestsDataAdapter.requests.clear();
+                acceptedRequestsDataAdapter.notifyDataSetChanged();
+                acceptedRequestsDataAdapter.requests = a;
+                acceptedRequestsDataAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onRightClicked(int position) {
+//                Request a = acceptedRequestsDataAdapter.requests.get(position);
+//
+//                // requestsDataAdapter.requests.remove(position);
+//                linearLayoutManagerAccepted.removeAllViews();
+//                List<Request> b = acceptedRequestsDataAdapter.requests;
+//                acceptedRequestsDataAdapter.requests.clear();
+//                acceptedRequestsDataAdapter.notifyDataSetChanged();
+//                acceptedRequestsDataAdapter.requests = b;
+//                acceptedRequestsDataAdapter.notifyDataSetChanged();
+            }
+        });
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(recyclerViewAccepted);
+
+        recyclerViewAccepted.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
     }
 
     public String returnUsername() {
@@ -199,20 +303,14 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
 
     public void setupRecyclerView() {
         recyclerView = findViewById(R.id.recyclerView2);
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+            linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(linearLayoutManager);
+
         recyclerView.setAdapter(requestsDataAdapter);
 
         SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
-            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onLeftClicked(int position) {
-                /*
-                * FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                        .child(companyName).child("locationList").child(username).child("requests").child(String.valueOf(position)).removeValue();
-                *
-                * */
-
                 FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
                         .child(companyName).child("locationList").child(username).child("requests").get().addOnCompleteListener(task -> {
                     ArrayList<Request> a = new ArrayList<>();
@@ -236,20 +334,23 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
                 requestsDataAdapter.notifyDataSetChanged();
                 requestsDataAdapter.requests = a;
                 requestsDataAdapter.notifyDataSetChanged();
-
-                //requestsDataAdapter.notifyItemRangeRemoved(position, requestsDataAdapter.getItemCount());
-                // requestsDataAdapter.notifyItemRangeChanged(0, requestsDataAdapter.requests.size());
-               // requestsDataAdapter.notifyItemRangeChanged(position, requestsDataAdapter.getItemCount());
-               /* final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.detach(requestsFragment);
-                ft.attach(requestsFragment);
-                ft.commit();
-                */System.out.println(requestsDataAdapter.requests.toString());
             }
 
             @Override
             public void onRightClicked(int position) {
-                super.onRightClicked(position);
+                Request a = requestsDataAdapter.requests.get(position);
+                a.setAccepted(true);
+
+                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
+                        .child(companyName).child("locationList").child(username).child("requests").child(String.valueOf(position)).setValue(a);
+
+                requestsDataAdapter.requests.remove(position);
+                linearLayoutManager.removeAllViews();
+                List<Request> b = requestsDataAdapter.requests;
+                requestsDataAdapter.requests.clear();
+                requestsDataAdapter.notifyDataSetChanged();
+                requestsDataAdapter.requests = b;
+                requestsDataAdapter.notifyDataSetChanged();
             }
         });
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
@@ -257,7 +358,7 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 swipeController.onDraw(c);
             }
         });
