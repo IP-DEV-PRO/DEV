@@ -9,13 +9,14 @@ public class Request {
     private String endTime;
     private String service;
     private boolean accepted;
-
+    private String firstName;
+    private String lastName;
     public Request()
     {
 
     }
 
-    public Request(String username, String companyName, String phone, String date, String startTime, String endTime, String service, boolean accepted) {
+    public Request(String username, String companyName, String phone, String date, String startTime, String endTime, String service, boolean accepted, String firstName, String lastName) {
         this.username = username;
         this.companyName = companyName;
         this.phone = phone;
@@ -24,6 +25,8 @@ public class Request {
         this.endTime = endTime;
         this.service = service;
         this.accepted = accepted;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
 
@@ -102,5 +105,21 @@ public class Request {
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

@@ -118,6 +118,8 @@
     <string name="date">Date</string>
     <string name="serviciu">Serviciu</string>
     <string name="phone_si_email">Phone si Email</string>
+    <string name="name">Name</string>
+    <string name="time_slot">Time slot</string>
 
 
 </resources>

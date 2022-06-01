@@ -1,5 +1,6 @@
 package com.devpro.activities;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devpro.R;
 import com.devpro.models.Request;
+import com.devpro.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
 class RequestsDataAdapter extends RecyclerView.Adapter<RequestsDataAdapter.RequestsViewHolder> {
     private List<Request> requests;
+    private DatabaseReference mDatabase;
 
     @NonNull
     @Override
@@ -26,11 +34,14 @@ class RequestsDataAdapter extends RecyclerView.Adapter<RequestsDataAdapter.Reque
 
     @Override
     public void onBindViewHolder(@NonNull RequestsDataAdapter.RequestsViewHolder holder, int position) {
+
         Request request = requests.get(position);
-        holder.date.setText(request.getDate());
-        holder.phone_email.setText(request.getDate());
-        holder.username.setText(request.getUsername());
+
+        holder.username.setText("Username: " + request.getUsername());
+        holder.name.setText(request.getFirstName() + " " + request.getLastName());
+        holder.date.setText("Date: " + request.getDate());
         holder.service.setText(request.getService());
+        holder.time_slot.setText("Time slot: " + request.getStartTime()+"-"+request.getEndTime());
     }
 
     @Override
@@ -39,15 +50,16 @@ class RequestsDataAdapter extends RecyclerView.Adapter<RequestsDataAdapter.Reque
     }
 
     public class RequestsViewHolder extends RecyclerView.ViewHolder {
-        TextView date, phone_email, username, service;
+        TextView date, name, username, service, time_slot;
 
         public RequestsViewHolder(@NonNull View itemView) {
             super(itemView);
 
             date = itemView.findViewById(R.id.date_cardview);
-            phone_email = itemView.findViewById(R.id.phone_email_cardview);
+            name = itemView.findViewById(R.id.name_cardview);
             username = itemView.findViewById(R.id.username_cardview);
             service = itemView.findViewById(R.id.service_cardview);
+            time_slot = itemView.findViewById(R.id.slot_cardview);
         }
     }
 

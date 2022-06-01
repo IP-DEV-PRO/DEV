@@ -70,20 +70,33 @@ public class MakeReservationActivity extends AppCompatActivity {
 
                     mDatabase.child("requests").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if (!task.isSuccessful()) {
+                        public void onComplete(@NonNull Task<DataSnapshot> task1) {
+                            if (!task1.isSuccessful()) {
                                 //
                             } else {
-                                ArrayList<Request> a = new ArrayList<>();
-                                for (DataSnapshot ds : task.getResult().getChildren()) {
-                                    System.out.println("dadadada");
-                                    System.out.println(ds.getValue(Request.class).getDate());
-                                    a.add(ds.getValue(Request.class));
-                                }
-                                System.out.println(a);
-                                a.add(new Request(userId,companyName, userPhone, date, timeSlotsStart[start_time], timeSlotsEnd[end_time], "no-service", false));
+
                                 FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
-                                        getReference("companies").child(companyName).child("locationList").child(ownerKey).child("requests").setValue(a);
+                                        getReference("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task2) {
+                                        if (!task2.isSuccessful()) {
+                                            Log.e("firebase", "Error getting data", task.getException());
+                                        }
+                                        else {
+                                            ArrayList<Request> a = new ArrayList<>();
+                                            String firstName = task2.getResult().child("firstName").getValue(String.class);
+                                            String lastName = task2.getResult().child("lastName").getValue(String.class);
+                                            for (DataSnapshot ds : task1.getResult().getChildren()) {
+                                                a.add(ds.getValue(Request.class));
+                                            }
+                                            a.add(new Request(userId, companyName, userPhone, date,
+                                                    timeSlotsStart[start_time], timeSlotsEnd[end_time], "no-service", false,
+                                                    firstName, lastName));
+                                            FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
+                                                    getReference("companies").child(companyName).child("locationList").child(ownerKey).child("requests").setValue(a);
+                                        }
+                                    }
+                                });
                             }
                         }
                     });
@@ -99,7 +112,7 @@ public class MakeReservationActivity extends AppCompatActivity {
                                 for (DataSnapshot ds : task.getResult().getChildren()) {
                                     a.add(ds.getValue(Request.class));
                                 }
-                                a.add(new Request(userId, companyName, userPhone, date, timeSlotsStart[start_time], timeSlotsEnd[end_time], "no-service", false));
+                                a.add(new Request(userId, companyName, userPhone, date, timeSlotsStart[start_time], timeSlotsEnd[end_time], "no-service", false, null, null));
                                 FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
                                         getReference("users").child(userId).child("requests").setValue(a);
                             }
