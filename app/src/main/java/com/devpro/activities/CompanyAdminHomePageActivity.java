@@ -2,6 +2,7 @@ package com.devpro.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -192,6 +194,27 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(requestsDataAdapter);
+
+        SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onLeftClicked(int position) {
+                super.onLeftClicked(position);
+            }
+
+            @Override
+            public void onRightClicked(int position) {
+                super.onRightClicked(position);
+            }
+        });
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(recyclerView);
+
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
