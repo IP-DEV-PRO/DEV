@@ -35,7 +35,7 @@
                 android:maxHeight="5dp"
                 android:paddingTop="2dp"
                 app:counterEnabled="true"
-                app:counterMaxLength="25"
+                app:counterMaxLength="160"
                 app:startIconDrawable="@drawable/ic_baseline_description_24">
 
                 <com.google.android.material.textfield.TextInputEditText

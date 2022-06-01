@@ -76,7 +76,7 @@ public class EditDetailsCompanyFragment2 extends Fragment {
             @Override
             public void onClick(View view) {
                 if (Objects.requireNonNull(add_description_text2.getText()).toString().compareTo("") != 0) {
-                    if (add_description_text2.getText().toString().length() > 25) {
+                    if (add_description_text2.getText().toString().length() > 160) {
                         Toast.makeText(getActivity(), "Description is too long", Toast.LENGTH_LONG).show();
                     } else {
                         FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
