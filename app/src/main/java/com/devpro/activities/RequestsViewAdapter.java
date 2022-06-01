@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 class RequestsDataAdapter extends RecyclerView.Adapter<RequestsDataAdapter.RequestsViewHolder> {
-    private List<Request> requests;
+    public List<Request> requests;
     private DatabaseReference mDatabase;
 
     @NonNull

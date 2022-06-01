@@ -3,17 +3,13 @@ package com.devpro.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +19,6 @@ import com.devpro.R;
 import com.devpro.activities.AddCompanyProfilePicture;
 import com.devpro.activities.CompanyAdminHomePageActivity;
 import com.devpro.activities.RegisterCompanyActivityWithMap;
-import com.devpro.models.Company;
 import com.devpro.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,13 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.regex.Pattern;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 
 public class EditDetailsCompanyFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
@@ -63,8 +53,7 @@ public class EditDetailsCompanyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.company_homepage_editdetails, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.company_homepage_editdetails, container, false);
     }
 
     @Override
@@ -82,11 +71,6 @@ public class EditDetailsCompanyFragment extends Fragment {
 
         username = ((CompanyAdminHomePageActivity) requireActivity()).returnUsername();
         companyName = ((CompanyAdminHomePageActivity) requireActivity()).returnCompanyName();
-
-        System.out.println(companyName + " " + username);
-        if (companyName != null && username != null) {
-        }
-
         setListenersButtons();
     }
 
@@ -94,29 +78,23 @@ public class EditDetailsCompanyFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        System.out.println("AICI");
-
         bundle = this.getArguments();
         if (bundle != null) {
             companyName = bundle.getString("key-company");
-            System.out.println(companyName + " dasddadsadasdadsa4444444");
             username = ((CompanyAdminHomePageActivity) requireActivity()).returnUsername();
 
-            System.out.println(username + " dasdad");
             FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                    .child(companyName).child("locationList").child(username).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    .child(companyName).child("locationList").child(username).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DataSnapshot snapshot = task.getResult();
                     if (snapshot.child("services").exists()) {
-                        System.out.println("gaga");
-                        //String[]array = new String[];
                         ArrayList<String> array = new ArrayList<>();
                         for (DataSnapshot service_name : snapshot.child("services").getChildren()) {
-                            array.add(service_name.getValue().toString());
+                            array.add(Objects.requireNonNull(service_name.getValue()).toString());
                         }
 
                         if (array.size() > 0) {
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                                     R.layout.list_item, array);
                             add_service.setAdapter(adapter);
                         } else {
@@ -126,11 +104,6 @@ public class EditDetailsCompanyFragment extends Fragment {
                             add_service.setAdapter(adapter);
                         }
                     }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
         }
@@ -145,7 +118,6 @@ public class EditDetailsCompanyFragment extends Fragment {
         add_service.setOnDismissListener(new AutoCompleteTextView.OnDismissListener() {
             @Override
             public void onDismiss() {
-                //System.out.println("AMDOSDMOSDOSMDOI0000000000------------------------------------------------------------ " + add_service.getText().toString());
                 currentSelectedService = add_service.getText().toString();
             }
         });
@@ -209,10 +181,10 @@ public class EditDetailsCompanyFragment extends Fragment {
                         } else {
                             ArrayList<String> a = new ArrayList<>();
                             for (DataSnapshot ds : task.getResult().getChildren()) {
-                                a.add(ds.getValue().toString());
+                                a.add(Objects.requireNonNull(ds.getValue()).toString());
 
                             }
-                            a.add(add_service_4.getText().toString());
+                            a.add(Objects.requireNonNull(add_service_4.getText()).toString());
                             add_service_4.setText("");
                             FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
                                     .child(companyName).child("locationList").child(username).child("services").setValue(a);
