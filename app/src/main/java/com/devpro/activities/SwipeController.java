@@ -159,7 +159,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 
         View itemView = viewHolder.itemView;
         Paint p = new Paint();
-
+//dada
         RectF leftButton = new RectF(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + buttonWidthWithoutPadding, itemView.getBottom());
         p.setColor(Color.RED);
         c.drawRoundRect(leftButton, corners, corners, p);

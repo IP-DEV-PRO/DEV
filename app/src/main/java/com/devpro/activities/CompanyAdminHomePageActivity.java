@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devpro.R;
-import com.devpro.fragments.AcceptedCompanyFragment;
 import com.devpro.fragments.EditDetailsCompanyFragment;
 import com.devpro.fragments.RequestsCompanyFragment;
 import com.devpro.models.Request;
@@ -51,7 +50,6 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager, linearLayoutManagerAccepted;
 
     Fragment requestsFragment;
-    Fragment acceptFragment;
     Fragment editFragment;
     boolean ok = false;
     boolean set1 = false;
@@ -62,7 +60,6 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
         add_location.setOnClickListener(view -> {
             //    changeActiviy(RegisterCompanyActivityWithMap.class);
         });
-
     }
 
     public static Date StringToDate(String dob) throws ParseException {
@@ -103,7 +100,6 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
 
         requestsFragment = new RequestsCompanyFragment();
-        acceptFragment = new AcceptedCompanyFragment();
         Fragment editFragment = new EditDetailsCompanyFragment();
 
         // requestsFragment.setArguments(bundle);
@@ -119,7 +115,6 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
                 companyName = user.getCompanyName();
                 bundle.putString("key-company", companyName);
                 editFragment.setArguments(bundle);
-                acceptFragment.setArguments(bundle);
                 requestsFragment.setArguments(bundle);
 
                 getSupportFragmentManager()
@@ -131,51 +126,6 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.acceptedRequests_company:
-                    List<Request> requestsAccepted = new ArrayList<Request>();
-                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                            .child(companyName).child("locationList").child(username).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (ok) {
-                                if (snapshot.child("requests").exists()) {
-                                    for (DataSnapshot request : snapshot.child("requests").getChildren()) {
-                                        Request request1 = request.getValue(Request.class);
-                                        assert request1 != null;
-                                        String date = request1.getDate();
-                                        Date my_date = null;
-                                        try {
-                                            my_date = StringToDate(date);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                        if (request1.isAccepted()) {
-                                            assert my_date != null;
-                                            if (my_date.after(Calendar.getInstance().getTime())) {
-
-                                                requestsAccepted.add(request1);
-                                            }
-                                        }
-                                    }
-
-                                    setAcceptedRequestsAdapter(requestsAccepted);
-                                    setupAcceptedRecyclerView();
-
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.company_component, acceptFragment)
-                            .commit();
-
-                    return true;
                 case R.id.requests_company:
                     List<Request> requests = new ArrayList<Request>();
                     FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
@@ -225,69 +175,6 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
         ok = true;
     }
 
-    private void setAcceptedRequestsAdapter(List<Request> requests) {
-        acceptedRequestsDataAdapter = new RequestsDataAdapter(requests);
-    }
-
-    public void setupAcceptedRecyclerView() {
-        recyclerViewAccepted = findViewById(R.id.recyclerViewAccepted);
-
-            linearLayoutManagerAccepted = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-            recyclerViewAccepted.setLayoutManager(linearLayoutManagerAccepted);
-            set1 = true;
-        recyclerViewAccepted.setAdapter(acceptedRequestsDataAdapter);
-
-        SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
-            @Override
-            public void onLeftClicked(int position) {
-                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                        .child(companyName).child("locationList").child(username).child("requests").get().addOnCompleteListener(task -> {
-                    ArrayList<Request> a = new ArrayList<>();
-                    int i = 0;
-                    for (DataSnapshot ds : task.getResult().getChildren()) {
-                        if (i != position) {
-                            a.add(ds.getValue(Request.class));
-                        }
-                        i++;
-                    }
-
-                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
-                            .child(companyName).child("locationList").child(username).child("requests").setValue(a);
-
-                });
-
-                acceptedRequestsDataAdapter.requests.remove(position);
-                linearLayoutManagerAccepted.removeAllViews();
-                List<Request> a = acceptedRequestsDataAdapter.requests;
-                acceptedRequestsDataAdapter.requests.clear();
-                acceptedRequestsDataAdapter.notifyDataSetChanged();
-                acceptedRequestsDataAdapter.requests = a;
-                acceptedRequestsDataAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onRightClicked(int position) {
-//                Request a = acceptedRequestsDataAdapter.requests.get(position);
-//
-//                // requestsDataAdapter.requests.remove(position);
-//                linearLayoutManagerAccepted.removeAllViews();
-//                List<Request> b = acceptedRequestsDataAdapter.requests;
-//                acceptedRequestsDataAdapter.requests.clear();
-//                acceptedRequestsDataAdapter.notifyDataSetChanged();
-//                acceptedRequestsDataAdapter.requests = b;
-//                acceptedRequestsDataAdapter.notifyDataSetChanged();
-            }
-        });
-        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
-        itemTouchhelper.attachToRecyclerView(recyclerViewAccepted);
-
-        recyclerViewAccepted.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                swipeController.onDraw(c);
-            }
-        });
-    }
 
     public String returnUsername() {
         return username;
@@ -324,7 +211,6 @@ public class CompanyAdminHomePageActivity extends AppCompatActivity {
 
                     FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").getReference("companies")
                             .child(companyName).child("locationList").child(username).child("requests").setValue(a);
-
                 });
 
                 requestsDataAdapter.requests.remove(position);

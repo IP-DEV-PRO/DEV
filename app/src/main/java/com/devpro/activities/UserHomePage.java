@@ -6,8 +6,11 @@ import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.devpro.R;
+import com.devpro.models.Request;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,8 +18,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +42,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
@@ -140,6 +146,7 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                     changeActiviy(SubscriptionActivity.class, userId, null);
                     return true;
                 case R.id.bottom_navigation_requests:
+                    changeActiviy(UserViewSentRequests.class, userId, null);
                     return true;
             }
             return false;
@@ -195,8 +202,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         List<String> providers = locationManager.getProviders(true);
         Location bestLocation = null;
         for (String provider : providers) {
-
-
             Location l = locationManager.getLastKnownLocation(provider);
             if (l == null) {
                 continue;
@@ -206,7 +211,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
                 bestLocation = l;
             }
         }
-
         return bestLocation;
     }
 
@@ -400,5 +404,6 @@ public class UserHomePage extends AppCompatActivity implements OnMapReadyCallbac
         // use:
         // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
+
 
 }
