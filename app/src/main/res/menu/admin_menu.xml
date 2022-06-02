@@ -7,11 +7,6 @@
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/view_accounts"/>
     <item
-        android:id="@+id/admin_menu_companies"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/view_companies"/>
-    <item
         android:id="@+id/admin_menu_requests"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_assignment_turned_in_24"

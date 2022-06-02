@@ -87,38 +87,50 @@ public class MakeReservationActivity extends AppCompatActivity {
                                             ArrayList<Request> a = new ArrayList<>();
                                             String firstName = task2.getResult().child("firstName").getValue(String.class);
                                             String lastName = task2.getResult().child("lastName").getValue(String.class);
-                                            for (DataSnapshot ds : task1.getResult().getChildren()) {
-                                                a.add(ds.getValue(Request.class));
+                                            boolean sub_active = task2.getResult().child("sub_active").getValue(Boolean.class);
+                                            if(sub_active) {
+                                                for (DataSnapshot ds : task1.getResult().getChildren()) {
+                                                    a.add(ds.getValue(Request.class));
+                                                }
+                                                a.add(new Request(userId, companyName, userPhone, date,
+                                                        timeSlotsStart[start_time], timeSlotsEnd[end_time], selected, false,
+                                                        firstName, lastName));
+                                                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
+                                                        getReference("companies").child(companyName).child("locationList").child(ownerKey).child("requests").setValue(a);
                                             }
-                                            a.add(new Request(userId, companyName, userPhone, date,
-                                                    timeSlotsStart[start_time], timeSlotsEnd[end_time], selected, false,
-                                                    firstName, lastName));
-                                            FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
-                                                    getReference("companies").child(companyName).child("locationList").child(ownerKey).child("requests").setValue(a);
+                                            else
+                                            {
+                                                Toast.makeText(getApplicationContext(), "Subscription not paid", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
                                     }
                                 });
                             }
                         }
                     });
-                    mDatabase = FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
-                            getReference("users").child(userId);
-                    mDatabase.child("requests").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
+                            getReference("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if (!task.isSuccessful()) {
                                 //
                             } else {
-                                ArrayList<Request> a = new ArrayList<>();
-                                for (DataSnapshot ds : task.getResult().getChildren()) {
-                                    a.add(ds.getValue(Request.class));
+                                boolean sub_active = task.getResult().child("sub_active").getValue(Boolean.class);
+                                if(sub_active)
+                                {
+                                    ArrayList<Request> a = new ArrayList<>();
+                                    for (DataSnapshot ds : task.getResult().child("requests").getChildren()) {
+                                        a.add(ds.getValue(Request.class));
+                                    }
+                                    a.add(new Request(userId, companyName, userPhone, date, timeSlotsStart[start_time], timeSlotsEnd[end_time], selected, false, null, null));
+                                    FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
+                                            getReference("users").child(userId).child("requests").setValue(a);
+                                    Toast.makeText(getApplicationContext(), "Request sent", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    changeActiviy(UserHomePage.class, userId);
                                 }
-                                a.add(new Request(userId, companyName, userPhone, date, timeSlotsStart[start_time], timeSlotsEnd[end_time], selected, false, null, null));
-                                FirebaseDatabase.getInstance("https://devpro-c3528-default-rtdb.europe-west1.firebasedatabase.app/").
-                                        getReference("users").child(userId).child("requests").setValue(a);
-                                Toast.makeText(getApplicationContext(), "Request sent", Toast.LENGTH_SHORT).show();
-                                finish();
-                                changeActiviy(UserHomePage.class, userId);
+                                else
+                                    Toast.makeText(getApplicationContext(), "Subscription not paid", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

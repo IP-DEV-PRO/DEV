@@ -52,8 +52,9 @@ public class AdminUserDetailsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                boolean companyAdmin = Boolean.parseBoolean(snapshot.child("companyAdmin").getValue().toString());
-                if(!companyAdmin) {
+                Integer role = Integer.parseInt(snapshot.child("role").getValue().toString());
+
+                if(role == 0) {
                     String firstName = snapshot.child("firstName").getValue().toString();
                     String lastName = snapshot.child("lastName").getValue().toString();
                     String email = snapshot.child("e_mail").getValue().toString();
@@ -81,6 +82,12 @@ public class AdminUserDetailsActivity extends AppCompatActivity {
                     phone_text.setText("Company name: " + companyName);
                     String reg_date = snapshot.child("reg_date").getValue().toString();
                     sub_text.setText("Registration date: " + reg_date);
+                    boolean banned = Boolean.parseBoolean(snapshot.child("blocked").getValue().toString());
+                    if(banned)
+                        date_text.setText("Account Banned");
+                    else
+                        date_text.setText("Active account");
+
                 }
             }
 

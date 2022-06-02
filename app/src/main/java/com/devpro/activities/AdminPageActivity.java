@@ -128,9 +128,6 @@ public class AdminPageActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Accounts", Toast.LENGTH_LONG).show();
                 viewAccounts();
                 return true;
-            case R.id.admin_menu_companies:
-                Toast.makeText(getApplicationContext(), "Companies", Toast.LENGTH_LONG).show();
-                return true;
             case R.id.admin_menu_requests:
                 Toast.makeText(getApplicationContext(), "Requests", Toast.LENGTH_LONG).show();
                 viewRequests();
